@@ -1,0 +1,39 @@
+<div id="userBadge" class="clearit user vcard" id="hcard-jessethegame">
+
+  <div class="badgeAvatar">
+    <span class="userImage">
+      <img class="photo" height="126" width="126" alt="" ng-src="{{user.image[2]['#text']}}" />
+    </span>
+  </div>
+
+  <div class="badgeInfo">
+    <a href="/settings" style="float: right;">
+      <small>Edit &raquo;</small>
+    </a>
+    <p class="userInfo adr">
+      <strong class="fn">{{user.realname || user.name}}</strong>,
+      {{user.gender|gender}},
+      <span class="country-name">{{user.country|country}}</span><br>
+      <a href="http://jessethegame.net" rel="me nofollow" class="url homepage">jessethegame.net</a>
+    </p>
+
+    <div class="userData">
+      <span class="userPlays" title="That&rsquo;s an average of {{user.playcount / (20 * 8)|currency:'&pound;'}} per hour">
+        <strong>
+          <span class=flip>&pound;</span>
+          <span class="count" ng-bind-html-unsafe="user.playcount|flipping"></span>&nbsp;salary
+      </strong> <small>{{user.registered['#text']}}</small></span>
+        <p class="userActivity">
+          <a href="/user/jessethegame/library/loved" title="">1 Loved Track</a>
+          | <a href="/user/jessethegame/grapevine" title="">0 Posts</a>
+          | <a href="/user/jessethegame/playlists" title="">0 Playlists</a>
+          | <span class="shoutCount">
+            <a href="#shoutbox" id="shoutBoxLink"  class="icon" data-analytics-action="ShoutCountLink">
+            <img class="icon comment_icon" width="13" height="11" src="http://cdn.last.fm/flatness/clear.gif" style="" /><span>1 shout</span>
+          </a>
+        </span>
+      </p>
+    </div><!--.userData-->
+  </div><!--.badgeInfo-->
+</div><!--.profileBadge-->
+

@@ -20,16 +20,42 @@ angular.module('lastfm.api', [])
 
     return lastfm;
 })
+.directive('userBadge', function () {
+  return {
+    restrict: 'AE',
+    scope: {
+      user: '='
+    },
+    templateUrl: 'assets/templates/lastfm/user-badge.html',
+    link: function ($scope) {
+    }
+  };
+})
 .directive('recentTracks', function () {
   return {
     restrict: 'AE',
     scope: {
       tracks: '='
     },
-    templateUrl: 'assets/templates/lastfm/recent.html',
-    link: function ($scope) {
-      console.log('SCOPE', $scope);
-    }
+    templateUrl: 'assets/templates/lastfm/recent.html'
+  };
+})
+.directive('friends', function () {
+  return {
+    restrict: 'AE',
+    scope: {
+      users: '='
+    },
+    templateUrl: 'assets/templates/lastfm/friends.html'
+  };
+})
+.directive('story', function () {
+  return {
+    restrict: 'AE',
+    scope: {
+      users: '='
+    },
+    templateUrl: 'assets/templates/lastfm/story.html'
   };
 })
 ;

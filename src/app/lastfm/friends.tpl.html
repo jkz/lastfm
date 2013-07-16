@@ -1,0 +1,34 @@
+<div class="module">
+  <h2 class="heading">
+    <span class="h2Wrapper">
+      <a href="/user/jessethegame/friends" title="">Friends ({{users.length}})</a>
+    </span>
+  </h2>
+
+  <ul class="usersSmall clearit" odd="1">
+    <li ng-repeat="user in users" class="first user friend">
+      <div ng-class="{odd: $index % 2, last: $last}" class="vcard">
+        <strong>
+          <a ng-href="#/user/{{user.name}}" title="{{user.realname}}, {{user.age}}, Switzerland" rel="acquaintance" class="url">
+            <span class="userImage">
+              <img class="photo fn" alt="{{user.realname}}" height="34"
+              width="34" ng-src="{{user.image[0]['#text']}}" />
+            </span>
+            <span class="nickname">{{user.name}}</span>
+          </a>
+        </strong>
+      </div>
+
+  </ul>
+
+  <div class="findmorefriends clearit">
+    <a href="/findfriends" class="icon">
+      <img class="icon act_befriended_icon" width="20" height="20" src="http://cdn.last.fm/flatness/clear.gif" style="" />
+    </a>
+
+    <h3>Friend Finder</h3>
+    <a href="/findfriends">Find more friends on Last.fm</a>
+  </div>
+</div>
+
+
