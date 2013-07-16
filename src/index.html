@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html ng-app="lastfm" ng-controller="AppCtrl">
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+
+    <title>Title</title>
+
+    <!-- social media tags -->
+    <meta name="twitter:card" content="">
+    <meta name="twitter:site" content="">
+    <meta name="twitter:title" content="">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:creator" content="">
+    <meta name="twitter:image:src" content="">
+    <meta property="og:title" content="" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="" />
+    <meta property="og:image" content="" />
+    <meta property="og:description" content="">
+
+    <link href="//cdn.last.fm/css/css/227249/user/overview.css" rel="stylesheet">
+    <link href="//cdn.last.fm/css/css/227249/master.css" rel="stylesheet">
+
+
+    <!-- compiled CSS --><% styles.forEach( function ( file ) { %>
+    <link rel="stylesheet" type="text/css" href="<%= file %>" /><% }); %>
+
+    <!--[if IE 7>
+    <link rel="stylesheet" href="assets/font-awesome-ie7.min.css />
+    <![endif]-->
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<!--
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script>$.noConflict();</script>
+->
+    <script src="//ajax.googleapis.com/ajax/libs/prototype/1.7.1.0/prototype.js"></script>
+    <script>
+        if(typeof Prototype === 'undefined') {
+            document.write(unescape("%3Cscript src='http://cdn.last.fm/javascript/javascript/227249/lib/prototype.js' type='text/javascript'%3E%3C/script%3E"));
+        }
+    </script>
+    <script src="//ajax.googleapis.com/ajax/libs/scriptaculous/1.9.0/scriptaculous.js"></script>
+    <script>
+        if(typeof Scriptaculous === 'undefined') {
+            document.write(unescape("%3Cscript src='http://cdn.last.fm/javascript/javascript/227249/lib/scriptaculous/scriptaculous.js' type='text/javascript'%3E%3C/script%3E"));
+        }
+    </script>
+    <script src="http://cdn.last.fm/javascript/javascript/227249/lib/mustache-min.js"></script>
+
+    <script>SM2_DEFER = true;</script>
+    <script src="http://cdn.last.fm/javascript/javascript/227249/lib/sm2-min.js"></script>
+    <script src="http://cdn.last.fm/javascript/javascript/227249/LFM.js"></script>
+-->
+
+
+    <!-- compiled JS --><% scripts.forEach( function ( file ) { %>
+    <script type="text/javascript" src="<%= file %>"></script><% }); %>
+
+  </head>
+  <body>
+
+
+
+<div id="fauxHeaderContainer" class="clearit">
+  <div id="fauxHeader"></div>
+</div>
+
+<div id="page" class="            ">
+<div class="fiflufi">
+
+<div id="header" class="clearit responsive-container" role="banner">
+  <div id="headerWrapper">
+    <a href="/home" id="lastfmLogo">Last.fm</a>
+    <ul id="primaryNav" role="navigation">
+      <li id="musicNav" class="navItem">
+        <a href="/music" class="nav-link">Music</a>
+      <li id="eventsNav" class="navItem">
+        <a href="/events" class="nav-link">Events</a>
+      <li id="chartsNav" class="navItem">
+        <a href="/charts" class="nav-link">Charts</a>
+      <li id="communityNav" class="navItem">
+        <a href="/community" class="nav-link">Community</a>
+      <li id="originalsNav" class="navItem">
+        <a href="http://originals.last.fm" class="nav-link">Originals</a>
+    </ul>
+
+    <div id="profileLinks">
+      <ul>
+        <li class="profileItem">
+          <div id="idBadger" >
+            <a href="/user/jessethegame" id="idBadgerUser" title="Jesse the Game, Male, Netherlands">
+              <img ng-src="{{user.image[0]['#text']}}" width="16" height="16" />{{user.name}}
+            </a><a href="/user/jessethegame" id="idBadgerDropper" title="Jesse the Game, Male, Netherlands"><span>▼</span></a>
+
+            <ul id="idBadgerDropDown">
+              <li class="home"><a href="/home">Home</a></li>
+              <li class="profile"><a href="/user/jessethegame"     title="Jesse the Game, Male, Netherlands">Profile</a></li>
+              <li class="friends"><a href="/user/jessethegame/friends"     title="">Friends</a></li>
+              <li class="recs"><a href="/home/recs">Recommended</a></li>
+              <li class="library"><a href="/user/jessethegame/library"     title="">Library</a></li>
+              <li class="events"><a href="/user/jessethegame/events"     title="">Events</a></li>
+              <li class="settings"><a href="/settings">Settings</a></li>
+              <li><a href="/subscribe"><strong>Subscribe</strong></a></li>
+            </ul>
+          </div>
+        </li>
+        <li id="logoutLink" class="profileItem">
+            <a href="/login/logout?shake-it-all-about" class="profile-link">Logout</a>
+        </li>
+        <li id="inboxLink" class="profileItem divider">
+            <a href="/inbox" class="profile-link">Inbox</a>
+        </li>
+      </ul>
+    </div>
+    <div id="headerLinks">
+      <a href="/user/jessethegame?change=language" title="Click here to change your language" rel="nofollow" id="headerLangToggle" class="icon">
+        <img class="transparent_png globe_icon icon" alt="Change language" width="11" height="11" src="http://cdn.last.fm/flatness/clear.gif" style="" />            <span>English</span></a>
+      | <a href="" title="Switch Colour Style" id="colourToggle" onclick="LFM.Display.colourToggle(this, LFM.String.toRedStr, LFM.String.toBlackStr); return false;">Paint it Black</a>
+      | <a href="/help">Help</a>
+    </div>
+
+<form id="siteSearch" method="get" action="/search" class="search-autocomplete" role="search" data-require="search/sitesearch" data-template="search" data-url="/search/autocomplete">
+    <input id="siteSearchBox" type="text" name="q" autocorrect="off" autocomplete="off" placeholder="Music search" size="26" class="js-search" />
+    <div id="siteSearchProgress" class="js-search-progress search-progress ir" style="display: none;">Loading</div>
+    <input type="hidden" name="from" value="ac" />
+    <button id="siteSearchSubmit" type="submit" class="submit" title="Search"></button>
+</form>
+        <div id="headerPromo">
+            <a href="/about/jobs">&pound;{{user.playcount}} and counting</a>
+        </div>
+</div>
+    </div><!-- #headerWrapper -->
+</div><!-- #header -->
+
+
+<div id="content" data-require="core/page">
+  <header class=" page-head without-crumbtrail without-image clearit separated">
+    <h1>jessethegame</h1>
+    <nav class="secondary-nav" role="navigation" data-require="secondarynav">
+      <ul class="visible-menu">
+        <li class=" first "><a href="/user/jessethegame/library">Library</a></li>
+        <li><a href="/user/jessethegame/friends">Friends</a></li>
+        <li><a href="/user/jessethegame/tracks">Tracks</a></li>
+        <li><a href="/user/jessethegame/albums">Albums</a></li>
+        <li><a href="/user/jessethegame/charts">Charts</a></li>
+        <li><a href="/user/jessethegame/neighbours">Neighbours</a></li>
+        <li><a href="/user/jessethegame/events">Events</a></li>
+        <li><a href="/user/jessethegame/groups">Groups</a></li>
+        <li><a href="/user/jessethegame/journal">Journal</a></li>
+        <li><a href="/user/jessethegame/library/tags">Tags</a></li>
+      </ul>
+      <div class="drop-down-menu more">
+        <a href="#" class="menu-toggle">More…</a>
+        <ul class="hidden-menu"></ul>
+      </div>
+    </nav>
+  </header>
+
+  <div class="leftCol">
+    <div class="leftColWrapper">
+      <user-badge user=user></user-badge>
+
+
+
+  <recent-tracks tracks=recent></recent-tracks>
+
+  </div><!-- .leftColWrapper -->
+</div><!-- .leftCol -->
+
+    <div class="mpuTop rightCol">
+       <h2 class="heading"><span class="h2Wrapper">Recent Activity</span></h2> <ul class="minifeedSmall">
+
+
+
+
+
+ <li id="dd0x6x1694191334x1373447272x38256316x4x52355959x4x0x0_d0x6x1694191334x1373447272x52355959x4x38256316x4x0x0" class=" clearit befriended first odd ">
+ <img class="icon act_befriended_icon" width="20" height="20" src="http://cdn.last.fm/flatness/clear.gif" style="" />
+
+
+ you and <a href="/user/reframe-music" title="Philipp Gnaegi, 33, Switzerland">reframe-music</a> are now friends. <span class="date" title="10 Jul 2013, 10:07">Wednesday morning</span>
+ </li>
+
+
+
+
+
+ <li id="dd0x9x-1x1354158508x305835854x9x52355959x4x0x0" class=" clearit loved even ">
+ <img class="icon act_loved_icon" width="20" height="20" src="http://cdn.last.fm/flatness/clear.gif" style="" />
+
+
+ You added <a href="/music/Arjuna+Schiks">Arjuna Schiks</a> – <a href="/music/Arjuna+Schiks/_/Mahesvari" >Mahesvari</a> to your <a href="/user/jessethegame/library/loved" title="">Loved Tracks</a>. <span class="date" title="29 Nov 2012, 04:08">November 2012</span>
+ </li>
+
+
+
+
+
+ <li id="dd0x6x1903172238x1354078618x52355959x4x52587729x4x0x0_d0x6x1903172238x1354078618x52587729x4x52355959x4x0x0" class=" clearit befriended odd ">
+ <img class="icon act_befriended_icon" width="20" height="20" src="http://cdn.last.fm/flatness/clear.gif" style="" />
+
+
+ <a href="/user/tijmenzwaan" title="Tijmen Zwaan, 21, Male, Netherlands">tijmenzwaan</a> and you are now friends. <span class="date" title="28 Nov 2012, 05:56">November 2012</span>
+ </li>
+
+
+
+
+
+ <li id="d0x18x-1x1352896970x0x0x52355959x4x0x0" class=" clearit profileupdated even ">
+
+
+
+ You updated your profile. <span class="date" title="14 Nov 2012, 13:42">November 2012</span>
+ </li>
+
+
+
+
+
+ <li id="d0x18x-1x1352896898x83918061x50x52355959x4x0x0" class=" clearit profileupdated odd ">
+
+
+
+ You updated your profile. <span class="date" title="14 Nov 2012, 13:41">November 2012</span>
+ </li>
+
+
+
+
+
+ <li id="d0x18x-1x1352896756x83918017x50x52355959x4x0x0" class=" clearit profileupdated even ">
+
+
+
+ You updated your profile. <span class="date" title="14 Nov 2012, 13:39">November 2012</span>
+ </li>
+
+
+
+
+
+ <li id="d0x7x-1x1351527745x123288x20x52355959x4x0x0" class=" clearit joined odd ">
+ <img class="icon act_joined_icon" width="20" height="20" src="http://cdn.last.fm/flatness/clear.gif" style="" />
+
+
+ You joined the group <a href="/group/Last.fm+Web+Services" >Last.fm Web Services</a>. <span class="date" title="29 Oct 2012, 17:22">October 2012</span>
+ </li>
+
+
+
+
+
+ <li id="d0x16x-1x1351527403x0x0x52355959x4x0x0" class=" clearit registered last even ">
+
+
+
+ You joined Last.fm. <span class="date" title="29 Oct 2012, 17:16">October 2012</span>
+ </li>
+ </ul>
+
+
+
+                 <div class="module">
+ <h2 class="heading"><span class="h2Wrapper"><a href="/user/jessethegame/friends" title="">Friends (2)</a></span></h2> <ul class="usersSmall clearit" odd="1">
+ <li class="first odd user friend">
+ <div class="vcard ">
+ <strong><a href="/user/reframe-music" title="Philipp Gnaegi, 33, Switzerland" rel="acquaintance" class="url"><span class="userImage"><img class="photo fn" alt="Philipp Gnaegi" height="34" width="34" src="http://userserve-ak.last.fm/serve/34s/90754229.jpg" /></span><span class="nickname">reframe-music</span></a></strong>
+
+ </div>
+
+ </li><li class="last user friend">
+ <div class="vcard ">
+ <strong><a href="/user/tijmenzwaan" title="Tijmen Zwaan, 21, Male, Netherlands" rel="acquaintance" class="url"><span class="userImage"><img class="photo fn" alt="Tijmen Zwaan" height="34" width="34" src="http://userserve-ak.last.fm/serve/34s/83969281.jpg" /></span><span class="nickname">tijmenzwaan</span></a></strong>
+
+ </div>
+
+ </li>
+</ul> <div class="findmorefriends clearit">
+ <a href="/findfriends" class="icon"><img class="icon act_befriended_icon" width="20" height="20" src="http://cdn.last.fm/flatness/clear.gif" style="" /></a>
+ <h3>Friend Finder</h3>
+ <a href="/findfriends">Find more friends on Last.fm</a>
+ </div>
+ </div>
+
+
+
+
+
+
+                 <div class="module">
+ <h2 class="heading"><span class="h2Wrapper"><a href="/user/jessethegame/groups" title="">Groups (1)</a></span></h2> <ul class="groupsSmall">
+ <li class="firstlast clearit
+">
+ <a href="/group/Last.fm+Web+Services" > <strong><span class="groupImg"><img class="groupImage imagesmallsquare" height="34" width="34" alt="" src="http://userserve-ak.last.fm/serve/34s/49707527.png" /></span>Last.fm Web Services</strong>
+ </a> <span class="info">
+ 3,873 members </span>
+
+ </li>
+</ul> </div>
+
+
+                <div id="LastAd_lowermpu" class="LastAd ad-lowermpu inactive" data-require="ads/staticadslot" data-ad-static data-ad-placement="lowermpu" data-ad-collapsible>
+    <span>
+
+    </span>
+</div>    </div><!-- .rightCol -->
+    <div id="LastAd_lowerleaderboard" class="LastAd ad-lowerleaderboard inactive" data-require="ads/staticadslot" data-ad-static data-ad-placement="lowerleaderboard" data-ad-collapsible>
+    <span>
+
+    </span>
+</div>
+
+  <a name="shoutbox"></a>
+  <div class="deferred widget widget-lazy/shoutbox"
+  data-url="/user/jessethegame/shoutbox"
+  data-template="shoutbox"
+  data-trigger="appear"
+  data-module="lazy/shoutbox"
+  data-require="lazy/shoutbox"
+  >
+
+<h2 class="heading">
+    <span class="h2Wrapper">
+        <a href="/user/jessethegame/shoutbox">Shoutbox</a>
+    </span>
+</h2>
+
+
+<div class="shoutboxContainer user-shoutbox">
+                <div class="shoutboxInput">
+                    <a href="#" id="shoutPostAgain" class="postAgainMessage" style="display:none;">
+                        Shout again…
+                    </a>
+                    <div id="shoutboxError" style="display:none" class="messageBox errorMessage">
+                        <span class="messageWrapper">Sorry, there was a problem sending your message, have another go.</span>
+                    </div>
+                    <form method="post" action="/user/jessethegame/shoutbox/add" id="shoutPost" class="shoutPost clearit">
+                        <input type="hidden" name="backto" value="/user/jessethegame">
+                        <input type="hidden" name="url" value="/user/jessethegame">
+                        <input type="hidden" name="formtoken" value="eda4ce4635e8dc41a544e5150d83211e0d9ac562">
+                        <span class="avatar">
+                            <span class="userImage">
+    <img src="http://userserve-ak.last.fm/serve/64/83918061.png" class="avatar " width="64">
+
+                            </span>
+                        </span>
+                        <textarea id="shoutmsg" name="message" data-maxcharacters="1000"></textarea>
+                        <div class="textareaActions">
+                            <input type="submit" name="submit" class="action-button" value="Post shout" id="sbPost">
+                            <span id="sbCharCount"><span class="charCount">0</span>/1000 characters used</span>
+                        </div>
+                    </form>
+
+                    <div id="shoutPostWait" class="waitMessage" style="display: none;">
+                        <img style="padding:4px; vertical-align:middle;" src="http://static.lst.fm/tageditor/progress_active.gif" height="20" width="16" alt="Saving…">
+                        Saving…
+                    </div>
+                </div>
+    <ul class="shouts">
+            <li class="clearit message can-delete">
+                    <h3 class="author staff">
+                        <a href="/user/LAST.HQ">
+    <span class="userImage">
+    <img src="http://userserve-ak.last.fm/serve/64/615839.jpg" class="avatar " width="64">
+    <img class="icon staff_icon" width="6" height="6" src="http://static.lst.fm/flatness/clear.gif">
+
+    </span>
+    LAST.HQ
+</a>
+
+
+                    </h3>
+                <p>
+                        Welcome aboard, jessethegame! Happy listening.
+                </p>
+                <div class="meta">
+                    <span class="date">29 Oct 2012</span>
+                        <a class="shoutbox-reply" href="/user/LAST.HQ#shoutbox">Reply</a>
+                        <form action="/user/jessethegame/shoutbox/delete" method="post" class="deleteShout options">
+                            <input type="hidden" name="formtoken" value="eda4ce4635e8dc41a544e5150d83211e0d9ac562">
+                            <input type="hidden" name="backto" value="/user/jessethegame">
+                            <input type="hidden" name="url" value="/user/jessethegame/shoutbox/341866268">
+                            <input type="image" class="delete" src="http://static.lst.fm/flatness/global/icon_delete.2.png" alt="Delete" title="Delete shout">
+                        </form>
+                </div>
+            </li>
+      </ul>
+  </div>
+</div>
+
+</div><!-- #content -->
+
+
+    <div class="container" ui-view></div>
+
+
+    <script>
+      var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+      (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+      g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+      s.parentNode.insertBefore(g,s)}(document,'script'));
+    </script>
+
+  </body>
+</html>
