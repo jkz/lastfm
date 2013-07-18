@@ -5,9 +5,10 @@ angular.module( 'lastfm', [
   'ui.route',
   'kit',
   'markdown',
+  'fuzzy',
   'titleService',
   'lastfm.api',
-  'story'
+  'github'
 ])
 
 // This is for Angular < 1.1
@@ -82,7 +83,7 @@ angular.module( 'lastfm', [
       default:
           console.log('NOOP');
       }
-    }
+    };
   }
 
   function update_user() {

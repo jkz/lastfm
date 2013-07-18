@@ -1,0 +1,24 @@
+<h2 class="heading"><span class="h2Wrapper">Recent GitHub Activity</span></h2>
+<ul class="minifeedSmall">
+  <li ng-repeat="activity in activities">
+    <ng-switch on=activity.type>
+      <span ng-switch-when="PushEvent">
+          Committed to <a href="//github.com/{{activity.repo.name}}">{{activity.repo.name}}</a>:<br>
+          <div ng-repeat="commit in activity.payload.commits">
+            - <a ng-href="//github.com/{{activity.repo.name}}/commit/{{commit.sha}}">{{commit.message}}</a>
+          </div>
+      </span>
+      <span ng-switch-when="CreateEvent">
+        Created <a ng-href="//github.com/{{activity.repo.name}}">
+          {{activity.repo.name}}
+        </a>
+      </span>
+      <span ng-switch-when="WatchEvent">
+        Followed <a ng-href=//github.com/{{activity.repo.name}}>{{activity.repo.name}}</a>
+      </span>
+    </ng-switch>
+    <span class=date
+      title="{{activity.created_at}}">{{activity.created_at|fuzzytime}}</span>
+  </li>
+</ul>
+
