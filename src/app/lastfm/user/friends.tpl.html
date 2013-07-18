@@ -1,0 +1,77 @@
+<div class="skyWrap">
+  <div class="clear">
+    <div class="userIntro">
+      <p>
+      See <a href="/home/friends">what your friends are listening to now</a> or look at their <a href="/home/friendsloved">loved tracks</a>.
+      </p>
+    </div>
+  </div>
+
+  <ul class="usersMedium clearit" id="users" odd="1">
+    <li ng-repeat="friend in friends[page.index]" ng-class="{first: $first, odd: $index % 2}" class="user friend" id="r4_{{friend.id}}">
+      <div class="userContainer">
+        <div id="hcard-reframe-music" class="vcard">
+          <strong>
+            <a ng-href="#/user/{{friend.name}}" title="{{friend.realname}}, {{friend.age}}, {{friend.country|country}}">
+              <span class="userImage">
+                <img height="64" width="64" alt="" ng-src="{{friend.image[1]['#text']}}" />
+            </span>
+            {{friend.name}}
+          </a>
+        </strong>
+        <p class="info">
+          <strong class="fn">{{friend.realname}}</strong>, {{friend.age}}, {{friend.country|country}}
+        </p>
+      </div>
+      <p class="lastTrack">
+        Last track: <a ng-href="{{friend.recenttrack.artist.url}}">{{friend.recenttrack.artist.name}}</a> –
+        <a ng-href="{{friend.recenttrack.url}}">{{friend.recenttrack.name}}</a>
+      </p>
+      </div>
+      <form action="friends" method="post">
+        <input name="formtoken" type="hidden" value="eda4ce4635e8dc41a544e5150d83211e0d9ac562"/>
+        <input type="hidden" name="id" value="38256316" class="friend" />
+        <a class="delete" href="javascript:;">
+          <img class="icon dismiss_icon" width="16" height="16" src="http://cdn.last.fm/flatness/clear.gif" style="" />
+        </a>
+      </form>
+    </li>
+
+    <li class="findfriends" ng-class="{odd: friends.length % 2}">
+      <div class="userContainer">
+        <a href="/findfriends" class="icon">
+          <img class="icon act_befriended_icon" width="20" height="20" src="http://cdn.last.fm/flatness/clear.gif" style="" />
+        </a>
+        <h2>Friend Finder</h2>
+        <p><a href="/findfriends">Find more friends on Last.fm</a></p>
+      </div>
+    </li>
+  </ul>
+
+  <div ng-show="page.count > 1" class="pagination">
+    <a ng-show="page.index > 1" class="prevlink" rel="prev"
+      ng-click="page.prev()">
+      <span>Prev</span>
+    </a>
+    <a ng-show="page.index > 1" class="pagelink firstpage" rel=prev
+      ng-click="page.first()">
+      1
+    </a>
+    <span ng-show="page.index > 3" class="ellipsis">&hellip;</span>
+    <a ng-show="page.index > 2" class="pagelink"
+      ng-click="page.prev()">{{page.index - 1}}</a>
+    <span class="selected">{{page.index}}</span>
+    <a ng-show="page.index < page.count - 2"
+      ng-click="page.next()" class="pagelink">{{page.index + 1}}</a>
+    <span ng-show="page.index < page.count - 3" class="ellipsis">&hellip;</span>
+    <a ng-show="page.index < page.count - 1"
+      ng-click="page.last()" class="pagelink lastpage" rel="next">
+      {{page.count}}
+    </a>
+    <a ng-show="page.index < page.count"
+      ng-click="page.next()" class="nextlink" rel="next">
+      <span>Next</span>
+    </a>
+  </div>
+
+</div><!-- .skyWrap -->

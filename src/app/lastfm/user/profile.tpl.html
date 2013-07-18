@@ -1,3 +1,25 @@
+<header class=" page-head without-crumbtrail without-image clearit separated">
+<h1>{{user.name}}</h1>
+  <nav class="secondary-nav" role="navigation" data-require="secondarynav">
+    <ul class="visible-menu">
+      <li class="first"><a href="#/user/{{user.name}}/library">Library</a></li>
+      <li><a ng-href="#/user/{{user.name}}/friends">Friends</a></li>
+      <li><a ng-href="#/user/{{user.name}}/tracks">Tracks</a></li>
+      <li><a ng-href="#/user/{{user.name}}/albums">Albums</a></li>
+      <li><a ng-href="#/user/{{user.name}}/charts">Charts</a></li>
+      <li><a ng-href="#/user/{{user.name}}/neighbours">Neighbours</a></li>
+      <li><a ng-href="#/user/{{user.name}}/events">Events</a></li>
+      <li><a ng-href="#/user/{{user.name}}/groups">Groups</a></li>
+      <li><a ng-href="#/user/{{user.name}}/journal">Journal</a></li>
+      <li><a ng-href="#/user/{{user.name}}/library/tags">Tags</a></li>
+    </ul>
+    <div class="drop-down-menu more">
+      <a href="#" class="menu-toggle">More…</a>
+      <ul class="hidden-menu"></ul>
+    </div>
+  </nav>
+</header>
+
 <div class="leftCol">
   <div class="leftColWrapper">
     <user-badge user=user></user-badge>

@@ -1,4 +1,3 @@
-{{params}}
   <div id="libraryTopWrapper" class="clearit">
     <p id="librarySubNav">
       <span ng-class="{current: params.sortBy == 'plays'}">
@@ -19,6 +18,23 @@
 
 <div class="wrapper">
   <div id="page1" class="page">
+
+<div id="paginationTop" class="ajaxpagination">
+  Page <span class="pagenumber">{{page}}</span> of {{meta.totalPages}}
+  <form action="#/user/{{user.name}}/library" method="get" class="jumpto">
+    <select name="page"  class="jumpto">
+      <option value="0">Jump to…</option>
+      <option value="1">1</option>
+      <option value="10">10</option>
+      <option value="20">20</option>
+      <option value="21">21</option>
+    </select>
+    <input type="submit" name="go" class="nonJs" value="Go" />
+  </form>
+
+  <a class=previousPage ng-click="prevPage()">Previous page</a>
+  <a class=nextPage ng-click="nextPage()">Next page</a>
+</div><!-- #pagination -->
     <ul class="libraryItems artistsLarge">
       <li ng-repeat="artist in library" class="first" id="r6_19498076">
       <a ng-href="{{artist.url}}">
@@ -55,6 +71,6 @@
     <input type="submit" name="go" class="nonJs" value="Go" />
   </form>
 
-  <a ng-click="prevPage()">Previous page</a>
-  <a ng-click="nextPage()">Next page</a>
+  <a class=previousPage ng-click="prevPage()">Previous page</a>
+  <a class=nextPage ng-click="nextPage()">Next page</a>
 </div><!-- #pagination -->

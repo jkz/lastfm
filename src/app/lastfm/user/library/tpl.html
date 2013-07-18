@@ -1,12 +1,51 @@
+<header class="
+    page-head
+    with-crumbtrail
+    with-image
+    clearit
+">
+  <div class="crumb-wrapper">
+    <div class="top-crumb">
+      <a href="#/user/{{user.name}}">
+        <img class="crumb-image"
+        src="{{user.image[1]['#text']}}" alt="Thumbnail of {{user.name}}" width="60" height="60" />
+        jessethegame
+      </a>
+    </div>
+    <h1>Library</h1>
+  </div>
+
+  <nav class="secondary-nav" role="navigation" data-require="secondarynav">
+    <ul class="visible-menu">
+      <li class="current first">
+        <a ng-href="#/user/{{user.name}}/library">Library</a>
+      </li>
+      <li><a ng-href="#/user/{{user.name}}/friends">Friends</a></li>
+      <li><a ng-href="#/user/{{user.name}}/tracks">Tracks</a></li>
+      <li><a ng-href="#/user/{{user.name}}/albums">Albums</a></li>
+      <li><a ng-href="#/user/{{user.name}}/charts">Charts</a></li>
+      <li><a ng-href="#/user/{{user.name}}/neighbours">Neighbours</a></li>
+      <li><a ng-href="#/user/{{user.name}}/events">Events</a></li>
+      <li><a ng-href="#/user/{{user.name}}/groups">Groups</a></li>
+      <li><a ng-href="#/user/{{user.name}}/journal">Journal</a></li>
+      <li><a ng-href="#/user/{{user.name}}/library/tags">Tags</a></li>
+    </ul>
+    <div class="drop-down-menu more">
+      <a href="" class="menu-toggle">More…</a>
+      <ul class="hidden-menu"></ul>
+    </div>
+  </nav>
+</header>
+
 <div id="libraryTop">
   <ul id="libraryNavigation">
-    <li class="current">
+    <li ng-class="{current: $state.includes('user.library.music')}">
       <a ng-href="#/user/{{user.name}}/library" class="icon">
         <img src="http://cdn.last.fm/flatness/library/navigation/music.png" class="transparent_png" width="20" height="20">
         <span>Music</span>
       </a>
     </li>
-    <li>
+    <li ng-class="{current: $state.includes('user.library.loved')}">
       <a ng-href="#/user/{{user.name}}/library/loved" class="icon">
         <img src="http://cdn.last.fm/flatness/library/navigation/loved_tracks.png" class="transparent_png" width="20" height="20">
         <span>Loved tracks</span>

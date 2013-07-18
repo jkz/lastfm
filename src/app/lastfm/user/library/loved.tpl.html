@@ -1,0 +1,53 @@
+<a href="http://ws.audioscrobbler.com/2.0/user/jessethegame/lovedtracks.rss" class="icon">
+  <img class="icon feed_small_icon" width="10" height="10" src="http://cdn.last.fm/flatness/clear.gif" style="" />
+  <span>RSS</span>
+</a>
+<div id="libraryTop">
+
+<div id="lovedTracksWrapper">
+  <div class="messageBox infoMessage">
+    <span class="messageWrapper">New! See <a href="/home/friendsloved">what your friends are loving</a>.</span>
+  </div>
+
+  <div class=" messageBox infoMessage exportMessage exportLoved">
+    <span class="messageWrapper"><a href="#" id="exportLink">Export Loved Tracks</a></span>
+  </div>
+  <p id="librarySubNav">
+    <span class="current">
+      <a href="/user/jessethegame/library/loved">Recently Added</a>
+    </span>
+    |
+    <span>
+      <a href="/user/jessethegame/library/loved?sortBy=plays">By Plays</a>
+    </span>
+    |
+    <span>
+      <a href="/user/jessethegame/library/loved?sortBy=artist">By Artist</a>
+    </span>
+  </p>
+  <table class="candyStriped tracklist" id="lovedTracks" odd="1">
+    <tbody>
+      <tr ng-repeat="track in tracks" class="first last odd" id="r9_305835854_282612734" data-track-id="305835854" >
+        <td class="playbuttonCell"></td>
+        <td class="subjectCell">
+          <a ng-href="track.artist.url">{{track.artist.name}}</a> – <a ng-href="{{track.url}}">{{track.name}}</a>
+        </td>
+        <td class="lovedCell">
+          <img title="A loved track" alt="Loved track" class="icon loved_indicator_icon" width="11" height="9" src="http://cdn.last.fm/flatness/clear.gif" style="" />
+        </td>
+        <td class="smallmultibuttonCell">
+          <a ng-href="{{track.url}}" class="mRemoveFromLibrary mSend mAddTags mAddToPlaylist mUnlove
+            lfmButton lfmMultiButton lfmButtonFortrack lfmSmallButton lfmSmallMultiButton lfmMultiButtonFull" forcelink="1">
+            <span></span></a>
+          </td>
+          <td class="dateCell" ng-class="{last: $last}">November 2012</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="messageBox infoMessage">
+    <span class="messageWrapper">
+      Psst! Looking for your <a href="#/user/{{user.name}}/library/banned">banned tracks</a>?
+    </span>
+  </div>
+</div>

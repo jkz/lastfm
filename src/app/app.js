@@ -31,26 +31,26 @@ angular.module( 'lastfm', [
   })
   .state( 'user404', {
     url: '/user404',
-    templateUrl: 'lastfm/user.404.tpl.html'
+    templateUrl: 'lastfm/user/404.tpl.html'
   })
   .state( 'user', {
     url: '/user/:uid',
     controller: 'UserCtrl',
     abstract: true,
-    templateUrl: 'lastfm/user.tpl.html'
+    templateUrl: 'lastfm/user/tpl.html'
   })
       .state( 'user.profile', {
         url: '',
-        templateUrl: 'lastfm/user.profile.tpl.html',
+        templateUrl: 'lastfm/user/profile.tpl.html',
       })
       .state( 'user.library', {
         url: '/library',
         abstract: true,
-        templateUrl: 'lastfm/user.library.tpl.html',
+        templateUrl: 'lastfm/user/library/tpl.html',
       })
           .state( 'user.library.music', {
             url: '',
-            templateUrl: 'lastfm/user.library.music.tpl.html',
+            templateUrl: 'lastfm/user/library/music.tpl.html',
             controller: function ($scope, $stateParams, lastfm) {
               $scope.params = {
                   user: $stateParams.uid,
@@ -66,7 +66,7 @@ angular.module( 'lastfm', [
                 lastfm.api.library.getArtists($scope.params, {
                     success: function (data) {
                       $scope.$apply(function () {
-                        $scope.library = data.artists.artist;
+                        $scope.library = [].concat(data.artists.artist);
                         $scope.meta = data.artists['@attr'];
                       });
                     }
@@ -96,6 +96,103 @@ angular.module( 'lastfm', [
               update();
             }
           })
+          .state( 'user.library.loved', {
+            url: '/loved',
+            templateUrl: 'lastfm/user/library/loved.tpl.html',
+            controller: function ($scope, $stateParams, lastfm) {
+              $scope.params = {
+                  user: $stateParams.uid,
+                  sortBy: 'plays',
+                  sortOrder: 'desc',
+                  page: 1,
+                  limit: 18
+              }
+              $scope.tracks = [];
+              $scope.meta = {};
+
+              function update() {
+                lastfm.api.user.getLovedTracks($scope.params, {
+                    success: function (data) {
+                      $scope.$apply(function () {
+                        $scope.meta = data.lovedtracks['@attr'];
+                        $scope.tracks = [].concat(data.lovedtracks.track);
+                      });
+                    }
+                });
+              }
+
+              $scope.prevPage = function () {
+                $scope.params.page -= 1;
+                update();
+              }
+
+              $scope.nextPage = function () {
+                $scope.params.page += 1;
+                update();
+              }
+
+              $scope.setSort = function (sort) {
+                $scope.params.sortBy = sort;
+                update();
+              };
+
+              $scope.setOrder = function (order) {
+                $scope.params.sortOrder = order;
+                update();
+              };
+
+              update();
+            }
+          })
+      .state( 'user.friends', {
+        url: '/friends',
+        templateUrl: 'lastfm/user/friends.tpl.html',
+        controller: function ($scope, $stateParams, lastfm, paginator) {
+          $scope.page = new paginator({limit: 10});
+          $scope.friends = {};
+
+          function fetch(params) {
+            lastfm.api.user.getFriends(params, {
+                success: function (data) {
+                  $scope.$apply(function () {
+                    console.log(data);
+                    var meta = data.friends['@attr'];
+                    $scope.page.count = meta.totalPages;
+                    $scope.friends[meta.page || 1] = [].concat(data.friends.user);
+                  });
+                }
+            });
+          };
+
+          function defaults() {
+            return {
+                user: $stateParams.uid,
+                page: $scope.page.index,
+                limit: $scope.page.limit,
+                recenttracks: true
+            };
+          }
+
+          function update() {
+              var i,
+                  params = defaults();
+              for (i = $scope.page.index - 2; i < $scope.page.index + 2; i++) {
+                console.log('FOR', i);
+                if (i >= 1 && !$scope.friends[i]) {
+                    console.log('FETCH', params);
+                    params.page = i;
+                    fetch(params);
+                }
+              }
+          }
+
+          $scope.$watch('page.index', function () {
+            update();
+          })
+
+        update();
+        }
+      })
   ;
   $urlRouterProvider.otherwise( '/404' );
 })
@@ -129,12 +226,13 @@ angular.module( 'lastfm', [
       lastfm.api.user.getRecentTracks({user: $scope.username, extended: 1}, {
       success: function (data) {
         $scope.$apply(function () {
-          $scope.recent = data.recenttracks.track;
+          $scope.recent = [].concat(data.recenttracks.track);
         });
-        update_friends();
+        //update_friends();
       }, error: lastfm.error(update_recent)});
   }
 
+  /*
   function update_friends() {
       lastfm.api.user.getFriends({user: $scope.username}, {
       success: function (data) {
@@ -146,13 +244,14 @@ angular.module( 'lastfm', [
         }, 10000);
       }, error: lastfm.error(update_friends)});
   }
+  */
 
   update_user();
 })
 
 .filter('gender', function () {
     return function (g) {
-        return {m: 'Male', f: 'Female'}[g] || '–';
+        return {m: 'Male', f: 'Female'}[g] || g;
     };
 })
 
@@ -162,7 +261,7 @@ angular.module( 'lastfm', [
           NL: 'Netherlands',
           US: 'United States',
           UK: 'United Kingdom'
-        }[code];
+        }[code] || code;
     };
 })
 
