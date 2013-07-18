@@ -31,13 +31,71 @@ angular.module( 'lastfm', [
   })
   .state( 'user404', {
     url: '/user404',
-    templateUrl: 'user.404.tpl.html'
+    templateUrl: 'lastfm/user.404.tpl.html'
   })
   .state( 'user', {
     url: '/user/:uid',
     controller: 'UserCtrl',
-    templateUrl: 'user.tpl.html'
+    abstract: true,
+    templateUrl: 'lastfm/user.tpl.html'
   })
+      .state( 'user.profile', {
+        url: '',
+        templateUrl: 'lastfm/user.profile.tpl.html',
+      })
+      .state( 'user.library', {
+        url: '/library',
+        abstract: true,
+        templateUrl: 'lastfm/user.library.tpl.html',
+      })
+          .state( 'user.library.music', {
+            url: '',
+            templateUrl: 'lastfm/user.library.music.tpl.html',
+            controller: function ($scope, $stateParams, lastfm) {
+              $scope.params = {
+                  user: $stateParams.uid,
+                  sortBy: 'plays',
+                  sortOrder: 'desc',
+                  page: 1,
+                  limit: 18
+              }
+              $scope.library = [];
+              $scope.meta = {};
+
+              function update() {
+                lastfm.api.library.getArtists($scope.params, {
+                    success: function (data) {
+                      $scope.$apply(function () {
+                        $scope.library = data.artists.artist;
+                        $scope.meta = data.artists['@attr'];
+                      });
+                    }
+                });
+              }
+
+              $scope.prevPage = function () {
+                $scope.params.page -= 1;
+                update();
+              }
+
+              $scope.nextPage = function () {
+                $scope.params.page += 1;
+                update();
+              }
+
+              $scope.setSort = function (sort) {
+                $scope.params.sortBy = sort;
+                update();
+              };
+
+              $scope.setOrder = function (order) {
+                $scope.params.sortOrder = order;
+                update();
+              };
+
+              update();
+            }
+          })
   ;
   $urlRouterProvider.otherwise( '/404' );
 })
@@ -57,57 +115,28 @@ angular.module( 'lastfm', [
 .controller( 'UserCtrl', function UserCtrl ( $scope, $location, $timeout, $state, $stateParams, lastfm) {
   $scope.username = $stateParams.uid;
 
-  var handlers = {
-    7: function () {
-        console.log(7);
-        $state.transitionTo('404');
-    },
-    29: function () {
-      console.log(29);
-    }
-  };
-
-  function error(caller) {
-    return function (code, message) {
-      console.log(code, message);
-      handlers[code]();
-      switch(code) {
-      case 7:
-          $state.transitionTo('404');
-          break;
-      case 29:
-        $timeout(function () {
-          caller();
-        }, 60000);
-        break;
-      default:
-          console.log('NOOP');
-      }
-    };
-  }
-
   function update_user() {
-      lastfm.user.getInfo({user: $scope.username}, {
+      lastfm.api.user.getInfo({user: $scope.username}, {
       success: function (data) {
         $scope.$apply(function () {
           $scope.user = data.user;
         });
         update_recent();
-      }, error: error(update_user)});
+      }, error: lastfm.error(update_user)});
   }
 
   function update_recent() {
-      lastfm.user.getRecentTracks({user: $scope.username, extended: 1}, {
+      lastfm.api.user.getRecentTracks({user: $scope.username, extended: 1}, {
       success: function (data) {
         $scope.$apply(function () {
           $scope.recent = data.recenttracks.track;
         });
         update_friends();
-      }, error: error(update_recent)});
+      }, error: lastfm.error(update_recent)});
   }
 
   function update_friends() {
-      lastfm.user.getFriends({user: $scope.username}, {
+      lastfm.api.user.getFriends({user: $scope.username}, {
       success: function (data) {
         $scope.$apply(function () {
           $scope.friends = data.friends.user;
@@ -115,7 +144,7 @@ angular.module( 'lastfm', [
         $timeout(function () {
           update_user();
         }, 10000);
-      }, error: error(update_friends)});
+      }, error: lastfm.error(update_friends)});
   }
 
   update_user();

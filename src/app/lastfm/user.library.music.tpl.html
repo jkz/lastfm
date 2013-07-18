@@ -1,6 +1,24 @@
+{{params}}
+  <div id="libraryTopWrapper" class="clearit">
+    <p id="librarySubNav">
+      <span ng-class="{current: params.sortBy == 'plays'}">
+        <a ng-href="#/user/{{user.name}}/library"
+           ng-click="setSort('plays')">By Plays</a>
+      </span>
+      |
+      <span ng-class="{current: params.sortBy == 'name'}">
+        <a ng-href="#/user/{{user.name}}/library"
+           ng-click="setSort('name')">A–Z</a>
+      </span>
+      |
+      <span>
+        <a ng-href="#/user/{{user.name}}/library/recent">Recently Added</a>
+      </span>
+    </p>
+  </div><!-- .libraryTopWrapper -->
+
 <div class="wrapper">
   <div id="page1" class="page">
-
     <ul class="libraryItems artistsLarge">
       <li ng-repeat="artist in library" class="first" id="r6_19498076">
       <a ng-href="{{artist.url}}">
@@ -13,9 +31,9 @@
           <strong class="name">{{artist.name}}</strong>
         </a>
         <a ng-href="#/user/{{user.name}}/library/music/{{artist.name}}?sortOrder=desc&amp;sortBy=plays"     class="plays" rel="nofollow">
-          <span dir="ltr">({{artist.plays}}&nbsp;plays)</span>
+          <span dir="ltr">({{artist.playcount}}&nbsp;plays)</span>
         </a>
-        <a ng-href="/user/{{{user.name/library/music/{{artist.name}}?remove=1"     title="Delete this artist from your library" class="remove">
+        <a ng-href="/user/{{user.name}}/library/music/{{artist.name}}?remove=1"     title="Delete this artist from your library" class="remove">
           <img class="transparent_png dismiss_dark_icon" width="13" height="13" src="http://cdn.last.fm/flatness/global/icon_delete_dark.png" style="" />
         </a>
 
@@ -25,8 +43,8 @@
 
 <div class="nrelate-library-grid"></div>
 <div id="paginationBottom" class="ajaxpagination">
-  Page <span class="pagenumber">1</span> of 21
-  <form action="/user/jessethegame/library" method="get" class="jumpto">
+  Page <span class="pagenumber">{{page}}</span> of {{meta.totalPages}}
+  <form action="#/user/{{user.name}}/library" method="get" class="jumpto">
     <select name="page"  class="jumpto">
       <option value="0">Jump to…</option>
       <option value="1">1</option>
@@ -37,6 +55,6 @@
     <input type="submit" name="go" class="nonJs" value="Go" />
   </form>
 
-  <a href="/user/jessethegame/library?page=1&amp;sortOrder=desc&amp;sortBy=plays" class="previousPage">Previous page</a>
-  <a href="/user/jessethegame/library?page=2&amp;sortOrder=desc&amp;sortBy=plays" class="nextPage">Next page</a>
+  <a ng-click="prevPage()">Previous page</a>
+  <a ng-click="nextPage()">Next page</a>
 </div><!-- #pagination -->

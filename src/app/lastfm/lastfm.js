@@ -41,7 +41,6 @@ angular.module('lastfm.api', [])
 
     return {
       api: lastfm,
-      handler: handler,
       error: error
     }
 })
