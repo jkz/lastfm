@@ -1,0 +1,47 @@
+<div id="libraryTop">
+  <ul id="libraryNavigation">
+    <li class="current">
+      <a ng-href="#/user/{{user.name}}/library" class="icon">
+        <img src="http://cdn.last.fm/flatness/library/navigation/music.png" class="transparent_png" width="20" height="20">
+        <span>Music</span>
+      </a>
+    </li>
+    <li>
+      <a ng-href="#/user/{{user.name}}/library/loved" class="icon">
+        <img src="http://cdn.last.fm/flatness/library/navigation/loved_tracks.png" class="transparent_png" width="20" height="20">
+        <span>Loved tracks</span>
+      </a>
+    </li>
+    <li>
+      <a ng-href="#/user/{{user.name}}/library/playlists" class="icon">
+        <img src="http://cdn.last.fm/flatness/library/navigation/playlists.png" class="transparent_png" width="20" height="20">
+        <span>Playlists</span>
+      </a>
+    </li>
+    <li>
+      <a ng-href="#/user/{{user.name}}/tags" class="icon" title="">
+        <img class="icon tag_icon" width="14" height="14" src="http://cdn.last.fm/flatness/clear.gif" style="">
+        <span>Tags</span>
+      </a>
+    </li>
+  </ul>
+
+  <div id="libraryTopWrapper" class="clearit">
+    <p id="librarySubNav">
+      <span class="current">
+        <a ng-href="#/user/{{user.name}}/library">By Plays</a>
+      </span>
+      |
+      <span>
+        <a ng-href="#/user/{{user.name}}/library?sortBy=name">A–Z</a>
+      </span>
+      |
+      <span>
+        <a ng-href="#/user/{{user.name}}/library/recent">Recently Added</a>
+      </span>
+    </p>
+  </div><!-- .libraryTopWrapper -->
+
+</div>
+
+<div id="pages" ui-view=library></div>

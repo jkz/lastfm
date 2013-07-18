@@ -10,15 +10,40 @@ angular.module('lastfm.api', [])
             cache     : cache
     });
 
-    /* Load some artist info. */
-    lastfm.artist.getInfo({artist: 'Jesse the Game'}, {success: function(data){
-        console.log(data);
-    }, error: function(code, message){
-        console.log(code, message);
-        /* Show error message. */
-    }});
+    var handlers = {
+      7: function () {
+          console.log(7);
+          $state.transitionTo('404');
+      },
+      29: function () {
+        console.log(29);
+      }
+    };
 
-    return lastfm;
+    function error(caller) {
+      return function (code, message) {
+        console.log(code, message);
+        handlers[code]();
+        switch(code) {
+        case 7:
+            $state.transitionTo('404');
+            break;
+        case 29:
+          $timeout(function () {
+            caller();
+          }, 60000);
+          break;
+        default:
+            console.log('NOOP');
+        }
+      };
+    }
+
+    return {
+      api: lastfm,
+      handler: handler,
+      error: error
+    }
 })
 .directive('userBadge', function () {
   return {

@@ -1,0 +1,42 @@
+<div class="wrapper">
+  <div id="page1" class="page">
+
+    <ul class="libraryItems artistsLarge">
+      <li ng-repeat="artist in library" class="first" id="r6_19498076">
+      <a ng-href="{{artist.url}}">
+          <span class="pictureFrame">
+            <span class="image">
+              <img height="126" width="126" alt="" ng-src="{{artist.image[2]['#text']}}" />
+            </span>
+            <span class="overlay"></span>
+          </span>
+          <strong class="name">{{artist.name}}</strong>
+        </a>
+        <a ng-href="#/user/{{user.name}}/library/music/{{artist.name}}?sortOrder=desc&amp;sortBy=plays"     class="plays" rel="nofollow">
+          <span dir="ltr">({{artist.plays}}&nbsp;plays)</span>
+        </a>
+        <a ng-href="/user/{{{user.name/library/music/{{artist.name}}?remove=1"     title="Delete this artist from your library" class="remove">
+          <img class="transparent_png dismiss_dark_icon" width="13" height="13" src="http://cdn.last.fm/flatness/global/icon_delete_dark.png" style="" />
+        </a>
+
+  </div><!-- #page1 -->
+</div><!-- .wrapper -->
+</div><!-- #pages -->
+
+<div class="nrelate-library-grid"></div>
+<div id="paginationBottom" class="ajaxpagination">
+  Page <span class="pagenumber">1</span> of 21
+  <form action="/user/jessethegame/library" method="get" class="jumpto">
+    <select name="page"  class="jumpto">
+      <option value="0">Jump to…</option>
+      <option value="1">1</option>
+      <option value="10">10</option>
+      <option value="20">20</option>
+      <option value="21">21</option>
+    </select>
+    <input type="submit" name="go" class="nonJs" value="Go" />
+  </form>
+
+  <a href="/user/jessethegame/library?page=1&amp;sortOrder=desc&amp;sortBy=plays" class="previousPage">Previous page</a>
+  <a href="/user/jessethegame/library?page=2&amp;sortOrder=desc&amp;sortBy=plays" class="nextPage">Next page</a>
+</div><!-- #pagination -->
