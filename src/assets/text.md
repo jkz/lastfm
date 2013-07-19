@@ -2,9 +2,10 @@ Hello last.fm,
 
 I am Jesse the Game, aspiring world dominator. To become this I have devised a scheme, which I am not only willing to share with you, but offering you to be a part of. Keep reading.
 
-The scheme is built upon a partial bachelor of computer science, a solid gaming history and a journey through the [Dutch X-Factor](http://youtube.com/jesseinliveshow) up to and including the live shows. This last feat allowed me to peek behind the scenes and inspired me to break the music industry; break pop-culture and achieve the first step towards domination: an army of loyal minions.
+The scheme is built upon a partial bachelor of computer science, a solid gaming
+history and a journey through the [Dutch X-Factor](http://www.youtube.com/watch?v=zSEMCb6DpZU&list=PL87E472931A2C3B15) up to and including the live shows. This last feat allowed me to peek behind the scenes and inspired me to break the music industry; break pop-culture and achieve the first step towards domination: an army of loyal minions.
 
-People love music. People love games. People think computer science is magic. These are the three psychological hacks I intend to abuse in one next level entertainment experience:
+People love music. People love games. People think computer science is magic. These are the three psychological hacks I intend to abuse in one entertainment experience:
 
 [Jesse the Game](http://jessethegame.net)
 
@@ -18,10 +19,10 @@ These points can be spent on various forms of assignments presented on my site b
 
 Glad you thought that.
 
-  1.  I could fill the Web Developer vacancy at your office, to make, say, £2500+ month (tooltip this, explaining it increases (and by how much) the longer they wait to click the stop button).
-  2.  I could encourage people to install last.fm to get the points for scrobbling.
-  3.  I might be willing to discuss a position as ambassador and bear a red flag to our marching army.
-  4.  I could provide you with many other ways to exploit the powerful scrobble data.
-  5.  I will bring cake along to the office for the job interview
-  6.  I could help with anything dutch
+ 1.  I could fill the Web Developer vacancy at your office, to make, say, £2500+ month (tooltip this, explaining it increases (and by how much) the longer they wait to click the stop button).
+ 2.  I could encourage people to install last.fm to get the points for scrobbling.
+ 3.  I might be willing to discuss a position as ambassador and bear a red flag to our marching army.
+ 4.  I could provide you with many other ways to exploit the powerful scrobble data.
+ 5.  I will bring cake along to the office for the job interview
+ 6.  I could help with anything dutch
 

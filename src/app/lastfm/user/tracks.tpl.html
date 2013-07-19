@@ -1,0 +1,59 @@
+<nav class="r add-bottom-margin">
+<div class="g6">
+  <ul class="toggle-list">
+    <li class="toggle-list-current">
+    <span class="btn btn--small btn--brand-blue is-pressed btn--toggle-left">Expanded view</span>
+    </li>
+    <li>
+    <a href="?view=compact&amp;page=1" class="btn btn--small btn--toggle-right">List view</a>
+    </li>
+  </ul>
+
+  <span class="simulate-btn-spacing simulate-btn-spacing--small add-left-margin">
+    <a href="http://ws.audioscrobbler.com/2.0/user/jessethegame/recenttracks.rss" class="icon">
+      <img class="icon feed_small_icon" width="10" height="10" src="http://cdn.last.fm/flatness/clear.gif" style="" />
+      <span>RSS</span>
+    </a>
+  </span>
+</div>
+<div class="g6">
+  <div class="responsive-pagination">
+    <span class="btn btn--small responsive-pagination-selected">1</span>
+    <a href="/user/jessethegame/tracks?page=2" class="btn btn--small btn--white">2</a>
+    <span>…</span>
+    <a href="/user/jessethegame/tracks?page=45" class="btn btn--small btn--white">45</a>
+    <a href="/user/jessethegame/tracks?page=2" class="btn btn--icon-only btn--small btn--white iconright iconright--right" rel="next" title="Next page">Next</a>
+  </div>
+</div>
+</nav>
+
+<ul class="recent-tracks-list" data-delete-url="/ajax/rmrecenttrack" data-require="user/deletescrobble">
+
+
+  <li ng-repeat="scrobble in scrobbles[page.index]" class="recent-tracks-item media js-scrobble">
+  <a ng-href="{{track.url}}" class="recent-tracks-image media-pull-left media-link-hook">
+      <div class="no-image no-image--album-g1"></div>
+    </a>
+    <div class="media-body">
+      <div class="media remove-bottom-margin">
+        <div class="media-pull-left track-detail">
+          <span class="play-button-container"></span>
+          <a href="{{track.artist.url}}">{{track.artist.name}}</a> - <a ng-href="{{track.url}}" class="media-link-reference">{{track.name}}</a>
+        </div>
+        <div class="media-body align-right">
+          <img class="icon loved_indicator_icon hide js-loved-scrobble"
+          width="11" height="9" src="http://cdn.last.fm/flatness/clear.gif" style="" />
+          <a ng-href="{{track.url}}" class="mRemoveFromLibrary mSend mAddTags
+            mAddToPlaylist mLove lfmButton lfmMultiButton lfmButtonFortrack
+            lfmSmallButton lfmSmallMultiButton lfmMultiButtonFull" forcelink="1">
+            <span></span>
+          </a>
+          <time class="very-lite scrobble-timestamp" datetime="2013-07-18T13:53:45Z">26 minutes ago</time>
+          <a class="js-delete-scrobble delete btn btn--rounded btn--icon-only btn--tiny iconleft iconleft--delete-tiny" href="#deleteThisScrobble" data-id="660051803" data-timestamp="1374152025" title="Delete this scrobble of “La Fique” from your profile">Delete</a>
+        </div>
+      </div>
+    </div>
+  </li>
+
+
+

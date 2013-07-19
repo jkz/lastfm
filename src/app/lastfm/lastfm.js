@@ -61,7 +61,7 @@ angular.module('lastfm.api', [])
     scope: {
       tracks: '='
     },
-    templateUrl: 'assets/templates/lastfm/recent.html'
+    templateUrl: 'lastfm/recent.tpl.html'
   };
 })
 .directive('friends', function () {
@@ -70,7 +70,7 @@ angular.module('lastfm.api', [])
     scope: {
       users: '='
     },
-    templateUrl: 'assets/templates/lastfm/friends.html'
+    templateUrl: 'lastfm/friends.tpl.html'
   };
 })
 .directive('story', function () {
@@ -79,15 +79,8 @@ angular.module('lastfm.api', [])
     scope: {
       users: '='
     },
-    templateUrl: 'assets/templates/lastfm/story.html'
+    templateUrl: 'lastfm/story.tpl.html'
   };
-})
-.factory('collection', function () {
-  function Collection() {
-    //get inital et
-    //cache some
-    //override slice to fetch new data
-  }
 })
 .factory('paginator', function () {
   function defaults() {
@@ -140,5 +133,59 @@ angular.module('lastfm.api', [])
   return function (conf) {
     return new Paginator(conf);
   }
+})
+.factory('collection', function (paginator) {
+  function defaults() {
+    return {
+      request: 1,
+      name: 10,
+      type: 0,
+      data: {},
+      pageOptions: {},
+      requestOptions: {}
+    };
+  }
+
+  function Collection(conf) {
+      angular.extend(this, conf);
+      this.data = {};
+      this.page = paginator(pageDefaults);
+  }
+
+  Collection.prototype.callback = function ($scope) {
+    var that = this;
+    return function (data) {
+      $scope.$apply(function () {
+        var meta = data[name]['@attr'];
+        that.page.count = meta.totalPages;
+        this.data[meta.page || 1] = [].concat(data[name][type]);
+      });
+    }
+  };
+
+  Collection.prototype.fetch = function (options, success, error) {
+    var params = angular.extend({
+        page: $scope.page.index,
+        limit: $scope.page.limit,
+      }, requestDefaults, options)
+
+    return request(params, {
+        success: success || function (){},
+        error: error || function (){},
+    });
+  };
+
+  Collection.prototype.update = function (options) {
+    var i;
+    options = options || {};
+    for (i = $scope.page.index - 2; i < $scope.page.index + 2; i++) {
+      if (i >= 1 && !$scope.friends[i]) {
+          options.page = i;
+          collection.fetch(params);
+      }
+    }
+  };
+
+  return collection;
 })
 ;

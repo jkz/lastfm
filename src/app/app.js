@@ -147,9 +147,15 @@ angular.module( 'lastfm', [
       .state( 'user.friends', {
         url: '/friends',
         templateUrl: 'lastfm/user/friends.tpl.html',
-        controller: function ($scope, $stateParams, lastfm, paginator) {
+        controller: function ($scope, $stateParams, lastfm, paginator, collection) {
           $scope.page = new paginator({limit: 10});
-          $scope.friends = {};
+          /*
+          $scope.friends = collection(
+            lastfm.user.getFriends, 'friends', 'user',
+            { '
+
+            ){};
+            */
 
           function fetch(params) {
             lastfm.api.user.getFriends(params, {
