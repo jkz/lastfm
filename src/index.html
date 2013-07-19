@@ -18,8 +18,9 @@
     <meta property="og:image" content="" />
     <meta property="og:description" content="">
 
-    <link href="//cdn.last.fm/css/css/227249/user/overview.css" rel="stylesheet">
-    <link href="//cdn.last.fm/css/css/227249/master.css" rel="stylesheet">
+    <link rel=stylesheet href="//cdn.last.fm/css/css/227249/user/overview.css">
+    <link rel=stylesheet href="http://cdn.last.fm/css/css/227358/user/library.css">
+    <link rel=stylesheet href="//cdn.last.fm/css/css/227249/master.css">
 
     <link rel="shortcut icon" href="http://cdn.last.fm/flatness/favicon.2.ico">
 
@@ -68,94 +69,102 @@
 </div>
 
 <div id="page" class="            ">
-  <div is404="{{$state.current.name == '404' && 1 || 0}}" ng-class="{true: 'fixed', false: 'fiflufi'}[$state.current.name == '404']">
+  <!-- is404="{{$state.current.name == '404' && 1 || 0}}" -->
+  <div
+    id=library
+    ng-class="{
+      sic: $state.includes('user.library'),
+      fixed: false,
+      fifulfi: $state.current == 'user'
+    }">
 
-<div id="header" class="clearit responsive-container" role="banner">
-  <div id="headerWrapper">
-    <a href="/home" id="lastfmLogo">Last.fm</a>
-    <ul id="primaryNav" role="navigation">
-      <li id="musicNav" class="navItem">
-        <a href="/music" class="nav-link">Music</a>
-      <li id="eventsNav" class="navItem">
-        <a href="/events" class="nav-link">Events</a>
-      <li id="chartsNav" class="navItem">
-        <a href="/charts" class="nav-link">Charts</a>
-      <li id="communityNav" class="navItem">
-        <a href="/community" class="nav-link">Community</a>
-      <li id="originalsNav" class="navItem">
-        <a href="http://originals.last.fm" class="nav-link">Originals</a>
-    </ul>
+    <div id="header" class="clearit responsive-container" role="banner">
+      <div id="headerWrapper">
+        <a href="/home" id="lastfmLogo">Last.fm</a>
+        <ul id="primaryNav" role="navigation">
+          <li id="musicNav" class="navItem">
+            <a href="/music" class="nav-link">Music</a>
+          <li id="eventsNav" class="navItem">
+            <a href="/events" class="nav-link">Events</a>
+          <li id="chartsNav" class="navItem">
+            <a href="/charts" class="nav-link">Charts</a>
+          <li id="communityNav" class="navItem">
+            <a href="/community" class="nav-link">Community</a>
+          <li id="originalsNav" class="navItem">
+            <a href="http://originals.last.fm" class="nav-link">Originals</a>
+        </ul>
 
-    <div id="profileLinks">
-      <ul>
-        <li id="loginLink" class="profileItem">
-            <a href="/login" class="profile-link"><strong>Login</strong></a>
-        </li>
-        <li id="signupLink" class="profileItem">
-            <a href="/join" class="profile-link"><strong>Join</strong></a>
-        </li>
-      </ul>
-    </div>
+        <div id="profileLinks">
+          <ul>
+            <li id="loginLink" class="profileItem">
+                <a href="/login" class="profile-link"><strong>Login</strong></a>
+            </li>
+            <li id="signupLink" class="profileItem">
+                <a href="/join" class="profile-link"><strong>Join</strong></a>
+            </li>
+          </ul>
+        </div>
 
-    <div id="profileLinks" ng-show="false">
-      <ul>
-        <li class="profileItem">
-          <div id="idBadger" >
-            <a href="/user/jessethegame" id="idBadgerUser" title="Jesse the Game, Male, Netherlands">
-              <img ng-src="{{user.image[0]['#text']}}" width="16" height="16" />{{user.name}}
-            </a><a href="/user/jessethegame" id="idBadgerDropper" title="Jesse the Game, Male, Netherlands"><span>▼</span></a>
+        <div id="profileLinks" ng-show="false">
+          <ul>
+            <li class="profileItem">
+              <div id="idBadger" >
+                <a href="/user/jessethegame" id="idBadgerUser" title="Jesse the Game, Male, Netherlands">
+                  <img ng-src="{{user.image[0]['#text']}}" width="16" height="16" />{{user.name}}
+                </a><a href="/user/jessethegame" id="idBadgerDropper" title="Jesse the Game, Male, Netherlands"><span>▼</span></a>
 
-            <ul id="idBadgerDropDown">
-              <li class="home"><a href="/home">Home</a></li>
-              <li class="profile"><a href="/user/jessethegame"     title="Jesse the Game, Male, Netherlands">Profile</a></li>
-              <li class="friends"><a href="/user/jessethegame/friends"     title="">Friends</a></li>
-              <li class="recs"><a href="/home/recs">Recommended</a></li>
-              <li class="library"><a href="/user/jessethegame/library"     title="">Library</a></li>
-              <li class="events"><a href="/user/jessethegame/events"     title="">Events</a></li>
-              <li class="settings"><a href="/settings">Settings</a></li>
-              <li><a href="/subscribe"><strong>Subscribe</strong></a></li>
-            </ul>
-          </div>
-        </li>
-        <li id="logoutLink" class="profileItem">
-            <a href="/login/logout?shake-it-all-about" class="profile-link">Logout</a>
-        </li>
-        <li id="inboxLink" class="profileItem divider">
-            <a href="/inbox" class="profile-link">Inbox</a>
-        </li>
-      </ul>
-    </div>
-    <div id="headerLinks">
-      <a href="/user/jessethegame?change=language" title="Click here to change your language" rel="nofollow" id="headerLangToggle" class="icon">
-        <img class="transparent_png globe_icon icon" alt="Change language" width="11" height="11" src="http://cdn.last.fm/flatness/clear.gif" style="" />            <span>English</span>
-      </a>
-      <ng-switch on="skinColor">
-      <span ng-switch-when="red">   | <a href="" title="Switch Colour Style"
-          ng-click="paintIt('black')">Paint it Black</a></span>
-      <span ng-switch-when="black"> | <a href="" title="Switch Colour Style"
-          ng-click="paintIt('brown')">Brown Skin Lady</a></span>
-      <span ng-switch-when="brown"> | <a href="" title="Switch Colour Style"
-          ng-click="paintIt('blue')">Daba dee daba da</a></span>
-      <span ng-switch-when="blue">  | <a href="" title="Switch Colour Style"
-          ng-click="paintIt('red')">Simply Red</a></span>
-      </ng-switch>
-      | <a href="/help">Help</a>
-    </div>
+                <ul id="idBadgerDropDown">
+                  <li class="home"><a href="/home">Home</a></li>
+                  <li class="profile"><a href="/user/jessethegame"     title="Jesse the Game, Male, Netherlands">Profile</a></li>
+                  <li class="friends"><a href="/user/jessethegame/friends"     title="">Friends</a></li>
+                  <li class="recs"><a href="/home/recs">Recommended</a></li>
+                  <li class="library"><a href="/user/jessethegame/library"     title="">Library</a></li>
+                  <li class="events"><a href="/user/jessethegame/events"     title="">Events</a></li>
+                  <li class="settings"><a href="/settings">Settings</a></li>
+                  <li><a href="/subscribe"><strong>Subscribe</strong></a></li>
+                </ul>
+              </div>
+            </li>
+            <li id="logoutLink" class="profileItem">
+                <a href="/login/logout?shake-it-all-about" class="profile-link">Logout</a>
+            </li>
+            <li id="inboxLink" class="profileItem divider">
+                <a href="/inbox" class="profile-link">Inbox</a>
+            </li>
+          </ul>
+        </div>
+        <div id="headerLinks">
+          <a href="/user/jessethegame?change=language" title="Click here to change your language" rel="nofollow" id="headerLangToggle" class="icon">
+            <img class="transparent_png globe_icon icon" alt="Change language" width="11" height="11" src="http://cdn.last.fm/flatness/clear.gif" style="" />
+            <span>English</span>
+          </a>
+          <ng-switch on="skinColor">
+          <span ng-switch-when="red">   | <a href="" title="Switch Colour Style"
+              ng-click="paintIt('black')">Paint it Black</a></span>
+          <span ng-switch-when="black"> | <a href="" title="Switch Colour Style"
+              ng-click="paintIt('brown')">Brown Skin Lady</a></span>
+          <span ng-switch-when="brown"> | <a href="" title="Switch Colour Style"
+              ng-click="paintIt('blue')">Daba dee daba da</a></span>
+          <span ng-switch-when="blue">  | <a href="" title="Switch Colour Style"
+              ng-click="paintIt('red')">Simply Red</a></span>
+          </ng-switch>
+          | <a href="/help">Help</a>
+        </div>
 
-<form id="siteSearch" method="get" action="/search" class="search-autocomplete" role="search" data-require="search/sitesearch" data-template="search" data-url="/search/autocomplete">
-    <input id="siteSearchBox" type="text" name="q" autocorrect="off" autocomplete="off" placeholder="Music search" size="26" class="js-search" />
-    <div id="siteSearchProgress" class="js-search-progress search-progress ir" style="display: none;">Loading</div>
-    <input type="hidden" name="from" value="ac" />
-    <button id="siteSearchSubmit" type="submit" class="submit" title="Search"></button>
-</form>
+        <form id="siteSearch" method="get" action="/search" class="search-autocomplete" role="search" data-require="search/sitesearch" data-template="search" data-url="/search/autocomplete">
+            <input id="siteSearchBox" type="text" name="q" autocorrect="off" autocomplete="off" placeholder="Music search" size="26" class="js-search" />
+            <div id="siteSearchProgress" class="js-search-progress search-progress ir" style="display: none;">Loading</div>
+            <input type="hidden" name="from" value="ac" />
+            <button id="siteSearchSubmit" type="submit" class="submit" title="Search"></button>
+        </form>
+
         <div id="headerPromo">
           <a href="/about/jobs">&pound;{{user.playcount}} and counting</a>
         </div>
-</div>
-    </div><!-- #headerWrapper -->
-</div><!-- #header -->
+      </div><!-- #headerWrapper -->
+    </div><!-- #header -->
 
-    <div id=content data-require="core/page" class="fixed container" ui-view></div><!-- #content -->
+    <div id=content data-require="core/page" ui-view></div><!-- #content -->
 
   </div>
 </div>
