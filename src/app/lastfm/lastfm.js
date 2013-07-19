@@ -102,6 +102,11 @@ console.log('CALLBACK', data);
               method: lastfm.user.getLovedTracks,
               collection: 'lovedtracks',
               entity: 'track'
+          }),
+          artists: endpoint({
+              method: lastfm.library.getArtists,
+              collection: 'artists',
+              entity: 'artist'
           })
       }
     }
@@ -120,18 +125,12 @@ console.log('CALLBACK', data);
 .directive('recentTracks', function () {
   return {
     restrict: 'AE',
-    scope: {
-      tracks: '='
-    },
     templateUrl: 'lastfm/recent.tpl.html'
   };
 })
 .directive('friends', function () {
   return {
     restrict: 'AE',
-    scope: {
-      users: '='
-    },
     templateUrl: 'lastfm/friends.tpl.html'
   };
 })
@@ -146,15 +145,16 @@ console.log('CALLBACK', data);
 })
 .directive('paginator', function () {
   return {
-    restrict: 'AE',
+    restrict: 'A',
     scope: {
-      page: '=',
-      collection: '='
+      paginator: '=',
     },
-    templateUrl: 'lastfm/paginator.tpl.html',
+    //templateUrl: 'lastfm/paginator.tpl.html',
     link: function ($scope) {
+        $scope.page = $scope.paginator.page;
         $scope.$watch('page.index', function () {
-            $scope.collection.update();
+console.log($scope.paginator);
+            $scope.paginator.update();
         });
     }
   };
@@ -212,17 +212,24 @@ console.log(this);
   }
 })
 .factory('collection', function (paginator) {
-  function Collection(endpoint, conf) {
+  /*
+   * conf includes:
+   *    endpoint
+   *    params
+   *    page
+   *    $scope
+   */
+  function Collection(conf) {
       conf = conf || {};
       angular.extend(this, conf);
-      this.endpoint = endpoint;
       this.data = {};
       this.page = paginator(this.page);
-      //this.update();
+      this.update();
   }
 
   Collection.prototype.callback = function (data, meta) {
     this.page.count = meta.totalPages;
+    this.count = meta.total;
     console.log('poei', this, this.data);
     this.data[meta.page || 1] = [].concat(data);
     this.$scope.$digest();
@@ -260,8 +267,8 @@ console.log('UPDATE', options);
     return this.data[this.page.index];
   }
 
-  return function (endpoint, options) {
-    return new Collection(endpoint, options);
+  return function (options) {
+    return new Collection(options);
   };
 })
 ;

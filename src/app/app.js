@@ -51,160 +51,43 @@ angular.module( 'lastfm', [
           .state( 'user.library.music', {
             url: '',
             templateUrl: 'lastfm/user/library/music.tpl.html',
-            controller: function ($scope, $stateParams, lastfm) {
-              $scope.params = {
-                  user: $stateParams.uid,
-                  sortBy: 'plays',
-                  sortOrder: 'desc',
-                  page: 1,
-                  limit: 18
-              }
-              $scope.library = [];
-              $scope.meta = {};
-
-              function update() {
-                lastfm.api.library.getArtists($scope.params, {
-                    success: function (data) {
-                      $scope.$apply(function () {
-                        $scope.library = [].concat(data.artists.artist);
-                        $scope.meta = data.artists['@attr'];
-                      });
-                    }
-                });
-              }
-
-              $scope.prevPage = function () {
-                $scope.params.page -= 1;
-                update();
-              }
-
-              $scope.nextPage = function () {
-                $scope.params.page += 1;
-                update();
-              }
-
-              $scope.setSort = function (sort) {
-                $scope.params.sortBy = sort;
-                update();
-              };
-
-              $scope.setOrder = function (order) {
-                $scope.params.sortOrder = order;
-                update();
-              };
-
-              update();
+            controller: function ($scope, $stateParams, lastfm, collection) {
+              $scope.artists = collection({
+                  endpoint: lastfm.user.artists,
+                  $scope: $scope,
+                  page: {
+                    limit: 18,
+                  },
+                  params: {
+                      user: $stateParams.uid,
+                      sortBy: 'plays',
+                      sortOrder: 'desc'
+                  }
+              });
             }
           })
           .state( 'user.library.loved', {
             url: '/loved',
             templateUrl: 'lastfm/user/library/loved.tpl.html',
-            controller: function ($scope, $stateParams, lastfm) {
-              $scope.params = {
-                  user: $stateParams.uid,
-                  sortBy: 'plays',
-                  sortOrder: 'desc',
-                  page: 1,
-                  limit: 18
-              }
-              $scope.tracks = [];
-              $scope.meta = {};
-
-              function update() {
-                lastfm.api.user.getLovedTracks($scope.params, {
-                    success: function (data) {
-                      $scope.$apply(function () {
-                        $scope.meta = data.lovedtracks['@attr'];
-                        $scope.tracks = [].concat(data.lovedtracks.track);
-                      });
-                    }
-                });
-              }
-
-              $scope.prevPage = function () {
-                $scope.params.page -= 1;
-                update();
-              }
-
-              $scope.nextPage = function () {
-                $scope.params.page += 1;
-                update();
-              }
-
-              $scope.setSort = function (sort) {
-                $scope.params.sortBy = sort;
-                update();
-              };
-
-              $scope.setOrder = function (order) {
-                $scope.params.sortOrder = order;
-                update();
-              };
-
-              update();
+            controller: function ($scope, $stateParams, lastfm, collection) {
+              $scope.tracks = collection({
+                  endpoint: lastfm.user.loved,
+                  $scope: $scope,
+                  page: {
+                    limit: 18,
+                  },
+                  params: {
+                      user: $stateParams.uid,
+                      sortBy: 'plays',
+                      sortOrder: 'desc'
+                  }
+              });
             }
           })
       .state( 'user.friends', {
         url: '/friends',
         templateUrl: 'lastfm/user/friends.tpl.html',
-        controller: function ($scope, $stateParams, lastfm, paginator, collection, $timeout) {
-          //$scope.page = new paginator({limit: 10});
-          $scope.friends = collection(lastfm.user.friends, {
-              $scope: $scope,
-              params: {
-                user: $stateParams.uid,
-                recenttracks: 1
-              }
-          });
-
-          //$scope.friends.watch($scope);
-
-
-          //$scope.friends.request();
-
-          /*
-          function fetch(params) {
-            lastfm.api.user.getFriends(params, {
-                success: function (data) {
-                  $scope.$apply(function () {
-                    console.log(data);
-                    var meta = data.friends['@attr'];
-                    $scope.page.count = meta.totalPages;
-                    $scope.friends[meta.page || 1] = [].concat(data.friends.user);
-                  });
-                }
-            });
-          };
-
-          function defaults() {
-            return {
-                user: $stateParams.uid,
-                page: $scope.page.index,
-                limit: $scope.page.limit,
-                recenttracks: true
-            };
-          }
-
-          function update() {
-              var i,
-                  params = defaults();
-              for (i = $scope.page.index - 2; i < $scope.page.index + 2; i++) {
-                console.log('FOR', i);
-                if (i >= 1 && !$scope.friends[i]) {
-                    console.log('FETCH', params);
-                    params.page = i;
-                    fetch(params);
-                }
-              }
-          }
-
-          $scope.$watch('page.index', function () {
-            update();
-          })
-
-        update();
-        */
-        }
+        controller: 'FriendCtrl'
       })
   ;
   $urlRouterProvider.otherwise( '/404' );
@@ -222,44 +105,38 @@ angular.module( 'lastfm', [
 
 })
 
+.controller( 'FriendCtrl', function ($scope, $stateParams, lastfm, collection) {
+  $scope.friends = collection({
+    endpoint: lastfm.user.friends,
+    $scope: $scope,
+    params: {
+      user: $stateParams.uid,
+      recenttracks: 1
+    }
+  });
+})
+
+.controller( 'ScrobbleCtrl', function ($scope, $stateParams, lastfm, collection) {
+  $scope.tracks = collection({
+    endpoint: lastfm.user.scrobbles,
+    $scope: $scope,
+    params: {
+      user: $stateParams.uid,
+      extended: 1
+    }
+  });
+})
+
 .controller( 'UserCtrl', function UserCtrl ( $scope, $location, $timeout, $state, $stateParams, lastfm) {
-  $scope.username = $stateParams.uid;
-
-  /*
-  function update_user() {
-      lastfm.api.user.getInfo({user: $scope.username}, {
+  lastfm.user.info({
+      user: $stateParams.uid,
+  }, {
       success: function (data) {
         $scope.$apply(function () {
-          $scope.user = data.user;
+            $scope.user = data;
         });
-        update_recent();
-      }, error: lastfm.error(update_user)});
-  }
-
-  function update_recent() {
-      lastfm.api.user.getRecentTracks({user: $scope.username, extended: 1}, {
-      success: function (data) {
-        $scope.$apply(function () {
-          $scope.recent = [].concat(data.recenttracks.track);
-        });
-        //update_friends();
-      }, error: lastfm.error(update_recent)});
-  }
-
-  function update_friends() {
-      lastfm.api.user.getFriends({user: $scope.username}, {
-      success: function (data) {
-        $scope.$apply(function () {
-          $scope.friends = data.friends.user;
-        });
-        $timeout(function () {
-          update_user();
-        }, 10000);
-      }, error: lastfm.error(update_friends)});
-  }
-
-  update_user();
-  */
+      }
+  });
 })
 
 .filter('gender', function () {
@@ -292,5 +169,14 @@ angular.module( 'lastfm', [
 .run(function ($rootScope, $state, $stateParams) {
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
-});
+    $rootScope.range = function(min, max, step){
+      step = (step == undefined) ? 1 : step;
+      var input = [];
+      for (var i=min; i<=max; i+=step) input.push(i);
+      return input;
+    };
+})
+
+
+;
 

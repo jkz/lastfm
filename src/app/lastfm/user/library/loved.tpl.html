@@ -27,7 +27,10 @@
   </p>
   <table class="candyStriped tracklist" id="lovedTracks" odd="1">
     <tbody>
-      <tr ng-repeat="track in tracks" class="first last odd" id="r9_305835854_282612734" data-track-id="305835854" >
+
+
+
+      <tr ng-repeat="track in tracks.current()" class="first last odd" id="r9_305835854_282612734" data-track-id="305835854" >
         <td class="playbuttonCell"></td>
         <td class="subjectCell">
           <a ng-href="track.artist.url">{{track.artist.name}}</a> – <a ng-href="{{track.url}}">{{track.name}}</a>
@@ -42,6 +45,9 @@
           </td>
           <td class="dateCell" ng-class="{last: $last}">November 2012</td>
       </tr>
+
+
+
     </tbody>
   </table>
   </div>

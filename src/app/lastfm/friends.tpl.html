@@ -1,12 +1,14 @@
 <div class="module">
   <h2 class="heading">
     <span class="h2Wrapper">
-      <a href="/user/jessethegame/friends" title="">Friends ({{users.length}})</a>
+      <a href="#/user/{{user.name}}/friends" title="">
+        Friends ({{friends.count}})
+      </a>
     </span>
   </h2>
 
   <ul class="usersSmall clearit" odd="1">
-    <li ng-repeat="user in users" class="first user friend">
+    <li ng-repeat="user in friends.current()" class="first user friend">
       <div ng-class="{odd: $index % 2, last: $last}" class="vcard">
         <strong>
           <a ng-href="#/user/{{user.name}}" title="{{user.realname}}, {{user.age}}, Switzerland" rel="acquaintance" class="url">
