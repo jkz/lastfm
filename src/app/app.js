@@ -147,16 +147,22 @@ angular.module( 'lastfm', [
       .state( 'user.friends', {
         url: '/friends',
         templateUrl: 'lastfm/user/friends.tpl.html',
-        controller: function ($scope, $stateParams, lastfm, paginator, collection) {
-          $scope.page = new paginator({limit: 10});
+        controller: function ($scope, $stateParams, lastfm, paginator, collection, $timeout) {
+          //$scope.page = new paginator({limit: 10});
+          $scope.friends = collection(lastfm.user.friends, {
+              $scope: $scope,
+              params: {
+                user: $stateParams.uid,
+                recenttracks: 1
+              }
+          });
+
+          //$scope.friends.watch($scope);
+
+
+          //$scope.friends.request();
+
           /*
-          $scope.friends = collection(
-            lastfm.user.getFriends, 'friends', 'user',
-            { '
-
-            ){};
-            */
-
           function fetch(params) {
             lastfm.api.user.getFriends(params, {
                 success: function (data) {
@@ -197,6 +203,7 @@ angular.module( 'lastfm', [
           })
 
         update();
+        */
         }
       })
   ;
@@ -218,6 +225,7 @@ angular.module( 'lastfm', [
 .controller( 'UserCtrl', function UserCtrl ( $scope, $location, $timeout, $state, $stateParams, lastfm) {
   $scope.username = $stateParams.uid;
 
+  /*
   function update_user() {
       lastfm.api.user.getInfo({user: $scope.username}, {
       success: function (data) {
@@ -238,7 +246,6 @@ angular.module( 'lastfm', [
       }, error: lastfm.error(update_recent)});
   }
 
-  /*
   function update_friends() {
       lastfm.api.user.getFriends({user: $scope.username}, {
       success: function (data) {
@@ -250,9 +257,9 @@ angular.module( 'lastfm', [
         }, 10000);
       }, error: lastfm.error(update_friends)});
   }
-  */
 
   update_user();
+  */
 })
 
 .filter('gender', function () {

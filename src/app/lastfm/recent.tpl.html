@@ -41,8 +41,10 @@ target="_blank"
 
             <td colspan="{{$first && 2 || 1}}" ng-class="{highlight: track['@attr'].nowplaying == 'true', imageSmall: !$first, imageMedium: $first}" class="imageCell">
               <a href="{{track.url}}" ng-switch="$first">
-                <img ng-switch-when=true height="64" width="64" alt="" ng-src="{{track.image[1]['#text']}}" />
-                <img ng-switch-default height="34" width="34" alt="" ng-src="{{track.image[0]['#text']}}" />
+                <img ng-switch-when=true height="64" width="64" alt=""
+                ng-src="{{track.image[1]['#text'] || 'http://cdn.last.fm/flatness/catalogue/noimage/2/large.png'}}" />
+                <img ng-switch-default height="34" width="34" alt=""
+                ng-src="{{track.image[0]['#text'] || 'http://cdn.last.fm/flatness/catalogue/noimage/2/small.png'}}" />
               </a>
             </td>
 

@@ -1,0 +1,34 @@
+<div ng-show="page.count > 1" class="pagination">
+
+  <a ng-show="page.index > 1" class="prevlink" rel="prev"
+    ng-click="page.prev()">
+    <span>Prev</span>
+  </a>
+
+  <a ng-show="page.index > 1" class="pagelink firstpage" rel=prev
+    ng-click="page.first()">
+    1
+  </a>
+
+  <span ng-show="page.index > 3" class="ellipsis">&hellip;</span>
+
+  <a ng-show="page.index > 2" class="pagelink"
+    ng-click="page.jump(page.index - 1)">{{page.index - 1}}</a>
+
+  <span class="selected">{{page.index}}</span>
+
+  <a ng-show="page.index < page.count - 2"
+    ng-click="page.jump(page.index + 1)" class="pagelink">{{page.index + 1}}</a>
+
+  <span ng-show="page.index < page.count - 3" class="ellipsis">&hellip;</span>
+
+  <a ng-show="page.index < page.count - 1"
+    ng-click="page.last()" class="pagelink lastpage">
+    {{page.count}}
+  </a>
+
+  <a ng-show="page.index < page.count" ng-click="page.next()" class="nextlink" rel="next">
+    <span>Next</span>
+  </a>
+
+</div>

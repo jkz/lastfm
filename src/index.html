@@ -68,12 +68,12 @@
   <div id="fauxHeader"></div>
 </div>
 
-<div id="page" class="            ">
+<div id="page">
   <!-- is404="{{$state.current.name == '404' && 1 || 0}}" -->
   <div
     id=library
     ng-class="{
-      sic: $state.includes('user.library'),
+      sic: $state.includes('user.library') || $state.includes('user.friends'),
       fixed: false,
       fifulfi: $state.current == 'user'
     }">

@@ -5,9 +5,9 @@ angular.module('lastfm.api', [])
 
     /* Create a LastFM object */
     var lastfm = new LastFM({
-            apiKey    : '96b7891388b19f60761d5cb03fcd88ff',
-            apiSecret : '1082aebf524eb701491422ccc096bde8',
-            cache     : cache
+        apiKey    : '96b7891388b19f60761d5cb03fcd88ff',
+        apiSecret : '1082aebf524eb701491422ccc096bde8',
+        cache     : cache
     });
 
     var handlers = {
@@ -16,11 +16,11 @@ angular.module('lastfm.api', [])
           $paginator.transitionTo('404');
       },
       29: function () {
-        console.log(29);
+          console.log(29);
       }
     };
 
-    function error(cdataer) {
+    function error(caller) {
       return function (code, message) {
         console.log(code, message);
         handlers[code]();
@@ -30,7 +30,7 @@ angular.module('lastfm.api', [])
             break;
         case 29:
           $timeout(function () {
-            cdataer();
+            caller();
           }, 60000);
           break;
         default:
@@ -39,9 +39,71 @@ angular.module('lastfm.api', [])
       };
     }
 
+    function handler(endpoint, callback) {
+        return function (data) {
+            if (endpoint.collection) {
+                return callback(
+                    data[endpoint.collection][endpoint.entity],
+                    data[endpoint.collection]['@attr']
+                )
+            } else {
+                return callback(
+                    data[endpoint.entity]
+                )
+            }
+        }
+    }
+
+    function request(endpoint, options, callbacks) {
+        var success = callbacks.success || console.log,
+            error = callbacks.error || error;
+
+        endpoint.method(options, {
+            error: error,
+            success: function (data) {
+console.log('CALLBACK', data);
+                if (endpoint.collection) {
+                    return success(
+                        data[endpoint.collection][endpoint.entity],
+                        data[endpoint.collection]['@attr']
+                    )
+                } else {
+                    return success(
+                        data[endpoint.entity]
+                    )
+                }
+            }
+        })
+    }
+
+    function endpoint(conf) {
+        return function (options, callbacks) {
+            return request(conf, options, callbacks);
+        }
+    }
+
     return {
-      api: lastfm,
-      error: error
+      user: {
+          info: endpoint({
+            method: lastfm.user.getInfo,
+            entity: 'user',
+          }),
+          friends: endpoint({
+            method: lastfm.user.getFriends,
+            collection: 'friends',
+            entity: 'user'
+          }),
+          scrobbles: endpoint({
+              method: lastfm.user.getRecentTracks,
+              collection: 'recenttracks',
+              entity: 'track'
+          }),
+          loved: endpoint({
+              method: lastfm.user.getLovedTracks,
+              collection: 'lovedtracks',
+              entity: 'track'
+          })
+      }
     }
 })
 .directive('userBadge', function () {
@@ -82,6 +144,21 @@ angular.module('lastfm.api', [])
     templateUrl: 'lastfm/story.tpl.html'
   };
 })
+.directive('paginator', function () {
+  return {
+    restrict: 'AE',
+    scope: {
+      page: '=',
+      collection: '='
+    },
+    templateUrl: 'lastfm/paginator.tpl.html',
+    link: function ($scope) {
+        $scope.$watch('page.index', function () {
+            $scope.collection.update();
+        });
+    }
+  };
+})
 .factory('paginator', function () {
   function defaults() {
     return {
@@ -95,7 +172,7 @@ angular.module('lastfm.api', [])
 
   function Paginator(conf) {
     angular.extend(this, defaults(), conf);
-    console.log(this);
+console.log(this);
   };
 
   Paginator.prototype.slice = function (data) {
@@ -135,57 +212,56 @@ angular.module('lastfm.api', [])
   }
 })
 .factory('collection', function (paginator) {
-  function defaults() {
-    return {
-      request: 1,
-      name: 10,
-      type: 0,
-      data: {},
-      pageOptions: {},
-      requestOptions: {}
-    };
-  }
-
-  function Collection(conf) {
+  function Collection(endpoint, conf) {
+      conf = conf || {};
       angular.extend(this, conf);
+      this.endpoint = endpoint;
       this.data = {};
-      this.page = paginator(pageDefaults);
+      this.page = paginator(this.page);
+      //this.update();
   }
 
-  Collection.prototype.callback = function ($scope) {
-    var that = this;
-    return function (data) {
-      $scope.$apply(function () {
-        var meta = data[name]['@attr'];
-        that.page.count = meta.totalPages;
-        this.data[meta.page || 1] = [].concat(data[name][type]);
-      });
-    }
+  Collection.prototype.callback = function (data, meta) {
+    this.page.count = meta.totalPages;
+    console.log('poei', this, this.data);
+    this.data[meta.page || 1] = [].concat(data);
+    this.$scope.$digest();
   };
 
-  Collection.prototype.fetch = function (options, success, error) {
+  Collection.prototype.request = function (options, success, error) {
+console.log('REQUEST', options, success, error);
     var params = angular.extend({
-        page: $scope.page.index,
-        limit: $scope.page.limit,
-      }, requestDefaults, options)
-
-    return request(params, {
-        success: success || function (){},
-        error: error || function (){},
+        page: this.page.index,
+        limit: this.page.limit,
+      }, this.params, options),
+      that = this;
+    return this.endpoint(params, {
+        success: function (data, meta) {
+            that.callback(data, meta);
+        },
+        error: error,
     });
   };
 
   Collection.prototype.update = function (options) {
-    var i;
-    options = options || {};
-    for (i = $scope.page.index - 2; i < $scope.page.index + 2; i++) {
-      if (i >= 1 && !$scope.friends[i]) {
-          options.page = i;
-          collection.fetch(params);
+console.log('UPDATE', options);
+    var i,
+        params = options || {};
+    params.page = 1;
+    for (i = this.page.index - 2; i < this.page.index + 2; i++) {
+      if (i > 0 && i < Math.max(2, this.page.count) && !this.data[i]) {
+          params.page = i;
+          this.request(params);
       }
     }
   };
 
-  return collection;
+  Collection.prototype.current = function () {
+    return this.data[this.page.index];
+  }
+
+  return function (endpoint, options) {
+    return new Collection(endpoint, options);
+  };
 })
 ;
