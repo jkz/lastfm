@@ -7,7 +7,8 @@
     </div>
   </div>
 
-  <paginator page=friends.page collection=friends></paginator>
+  <paginator-ellipsis paginator=friends>
+  </paginator-ellipsis>
 
   <ul class="usersMedium clearit" id="users" odd="1">
     <li ng-repeat="friend in friends.current()" ng-class="{
@@ -56,5 +57,7 @@
     </li>
   </ul>
 
+  <paginator-ellipsis ng-show="page.count > 1" paginator=friends>
+  </paginator-ellipsis>
 
 </div><!-- .skyWrap -->

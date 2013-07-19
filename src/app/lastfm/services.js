@@ -1,4 +1,4 @@
-angular.module('lastfm.api', [])
+angular.module('lastfm.services')
 .service('lastfm', function () {
     /* Create a cache object */
     var cache = new LastFMCache();
@@ -111,54 +111,7 @@ console.log('CALLBACK', data);
       }
     }
 })
-.directive('userBadge', function () {
-  return {
-    restrict: 'AE',
-    scope: {
-      user: '='
-    },
-    templateUrl: 'lastfm/user/badge.tpl.html',
-    link: function ($scope) {
-    }
-  };
-})
-.directive('recentTracks', function () {
-  return {
-    restrict: 'AE',
-    templateUrl: 'lastfm/recent.tpl.html'
-  };
-})
-.directive('friends', function () {
-  return {
-    restrict: 'AE',
-    templateUrl: 'lastfm/friends.tpl.html'
-  };
-})
-.directive('story', function () {
-  return {
-    restrict: 'AE',
-    scope: {
-      users: '='
-    },
-    templateUrl: 'lastfm/story.tpl.html'
-  };
-})
-.directive('paginator', function () {
-  return {
-    restrict: 'A',
-    scope: {
-      paginator: '=',
-    },
-    //templateUrl: 'lastfm/paginator.tpl.html',
-    link: function ($scope) {
-        $scope.page = $scope.paginator.page;
-        $scope.$watch('page.index', function () {
-console.log($scope.paginator);
-            $scope.paginator.update();
-        });
-    }
-  };
-})
+
 .factory('paginator', function () {
   function defaults() {
     return {
@@ -211,6 +164,7 @@ console.log(this);
     return new Paginator(conf);
   }
 })
+
 .factory('collection', function (paginator) {
   /*
    * conf includes:
@@ -256,7 +210,7 @@ console.log('UPDATE', options);
         params = options || {};
     params.page = 1;
     for (i = this.page.index - 2; i < this.page.index + 2; i++) {
-      if (i > 0 && i < Math.max(2, this.page.count) && !this.data[i]) {
+      if (i > 0 && i <= (this.page.count || 1) && !this.data[i]) {
           params.page = i;
           this.request(params);
       }

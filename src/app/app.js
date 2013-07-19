@@ -1,13 +1,25 @@
+angular.module('lastfm.directives', []);
+angular.module('lastfm.services', [])
+angular.module('lastfm.filters', [])
+angular.module('lastfm.controllers', ['lastfm.services'])
+
 angular.module( 'lastfm', [
+  'lastfm.controllers',
+  'lastfm.directives',
+  'lastfm.services',
+  'lastfm.filters',
+
   'templates-app',
   'templates-common',
+
   'ui.state',
   'ui.route',
+  'titleService',
+
   'kit',
   'markdown',
   'fuzzy',
-  'titleService',
-  'lastfm.api',
+
   'github'
 ])
 
@@ -51,38 +63,12 @@ angular.module( 'lastfm', [
           .state( 'user.library.music', {
             url: '',
             templateUrl: 'lastfm/user/library/music.tpl.html',
-            controller: function ($scope, $stateParams, lastfm, collection) {
-              $scope.artists = collection({
-                  endpoint: lastfm.user.artists,
-                  $scope: $scope,
-                  page: {
-                    limit: 18,
-                  },
-                  params: {
-                      user: $stateParams.uid,
-                      sortBy: 'plays',
-                      sortOrder: 'desc'
-                  }
-              });
-            }
+            controller: 'LibraryArtistCtrl'
           })
           .state( 'user.library.loved', {
             url: '/loved',
             templateUrl: 'lastfm/user/library/loved.tpl.html',
-            controller: function ($scope, $stateParams, lastfm, collection) {
-              $scope.tracks = collection({
-                  endpoint: lastfm.user.loved,
-                  $scope: $scope,
-                  page: {
-                    limit: 18,
-                  },
-                  params: {
-                      user: $stateParams.uid,
-                      sortBy: 'plays',
-                      sortOrder: 'desc'
-                  }
-              });
-            }
+            controller: 'LibraryLoveCtrl'
           })
       .state( 'user.friends', {
         url: '/friends',
@@ -97,86 +83,10 @@ angular.module( 'lastfm', [
   titleService.setSuffix( ' | Title' );
 })
 
-.controller( 'AppCtrl', function AppCtrl ( $scope, $location, $timeout) {
-  $scope.skinColor = 'red';
-  $scope.paintIt = function (color) {
-    $scope.skinColor = color;
-  };
-
-})
-
-.controller( 'FriendCtrl', function ($scope, $stateParams, lastfm, collection) {
-  $scope.friends = collection({
-    endpoint: lastfm.user.friends,
-    $scope: $scope,
-    params: {
-      user: $stateParams.uid,
-      recenttracks: 1
-    }
-  });
-})
-
-.controller( 'ScrobbleCtrl', function ($scope, $stateParams, lastfm, collection) {
-  $scope.tracks = collection({
-    endpoint: lastfm.user.scrobbles,
-    $scope: $scope,
-    params: {
-      user: $stateParams.uid,
-      extended: 1
-    }
-  });
-})
-
-.controller( 'UserCtrl', function UserCtrl ( $scope, $location, $timeout, $state, $stateParams, lastfm) {
-  lastfm.user.info({
-      user: $stateParams.uid,
-  }, {
-      success: function (data) {
-        $scope.$apply(function () {
-            $scope.user = data;
-        });
-      }
-  });
-})
-
-.filter('gender', function () {
-    return function (g) {
-        return {m: 'Male', f: 'Female'}[g] || g;
-    };
-})
-
-.filter('country', function () {
-    return function (code) {
-        return {
-          NL: 'Netherlands',
-          US: 'United States',
-          UK: 'United Kingdom'
-        }[code] || code;
-    };
-})
-
-.filter('flipping', function () {
-    return function (num) {
-        var result = '',
-            text = (num || 0).toString();
-        angular.forEach(text.toString().split(''), function (c) {
-            result += '<span class=flip>' + c + '</span>';
-        });
-        return result;
-    };
-})
-
 .run(function ($rootScope, $state, $stateParams) {
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
-    $rootScope.range = function(min, max, step){
-      step = (step == undefined) ? 1 : step;
-      var input = [];
-      for (var i=min; i<=max; i+=step) input.push(i);
-      return input;
-    };
 })
-
 
 ;
 
