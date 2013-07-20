@@ -159,12 +159,26 @@
         </form>
 
         <div id="headerPromo">
-          <a href="/about/jobs">&pound;{{user.playcount}} and counting</a>
+          <ng-switch on="randint(1,2)">
+            <a ng-switch-when="1" href="//twitter.com/jessethegame">
+              Get updates from Jesse, follow me on Twitter »
+            </a>
+            <a ng-switch-when="2" href="mailto:j.k.zwaan@gmail.com">
+              Let's work together! Jesse is ready »
+            </a>
+            <a ng-switch-default></a>
+          </ng-switch>
         </div>
       </div><!-- #headerWrapper -->
     </div><!-- #header -->
 
-    <div id=content data-require="core/page" ui-view></div><!-- #content -->
+
+
+
+    <div ui-view id=content data-require="core/page"></div><!-- #content -->
+
+
+
 
   </div>
 </div>

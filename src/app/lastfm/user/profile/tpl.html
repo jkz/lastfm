@@ -20,17 +20,18 @@
   </nav>
 </header>
 
+<div>Boo<a ui-sref="user.library.music">CLEICK MI</div>
+
 <div class="leftCol">
   <div class="leftColWrapper">
-    <user-badge user=user></user-badge>
-    <story></story>
-    <recent-tracks ng-controller=ScrobbleCtrl></recent-tracks>
+    <div ui-view></div>
+    <div ui-view=badge></div>
+    <div ui-view=taste></div>
   </div><!-- .leftColWrapper -->
 </div><!-- .leftCol -->
 
 <div class="mpuTop rightCol">
   <github-activities user="user.name"></github-activities>
-  <friends ng-controller=FriendCtrl></friends>
 </div>
 
 <div ng-show=false class="module">
@@ -60,6 +61,8 @@ data-template="shoutbox"
 data-trigger="appear"
 data-module="lazy/shoutbox"
 data-require="lazy/shoutbox"
+
+ng-show=false
 >
 
 <h2 class="heading">
@@ -71,7 +74,7 @@ data-require="lazy/shoutbox"
 <div class="shoutboxContainer user-shoutbox">
   <div class="shoutboxInput">
     <a href="#" id="shoutPostAgain" class="postAgainMessage" style="display:none;">
-        Shout again…
+      Shout again…
     </a>
     <div id="shoutboxError" style="display:none" class="messageBox errorMessage">
       <span class="messageWrapper">Sorry, there was a problem sending your message, have another go.</span>
@@ -100,26 +103,26 @@ data-require="lazy/shoutbox"
 
   <ul class="shouts">
     <li class="clearit message can-delete">
-      <h3 class="author staff">
-        <a href="/user/LAST.HQ">
-          <span class="userImage">
-            <img src="http://userserve-ak.last.fm/serve/64/615839.jpg" class="avatar " width="64">
-            <img class="icon staff_icon" width="6" height="6" src="http://static.lst.fm/flatness/clear.gif">
-          </span>
-          LAST.HQ
-        </a>
-      </h3>
-      <p>Welcome aboard, jessethegame! Happy listening.</p>
-      <div class="meta">
-        <span class="date">29 Oct 2012</span>
-        <a class="shoutbox-reply" href="/user/LAST.HQ#shoutbox">Reply</a>
-        <form action="/user/jessethegame/shoutbox/delete" method="post" class="deleteShout options">
-          <input type="hidden" name="formtoken" value="eda4ce4635e8dc41a544e5150d83211e0d9ac562">
-          <input type="hidden" name="backto" value="/user/jessethegame">
-          <input type="hidden" name="url" value="/user/jessethegame/shoutbox/341866268">
-          <input type="image" class="delete" src="http://static.lst.fm/flatness/global/icon_delete.2.png" alt="Delete" title="Delete shout">
-        </form>
-      </div>
+    <h3 class="author staff">
+      <a href="/user/LAST.HQ">
+        <span class="userImage">
+          <img src="http://userserve-ak.last.fm/serve/64/615839.jpg" class="avatar " width="64">
+          <img class="icon staff_icon" width="6" height="6" src="http://static.lst.fm/flatness/clear.gif">
+        </span>
+        LAST.HQ
+      </a>
+    </h3>
+    <p>Welcome aboard, jessethegame! Happy listening.</p>
+    <div class="meta">
+      <span class="date">29 Oct 2012</span>
+      <a class="shoutbox-reply" href="/user/LAST.HQ#shoutbox">Reply</a>
+      <form action="/user/jessethegame/shoutbox/delete" method="post" class="deleteShout options">
+        <input type="hidden" name="formtoken" value="eda4ce4635e8dc41a544e5150d83211e0d9ac562">
+        <input type="hidden" name="backto" value="/user/jessethegame">
+        <input type="hidden" name="url" value="/user/jessethegame/shoutbox/341866268">
+        <input type="image" class="delete" src="http://static.lst.fm/flatness/global/icon_delete.2.png" alt="Delete" title="Delete shout">
+      </form>
+    </div>
     </li>
   </ul>
 </div>

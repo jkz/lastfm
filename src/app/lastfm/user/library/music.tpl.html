@@ -1,20 +1,21 @@
-  <div id="libraryTopWrapper" class="clearit">
-    <p id="librarySubNav">
-      <span ng-class="{current: params.sortBy == 'plays'}">
-        <a ng-href="#/user/{{user.name}}/library"
-           ng-click="setSort('plays')">By Plays</a>
-      </span>
-      |
-      <span ng-class="{current: params.sortBy == 'name'}">
-        <a ng-href="#/user/{{user.name}}/library"
-           ng-click="setSort('name')">A–Z</a>
-      </span>
-      |
-      <span>
-        <a ng-href="#/user/{{user.name}}/library/recent">Recently Added</a>
-      </span>
-    </p>
-  </div><!-- .libraryTopWrapper -->
+<div id="libraryTopWrapper" class="clearit" ng-show=false>
+  <p id="librarySubNav">
+    <span ng-class="{current: artists.params.sortBy == 'plays'}">
+      <a ng-href="#/user/{{user.name}}/library"
+         ng-click="artists.sort('plays')">By Plays</a>
+       {{sortBy}}
+    </span>
+    |
+    <span ng-class="{current: artists.params.sortBy == 'name'}">
+      <a ng-href="#/user/{{user.name}}/library"
+         ng-click="artists.sort('name')">A–Z</a>
+    </span>
+    |
+    <span>
+      <a ng-href="#/user/{{user.name}}/library/recent">Recently Added</a>
+    </span>
+  </p>
+</div><!-- .libraryTopWrapper -->
 
 <div class="wrapper">
   <div id="page1" class="page">

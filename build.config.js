@@ -55,9 +55,6 @@ module.exports = {
       'vendor/angular-ui-router/release/angular-ui-router.js',
       'vendor/angular-ui-utils/modules/route/route.js',
       'vendor/showdown/compressed/showdown.js',
-      'vendor/last.fm-api/lastfm.api.cache.js',
-      'vendor/last.fm-api/lastfm.api.js',
-      'vendor/last.fm-api/lastfm.api.md5.js'
     ],
     css: [
     ]

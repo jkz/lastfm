@@ -14,7 +14,6 @@ angular.module( 'lastfm', [
 
   'ui.state',
   'ui.route',
-  'titleService',
 
   'kit',
   'markdown',
@@ -31,10 +30,18 @@ angular.module( 'lastfm', [
 })
 
 .config( function myAppConfig ( $stateProvider, $urlRouterProvider ) {
+  $urlRouterProvider.otherwise( '/404' );
+
   $stateProvider
-  .state( 'intro', {
+  .state( 'home', {
     url: '/',
-    //controller: 'AppCtrl',
+    controller: 'HomeCtrl',
+    resolve: { title: function(){ return 'Home - Last.fm' } },
+    templateUrl: 'index.tpl.html'
+  })
+  .state( 'intro', {
+    url: '/intro',
+    controller: 'AppCtrl',
     templateUrl: 'index.tpl.html'
   })
   .state( '404', {
@@ -49,16 +56,32 @@ angular.module( 'lastfm', [
     url: '/user/:uid',
     controller: 'UserCtrl',
     abstract: true,
-    templateUrl: 'lastfm/user/tpl.html'
+    templateUrl: 'lastfm/user/profile/tpl.html',
   })
       .state( 'user.profile', {
+        resolve: function ($stateParams) { return $stateParams.name + "'s Music Profile - Users at Last.fm"; },
         url: '',
-        templateUrl: 'lastfm/user/profile.tpl.html',
+        views: {
+            '': {
+                template: 'BOIBOIBOIB'
+            },
+            'badge@user': {
+                //templateUrl: 'lastfm/user/profile/badge.tpl.html'
+                template: 'FOOOOOOOOO'
+            },
+            'taste@user': {
+                templateUrl: 'lastfm/user/profile/taste.tpl.html'
+            }
+        }
       })
       .state( 'user.library', {
         url: '/library',
         abstract: true,
-        templateUrl: 'lastfm/user/library/tpl.html',
+        views: {
+          '@': {
+              templateUrl: 'lastfm/user/library/tpl.html',
+          }
+        }
       })
           .state( 'user.library.music', {
             url: '',
@@ -76,12 +99,13 @@ angular.module( 'lastfm', [
         controller: 'FriendCtrl'
       })
   ;
-  $urlRouterProvider.otherwise( '/404' );
 })
 
+/*
 .run( function run ( titleService ) {
   titleService.setSuffix( ' | Title' );
 })
+*/
 
 .run(function ($rootScope, $state, $stateParams) {
     $rootScope.$state = $state;

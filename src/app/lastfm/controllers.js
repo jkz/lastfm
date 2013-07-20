@@ -5,7 +5,9 @@ angular.module('lastfm.controllers')
   $scope.paintIt = function (color) {
     $scope.skinColor = color;
   };
-
+  $scope.randint = function (min, max) {
+    return Math.floor(Math.random() * (max - min) + 0.5) + min;
+  }
 })
 
 .controller( 'FriendCtrl', function ($scope, $stateParams, lastfm, collection) {
@@ -31,6 +33,8 @@ angular.module('lastfm.controllers')
 })
 
 .controller( 'UserCtrl', function UserCtrl ( $scope, $stateParams, lastfm) {
+    $scope.username = $stateParams.uid;
+  /*
   lastfm.user.info({
       user: $stateParams.uid,
   }, {
@@ -38,6 +42,15 @@ angular.module('lastfm.controllers')
         $scope.$apply(function () {
             $scope.user = data;
         });
+      }
+  });
+  */
+
+  lastfm.user.info({
+      user: $stateParams.uid,
+  }, {
+      success: function (data) {
+          $scope.user = data;
       }
   });
 })
