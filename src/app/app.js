@@ -12,6 +12,7 @@ angular.module( 'lastfm', [
   'templates-app',
   'templates-common',
 
+  'ngCookies',
   'ui.state',
   'ui.route',
   'titleService',
@@ -73,6 +74,9 @@ angular.module( 'lastfm', [
             'taste': {
                 templateUrl: 'lastfm/views/user/profile/taste.tpl.html'
             }
+            'friends': {
+                templateUrl: 'lastfm/views/user/profile/friends.tpl.html'
+            }
         }
       })
       .state( 'user.library', {
@@ -111,6 +115,26 @@ angular.module( 'lastfm', [
 .run(function ($rootScope, $state, $stateParams) {
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
+
+    $rootScope.user = $stateParams;
+
+    $rootScope.$watch('user.name', function () {
+        console.log('CHANGE!');
+    })
+})
+
+.controller( 'AppCtrl', function AppCtrl ( $scope, $cookies) {
+  $scope.skinColor = $cookies.skinColor || 'red'
+
+    console.log('COOK', $cookies);
+
+  $scope.paintIt = function (color) {
+    $cookies.skinColor = color;
+    $scope.skinColor = color;
+  };
+  $scope.randint = function (min, max) {
+    return Math.floor(Math.random() * (max - min) + 0.5) + min;
+  };
 })
 
 ;
