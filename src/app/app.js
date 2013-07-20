@@ -68,6 +68,9 @@ angular.module( 'lastfm', [
         },
         url: '',
         views: {
+            'scrobbles': {
+                templateUrl: 'lastfm/views/user/profile/scrobbles.tpl.html'
+            },
             'badge': {
                 templateUrl: 'lastfm/views/user/profile/badge.tpl.html'
             },
