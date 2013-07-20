@@ -73,7 +73,7 @@ angular.module( 'lastfm', [
             },
             'taste': {
                 templateUrl: 'lastfm/views/user/profile/taste.tpl.html'
-            }
+            },
             'friends': {
                 templateUrl: 'lastfm/views/user/profile/friends.tpl.html'
             }
