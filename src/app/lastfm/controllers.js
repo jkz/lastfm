@@ -36,12 +36,10 @@ angular.module('lastfm.controllers')
   });
   */
 
-  console.log('USER???');
   lastfm.user.info({
       user: $stateParams.user,
   }, {
       success: function (data) {
-          console.log('SUCCESS USER', data);
           $scope.user = data;
       }
   });

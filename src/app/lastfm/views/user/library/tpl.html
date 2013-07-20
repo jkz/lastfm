@@ -3,7 +3,9 @@
     with-crumbtrail
     with-image
     clearit
-">
+    "
+   ng-controller=UserCtrl
+>
   <div class="crumb-wrapper">
     <div class="top-crumb">
       <a href="#/user/{{user.name}}">
@@ -21,6 +23,7 @@
         <a ng-href="#/user/{{user.name}}/library">Library</a>
       </li>
       <li><a ng-href="#/user/{{user.name}}/friends">Friends</a></li>
+      <!--
       <li><a ng-href="#/user/{{user.name}}/tracks">Tracks</a></li>
       <li><a ng-href="#/user/{{user.name}}/albums">Albums</a></li>
       <li><a ng-href="#/user/{{user.name}}/charts">Charts</a></li>
@@ -29,6 +32,7 @@
       <li><a ng-href="#/user/{{user.name}}/groups">Groups</a></li>
       <li><a ng-href="#/user/{{user.name}}/journal">Journal</a></li>
       <li><a ng-href="#/user/{{user.name}}/library/tags">Tags</a></li>
+      -->
     </ul>
     <div class="drop-down-menu more">
       <a href="" class="menu-toggle">More…</a>

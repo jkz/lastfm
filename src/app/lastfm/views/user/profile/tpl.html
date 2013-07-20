@@ -1,4 +1,9 @@
-<header class=" page-head without-crumbtrail without-image clearit separated">
+<header class="
+page-head
+without-crumbtrail
+without-image
+clearit
+separated">
 <h1>{{user.name}}</h1>
   <nav class="secondary-nav" role="navigation" data-require="secondarynav">
     <ul class="visible-menu">
@@ -33,6 +38,7 @@
 
 <div class="mpuTop rightCol">
   <github-activities user="user.name"></github-activities>
+  <div ui-view=friends ng-controller=FriendCtrl></div>
 </div>
 
 <div ng-show=false class="module">
