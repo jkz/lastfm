@@ -12,7 +12,7 @@ angular.module('lastfm.services')
       }
     };
 
-    function error(caller) {
+    function errorHandler(caller) {
       return function (code, message) {
         console.log(code, message);
         handlers[code]();
@@ -48,7 +48,7 @@ angular.module('lastfm.services')
 
     function request(endpoint, options, callbacks) {
         var success = callbacks.success || console.log,
-            error = callbacks.error || error;
+            error = callbacks.error || errorHandler;
         options.method = endpoint.method;
         options.api_key = apiKey;
         options.format = 'json';

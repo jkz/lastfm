@@ -1,4 +1,4 @@
-<div id="userBadge" class="clearit user vcard" id="hcard-jessethegame">
+<div id="userBadge" class="clearit user vcard" id="hcard-{{user.name}}">
 
   <div class="badgeAvatar">
     <span class="userImage">
@@ -23,13 +23,13 @@
           <span class=flip>&pound;</span>
           <span class="count" ng-bind-html-unsafe="user.playcount|flipping"></span>&nbsp;salary expectation
       </strong> <small>{{user.registered['#text']}}</small></span>
-        <p class="userActivity">
-          <a href="/user/jessethegame/library/loved" title="">1 Loved Track</a>
-          | <a href="/user/jessethegame/grapevine" title="">0 Posts</a>
-          | <a href="/user/jessethegame/playlists" title="">0 Playlists</a>
+        <p class="userActivity" ng-show=false>
+        <a ng-href="#/user/{{user.name}}/library/loved" title="">{{}} Loved Track</a>
+        | <a ng-href="#/user/{{user.name}}/grapevine" title="">{{}} Posts</a>
+        | <a ng-href="#/user/{{user.name}}/playlists" title="">{{}} Playlists</a>
           | <span class="shoutCount">
-            <a href="#shoutbox" id="shoutBoxLink"  class="icon" data-analytics-action="ShoutCountLink">
-            <img class="icon comment_icon" width="13" height="11" src="http://cdn.last.fm/flatness/clear.gif" style="" /><span>1 shout</span>
+            <a href="#shoutbox" id="shoutBoxLink" class="icon" data-analytics-action="ShoutCountLink">
+            <img class="icon comment_icon" width="13" height="11" src="http://cdn.last.fm/flatness/clear.gif" style="" /><span>{{}} shout</span>
           </a>
         </span>
       </p>

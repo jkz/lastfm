@@ -80,8 +80,7 @@
 
     <div id="header" class="clearit responsive-container" role="banner">
       <div id="headerWrapper">
-        <a href="/home" id="lastfmLogo">Last.fm</a>
-        {{username}}
+        <a href="#/home" id="lastfmLogo">Last.fm</a>
         <ul id="primaryNav" role="navigation" ng-show=false>
           <li id="musicNav" class="navItem">
             <a href="/music" class="nav-link">Music</a>
@@ -135,25 +134,30 @@
           </ul>
         </div>
         <div id="headerLinks">
+          <!--
           <a href="/user/jessethegame?change=language" title="Click here to change your language" rel="nofollow" id="headerLangToggle" class="icon">
             <img class="transparent_png globe_icon icon" alt="Change language" width="11" height="11" src="http://cdn.last.fm/flatness/clear.gif" style="" />
             <span>English</span>
           </a>
+          |
+          -->
           <ng-switch on="skinColor">
-          <span ng-switch-when="red">   | <a href="" title="Switch Colour Style"
-              ng-click="paintIt('black')">Paint it Black</a></span>
-          <span ng-switch-when="black"> | <a href="" title="Switch Colour Style"
-              ng-click="paintIt('brown')">Brown Skin Lady</a></span>
-          <span ng-switch-when="brown"> | <a href="" title="Switch Colour Style"
-              ng-click="paintIt('blue')">Daba dee daba da</a></span>
-          <span ng-switch-when="blue">  | <a href="" title="Switch Colour Style"
-              ng-click="paintIt('red')">Simply Red</a></span>
+          <span ng-switch-when="red">
+            <a href="" title="Switch Colour Style" ng-click="paintIt('black')">Paint it Black</a></span>
+          <span ng-switch-when="black">
+            <a href="" title="Switch Colour Style" ng-click="paintIt('brown')">Brown Skin Lady</a></span>
+          <span ng-switch-when="brown">
+            <a href="" title="Switch Colour Style" ng-click="paintIt('blue')">Daba dee</a></span>
+          <span ng-switch-when="blue">
+            <a href="" title="Switch Colour Style" ng-click="paintIt('red')">Simply Red</a></span>
           </ng-switch>
+          <!--
           | <a href="/help">Help</a>
+          -->
         </div>
 
-        <form id="siteSearch" method="get" action="/search" class="search-autocomplete" role="search" data-require="search/sitesearch" data-template="search" data-url="/search/autocomplete">
-            <input id="siteSearchBox" type="text" name="q" autocorrect="off" autocomplete="off" placeholder="Music search" size="26" class="js-search" />
+        <form id="siteSearch" method="get" class="search-autocomplete" role="search" data-require="search/sitesearch" data-template="search" data-url="/search/autocomplete">
+            <input id="siteSearchBox" disabled type="text" name="q" autocorrect="off" autocomplete="off" placeholder="Music search" size="26" class="js-search" />
             <div id="siteSearchProgress" class="js-search-progress search-progress ir" style="display: none;">Loading</div>
             <input type="hidden" name="from" value="ac" />
             <button id="siteSearchSubmit" type="submit" class="submit" title="Search"></button>

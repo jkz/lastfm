@@ -53,13 +53,13 @@ angular.module( 'lastfm', [
   })
   .state( 'user404', {
     url: '/user404',
-    templateUrl: 'lastfm/user/404.tpl.html'
+    templateUrl: 'lastfm/views/user/404.tpl.html'
   })
   .state( 'user', {
     url: '/user/:user',
     controller: 'UserCtrl',
     abstract: true,
-    templateUrl: 'lastfm/user/profile/tpl.html',
+    templateUrl: 'lastfm/views/user/profile/tpl.html',
   })
       .state( 'user.profile', {
         onEnter: function(titleService, $stateParams) {
@@ -67,15 +67,11 @@ angular.module( 'lastfm', [
         },
         url: '',
         views: {
-            '': {
-                template: 'BOIBOIBOIB'
+            'badge': {
+                templateUrl: 'lastfm/views/user/profile/badge.tpl.html'
             },
-            'badge@user': {
-                //templateUrl: 'lastfm/user/profile/badge.tpl.html'
-                template: 'FOOOOOOOOO'
-            },
-            'taste@user': {
-                templateUrl: 'lastfm/user/profile/taste.tpl.html'
+            'taste': {
+                templateUrl: 'lastfm/views/user/profile/taste.tpl.html'
             }
         }
       })
@@ -84,23 +80,23 @@ angular.module( 'lastfm', [
         abstract: true,
         views: {
           '@': {
-              templateUrl: 'lastfm/user/library/tpl.html',
+              templateUrl: 'lastfm/views/user/library/tpl.html',
           }
         }
       })
           .state( 'user.library.music', {
             url: '',
-            templateUrl: 'lastfm/user/library/music.tpl.html',
+            templateUrl: 'lastfm/views/user/library/music.tpl.html',
             controller: 'LibraryArtistCtrl'
           })
           .state( 'user.library.loved', {
             url: '/loved',
-            templateUrl: 'lastfm/user/library/loved.tpl.html',
+            templateUrl: 'lastfm/views/user/library/loved.tpl.html',
             controller: 'LibraryLoveCtrl'
           })
       .state( 'user.friends', {
         url: '/friends',
-        templateUrl: 'lastfm/user/friends.tpl.html',
+        templateUrl: 'lastfm/views/user/friends.tpl.html',
         controller: 'FriendCtrl'
       })
   ;

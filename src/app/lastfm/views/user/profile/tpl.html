@@ -4,6 +4,7 @@
     <ul class="visible-menu">
       <li class="first"><a href="#/user/{{user.name}}/library">Library</a></li>
       <li><a ng-href="#/user/{{user.name}}/friends">Friends</a></li>
+      <!--
       <li><a ng-href="#/user/{{user.name}}/tracks">Tracks</a></li>
       <li><a ng-href="#/user/{{user.name}}/albums">Albums</a></li>
       <li><a ng-href="#/user/{{user.name}}/charts">Charts</a></li>
@@ -12,6 +13,7 @@
       <li><a ng-href="#/user/{{user.name}}/groups">Groups</a></li>
       <li><a ng-href="#/user/{{user.name}}/journal">Journal</a></li>
       <li><a ng-href="#/user/{{user.name}}/library/tags">Tags</a></li>
+      -->
     </ul>
     <div class="drop-down-menu more">
       <a href="#" class="menu-toggle">More…</a>
@@ -20,11 +22,8 @@
   </nav>
 </header>
 
-<div>Boo<a ui-sref="user.library.music">CLEICK MI</div>
-
 <div class="leftCol">
   <div class="leftColWrapper">
-    <div ui-view></div>
     <div ui-view=badge></div>
     <div ui-view=taste></div>
   </div><!-- .leftColWrapper -->
@@ -61,8 +60,6 @@ data-template="shoutbox"
 data-trigger="appear"
 data-module="lazy/shoutbox"
 data-require="lazy/shoutbox"
-
-ng-show=false
 >
 
 <h2 class="heading">

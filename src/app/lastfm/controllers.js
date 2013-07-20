@@ -15,7 +15,7 @@ angular.module('lastfm.controllers')
     endpoint: lastfm.user.friends,
     $scope: $scope,
     params: {
-      user: $stateParams.uid,
+      user: $stateParams.user,
       recenttracks: 1
     }
   });
@@ -26,17 +26,17 @@ angular.module('lastfm.controllers')
     endpoint: lastfm.user.scrobbles,
     $scope: $scope,
     params: {
-      user: $stateParams.uid,
+      user: $stateParams.user,
       extended: 1
     }
   });
 })
 
 .controller( 'UserCtrl', function UserCtrl ( $scope, $stateParams, lastfm) {
-    $scope.username = $stateParams.uid;
+    $scope.user = {name: $stateParams.user};
   /*
   lastfm.user.info({
-      user: $stateParams.uid,
+      user: $stateParams.user,
   }, {
       success: function (data) {
         $scope.$apply(function () {
@@ -46,10 +46,12 @@ angular.module('lastfm.controllers')
   });
   */
 
+  console.log('USER???');
   lastfm.user.info({
-      user: $stateParams.uid,
+      user: $stateParams.user,
   }, {
       success: function (data) {
+          console.log('SUCCESS USER', data);
           $scope.user = data;
       }
   });
@@ -63,7 +65,7 @@ angular.module('lastfm.controllers')
             limit: 18,
         },
         params: {
-            user: $stateParams.uid,
+            user: $stateParams.user,
             sortBy: 'plays',
             sortOrder: 'desc'
         }
@@ -79,7 +81,7 @@ angular.module('lastfm.controllers')
         limit: 18,
       },
       params: {
-          user: $stateParams.uid,
+          user: $stateParams.user,
           sortBy: 'plays',
           sortOrder: 'desc'
       }
