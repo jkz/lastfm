@@ -1,7 +1,7 @@
 angular.module('lastfm.filters')
 .filter('gender', function () {
     return function (g) {
-        return {m: 'Male', f: 'Female'}[g] || g;
+        return {m: 'Male', f: 'Female'}[g] || g || '–';
     };
 })
 
@@ -11,7 +11,7 @@ angular.module('lastfm.filters')
           NL: 'Netherlands',
           US: 'United States',
           UK: 'United Kingdom'
-        }[code] || code;
+        }[code] || code || '–';
     };
 })
 

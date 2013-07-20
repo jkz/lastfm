@@ -1,0 +1,105 @@
+<div class="module modulecharts modulechartsartists" data-require="affiliation/multiaffiliationarea" data-placement="" id="switcher457243">
+  <div id="switcher457243Buttons" class="moduleButtons">
+    <a class="mEdit icon" href="#">
+      <img class="icon settings_icon" width="9" height="9" src="http://cdn.last.fm/flatness/clear.gif" style="">
+      <span>Settings</span>
+    </a> |
+    <a class="mPaste" href="#">Paste Your Taste</a> |
+    <a class="mFeeds" href="#">
+      <img class="icon feed_small_icon" width="10" height="10" src="http://cdn.last.fm/flatness/clear.gif" style="">
+      <span>Feeds</span>
+    </a>
+  </div>
+
+
+  <h2 class="heading">
+    <span class="h2Wrapper">
+      <a href="/user/jessethegame/charts?subtype=artists" title="">
+        Top Artists
+      </a>
+    </span>
+  </h2>
+
+  <div class="horizontalOptions clearit">
+    <ul>
+      <li class="first chartweek" ng-class="{current: tracks.params.period == '1week'}">
+      <a ng-click=setPeriod('7day')>
+        Last 7 days
+      </a>
+      </li>
+      <li class="chart1month"  ng-class="{current: tracks.params.period == '7day'}">
+      <a ng-click="setPeriod('1month')">
+        Last month
+      </a>
+      </li>
+      <li class="chart3month" ng-class="{current: tracks.params.period == '3month'}">
+      <a ng-click="setPeriod('3month')">
+        Last 3 months
+      </a>
+      </li>
+      <li class="chart6month" ng-class="{current: tracks.params.period == '6month'}">
+      <a ng-click="setPeriod('6month')">
+        Last 6 months
+      </a>
+      </li>
+      <li class="chartyear" ng-class="{current: tracks.params.period == '12month'}">
+      <a ng-click="setPeriod('12month')">
+        Last 12 months
+      </a>
+      </li>
+      <li class="chartoverall" ng-class="{current: tracks.params.period == 'overall'}">
+      <a ng-click="setPeriod('overall')">
+        Overall
+      </a>
+      </li>
+    </ul>
+  </div><!-- .horizontalOptions -->
+
+  <div class="module-body chart chartoverall current" id="charts271350">
+    <table class="candyStriped chart" odd="1">
+      <tbody>
+
+        <tr ng-repeat="artist in artists.data[1]" ng-class="{first: $first, odd:
+          ($index + 1) % 2}">
+          <td class="positionCell">
+            {{artist.rank}}
+          </td>
+
+          <td class="subjectCell" title="{{artist.name}}, played {{artist.playcount}} times">
+            <div>
+              <a ng-href="{{artist.url}}">{{artist.name}}</a>
+            </div>
+          </td>
+
+          <td class="lovedCell">
+          </td>
+
+          <td class="multibuttonCell">
+            <a ng-href="{{artist.url}}" class="
+              mRemoveFromLibrary
+              mSend mAddTags
+              lfmButton lfmMultiButton lfmButtonForartist lfmSmallButton lfmSmallMultiButton lfmMultiButtonFull"
+              forcelink="1">
+              <span></span>
+            </a>
+          </td>
+
+          <td class="chartbarCell">
+            <div style="width:{{10 + 90 * artist.playcount / artists.data[1][0].playcount}}%;" class="chartbar">
+              <a ng-href="#/user/{{user.name}}/library/music/{{artist.name}}">
+                <span>{{artist.playcount}}</span>
+              </a>
+            </div>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+
+    <div class="moduleOptions">
+      <a ng-href="#/user/{{user.name}}/charts?rangetype=overall&amp;subtype=artists" title="">
+        See more
+      </a>
+    </div>
+  </div>
+</div>

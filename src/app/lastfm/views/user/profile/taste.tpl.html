@@ -1,4 +1,4 @@
-<div id="taste" class="clearit module modulelibrary" ng-controller=LibraryArtistCtrl>
+<div id="taste" class="clearit module modulelibrary">
   <div id="tasteButtons" class="moduleButtons">
     <a class="mEdit icon" href="#">
       <img class="icon settings_icon" width="9" height="9" src="http://cdn.last.fm/flatness/clear.gif" style="">
@@ -11,15 +11,15 @@
     </span>
   </h2>
 
-  <div class="module-body">
+  <div class="module-body" ng-controller=LibraryArtistCtrl>
     <p class="libraryInfo clearit">
-    <a ng-href="#/user/{{user.name}}/library" class="total" title="">{{artist.count}} Artists in total</a>
+    <a ng-href="#/user/{{user.name}}/library" class="total" title="">{{artists.count}} Artists in total</a>
     <br>
     <span class="rangetype">Showing: Overall</span>
     </p>
 
     <ul class="libraryItems artistsLarge">
-      <li ng-repeat="artist in artists.data" ng-class="{first: $first}" id="r6_19498076">
+      <li ng-repeat="artist in artists.data[1]" ng-class="{first: $first}" id="r6_19498076">
       <a href="{{artist.url}}">
         <span class="pictureFrame">
           <span class="image">

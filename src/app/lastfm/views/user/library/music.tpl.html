@@ -28,7 +28,14 @@
       <a ng-href="{{artist.url}}">
           <span class="pictureFrame">
             <span class="image">
-              <img height="126" width="126" alt="" ng-src="{{artist.image[2]['#text']}}" />
+              <img style="min-width: 126px; min-height: 126px; " alt="" ng-src="{{
+                artist.image[2]['#text'] ||
+                'http://cdn.last.fm/flatness/catalogue/noimage/2/default_artist_large.png'
+              }}" />
+              <img ng-show=false height="126" width="126" alt="" ng-src="{{
+                artist.image[2]['#text'] ||
+                'http://cdn.last.fm/flatness/catalogue/noimage/2/default_artist_large.png'
+              }}" />
             </span>
             <span class="overlay"></span>
           </span>

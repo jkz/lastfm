@@ -2,7 +2,10 @@
 
   <div class="badgeAvatar">
     <span class="userImage">
-      <img class="photo" height="126" width="126" alt="" ng-src="{{user.image[2]['#text']}}" />
+      <img class="photo" height="126" width="126" alt="" ng-src="{{
+        user.image[2]['#text'] ||
+        'http://cdn.last.fm/flatness/responsive/2/noimage/default_user_140_g2.png'
+      }}" />
     </span>
   </div>
 

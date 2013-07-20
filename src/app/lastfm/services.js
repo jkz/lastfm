@@ -107,7 +107,14 @@ angular.module('lastfm.services')
               method: 'library.getArtists',
               collection: 'artists',
               entity: 'artist'
-          })
+          }),
+          top: {
+              artists: endpoint({
+                  method: 'user.getTopArtists',
+                  collection: 'topartists',
+                  entity: 'artist'
+              })
+          }
       }
     }
 })

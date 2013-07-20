@@ -76,6 +76,12 @@ angular.module( 'lastfm', [
             },
             'friends': {
                 templateUrl: 'lastfm/views/user/profile/friends.tpl.html'
+            },
+            'topArtists': {
+                templateUrl: 'lastfm/views/user/profile/top.artists.tpl.html'
+            },
+            'topFriends': {
+                templateUrl: 'lastfm/views/user/profile/top.tracks.tpl.html'
             }
         }
       })

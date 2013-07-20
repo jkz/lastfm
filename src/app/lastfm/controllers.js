@@ -78,5 +78,24 @@ angular.module('lastfm.controllers')
   });
 })
 
+.controller( 'TopArtistCtrl', function ($scope, $stateParams, lastfm, collection) {
+  $scope.artists = collection({
+      endpoint: lastfm.user.top.artists,
+      $scope: $scope,
+      page: {
+        limit: 15,
+      },
+      params: {
+          user: $stateParams.user,
+          period: 'overall',
+      }
+  });
+
+    $scope.setPeriod = function (value) {
+      $scope.artists.params.period = value;
+      $scope.artists.request();
+    };
+})
+
 ;
 
