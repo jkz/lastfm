@@ -60,7 +60,7 @@
     <script type="text/javascript" src="<%= file %>"></script><% }); %>
 
   </head>
-  <body ng-class="{black: 'lfmBlack'}[skinColor]">
+  <body ng-class="{black: 'lfmBlack', brown: 'lfmBrown', blue: 'lfmBlue'}[skinColor]">
 
 
 
@@ -81,7 +81,8 @@
     <div id="header" class="clearit responsive-container" role="banner">
       <div id="headerWrapper">
         <a href="/home" id="lastfmLogo">Last.fm</a>
-        <ul id="primaryNav" role="navigation">
+        {{username}}
+        <ul id="primaryNav" role="navigation" ng-show=false>
           <li id="musicNav" class="navItem">
             <a href="/music" class="nav-link">Music</a>
           <li id="eventsNav" class="navItem">

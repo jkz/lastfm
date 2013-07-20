@@ -14,6 +14,7 @@ angular.module( 'lastfm', [
 
   'ui.state',
   'ui.route',
+  'titleService',
 
   'kit',
   'markdown',
@@ -35,7 +36,9 @@ angular.module( 'lastfm', [
   $stateProvider
   .state( 'home', {
     url: '/',
-    controller: 'HomeCtrl',
+    onEnter: function(titleService) {
+        titleService.setTitle('Home - Last.fm');
+    },
     resolve: { title: function(){ return 'Home - Last.fm' } },
     templateUrl: 'index.tpl.html'
   })
@@ -53,13 +56,15 @@ angular.module( 'lastfm', [
     templateUrl: 'lastfm/user/404.tpl.html'
   })
   .state( 'user', {
-    url: '/user/:uid',
+    url: '/user/:user',
     controller: 'UserCtrl',
     abstract: true,
     templateUrl: 'lastfm/user/profile/tpl.html',
   })
       .state( 'user.profile', {
-        resolve: function ($stateParams) { return $stateParams.name + "'s Music Profile - Users at Last.fm"; },
+        onEnter: function(titleService, $stateParams) {
+            titleService.setTitle($stateParams.user + "’s Music Profile - Users at Last.fm");
+        },
         url: '',
         views: {
             '': {
