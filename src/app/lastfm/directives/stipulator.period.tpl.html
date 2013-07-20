@@ -1,0 +1,32 @@
+<ul>
+  <li class="first chartweek" ng-class="{current: collection.params.period == '1week'}">
+  <a ng-click=stipulate('7day')>
+    Last 7 days
+  </a>
+  </li>
+  <li class="chart1month"  ng-class="{current: collection.params.period == '7day'}">
+  <a ng-click="stipulate('1month')">
+    Last month
+  </a>
+  </li>
+  <li class="chart3month" ng-class="{current: collection.params.period == '3month'}">
+  <a ng-click="stipulate('3month')">
+    Last 3 months
+  </a>
+  </li>
+  <li class="chart6month" ng-class="{current: collection.params.period == '6month'}">
+  <a ng-click="stipulate('6month')">
+    Last 6 months
+  </a>
+  </li>
+  <li class="chartyear" ng-class="{current: collection.params.period == '12month'}">
+  <a ng-click="stipulate('12month')">
+    Last 12 months
+  </a>
+  </li>
+  <li class="chartoverall" ng-class="{current: collection.params.period == 'overall'}">
+  <a ng-click="stipulate('overall')">
+    Overall
+  </a>
+  </li>
+</ul>

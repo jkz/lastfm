@@ -61,7 +61,7 @@
     <script type="text/javascript" src="<%= file %>"></script><% }); %>
 
   </head>
-  <body ng-class="{black: 'lfmBlack', brown: 'lfmBrown', blue: 'lfmBlue'}[skinColor]">
+  <body class=not-responsive ng-class="{black: 'lfmBlack', brown: 'lfmBrown', blue: 'lfmBlue'}[skinColor]">
 
 
 
@@ -189,6 +189,100 @@
   </div>
 </div>
 
+
+<footer role="banner" class="site-footer">
+<div class="responsive-container">
+  <nav class="site-footer-nav">
+  <div class="r add-bottom-margin">
+    <a href="/uploadmusic" class="g6 call-to-action call-to-action--upload" data-analytics-action="FooterClick" data-analytics-label="Artists and Labels">
+      <div>
+        <h2>Artists and Labels</h2>
+        <p>Upload your music and connect with 40 million music fans</p>
+      </div>
+    </a>
+    <a href="/download" class="g6 call-to-action call-to-action--download" data-analytics-action="FooterClick" data-analytics-label="Download Desktop App">
+      <div>
+        <h2>Download Desktop App</h2>
+        <p>Get the desktop app for Windows, Mac, or Linux and start scrobbling</p>
+      </div>
+    </a>
+  </div>
+  <hr class="separator">
+  <ul class="r add-bottom-margin">
+    <li class="g3">
+    <h2>Find out more</h2>
+    <ul>
+      <li><a href="/about" data-analytics-action="FooterClick" data-analytics-label="About us">About us</a></li>
+      <li><a href="http://blog.last.fm" data-analytics-action="FooterClick" data-analytics-label="Blog">Blog</a></li>
+      <li><a href="/about/contact" data-analytics-action="FooterClick" data-analytics-label="Contact us">Contact us</a></li>
+      <li><a href="/about/jobs" data-analytics-action="FooterClick" data-analytics-label="Jobs">Jobs</a></li>
+      <li><a href="/resources" data-analytics-action="FooterClick" data-analytics-label="Logo &amp; badges">Logo &amp; badges</a></li>
+      <li><a href="/advertise" data-analytics-action="FooterClick" data-analytics-label="Advertise">Advertise</a></li>
+      <li><a href="/legal" data-analytics-action="FooterClick" data-analytics-label="Legal">Legal</a></li>
+    </ul>
+    </li>
+    <li class="g3">
+    <h2>Join in</h2>
+    <ul>
+      <li><a href="/subscribe" data-analytics-action="FooterClick" data-analytics-label="Subscribe">Subscribe</a></li>
+      <li><a href="/findfriends" data-analytics-action="FooterClick" data-analytics-label="Find friends">Find friends</a></li>
+      <li><a href="/community/groups" data-analytics-action="FooterClick" data-analytics-label="Find groups">Find groups</a></li>
+      <li><a href="/forum" data-analytics-action="FooterClick" data-analytics-label="Forums">Forums</a></li>
+    </ul>
+    </li>
+    <li class="g3">
+    <h2>Do more</h2>
+    <ul>
+      <li><a href="/download" title="The Scrobbler" data-analytics-action="FooterClick" data-analytics-label="Download Scrobbler">Download Scrobbler</a></li>
+      <li><a href="/hardware/ios" title="The iOS Scrobbler" data-analytics-action="FooterClick" data-analytics-label="Scrobbler for iOS">Scrobbler for iOS</a></li>
+      <li><a href="/hardware/apple" data-analytics-action="FooterClick" data-analytics-label="iPhone app">iPhone app</a></li>
+      <li><a href="/hardware" data-analytics-action="FooterClick" data-analytics-label="More apps">More apps</a></li>
+      <li><a href="http://playground.last.fm" data-analytics-action="FooterClick" data-analytics-label="Playground">Playground</a></li>
+      <li><a href="http://build.last.fm" data-analytics-action="FooterClick" data-analytics-label="Tools, plugins &amp; more">Tools, plugins &amp; more</a></li>
+      <li><a href="/api" data-analytics-action="FooterClick" data-analytics-label="Last.fm API">Last.fm API</a></li>
+    </ul>
+    </li>
+    <li class="g3">
+    <h2>Get help</h2>
+    <ul>
+      <li><a href="/help" data-analytics-action="FooterClick" data-analytics-label="Help &amp; support">Help &amp; support</a></li>
+      <li><a href="http://status.last.fm/" data-analytics-action="FooterClick" data-analytics-label="System status">System status</a></li>
+      <li><a href="/help/guidelines" data-analytics-action="FooterClick" data-analytics-label="Community guidelines">Community guidelines</a></li>
+      <li><a href="/about/moderators" data-analytics-action="FooterClick" data-analytics-label="Moderators">Moderators</a></li>
+      <li><a href="/listen" data-analytics-action="FooterClick" data-analytics-label="Where’s Radio" rel="nofollow">Where’s Radio?</a></li>
+
+    </ul>
+    <h2 class="add-top-margin">Even more…</h2>
+    <ul>
+      <li><a href="/music/+free-music-downloads" data-analytics-action="FooterClick" data-analytics-label="Free music downloads">Free music downloads</a></li>
+      <li><a href="http://musicmanager.last.fm" data-analytics-action="FooterClick" data-analytics-label="Music Manager">Music Manager</a></li>
+    </ul>
+    </li>
+  </ul>
+  </nav>
+  <hr class="separator">
+
+  <div class="media site-footer-legalese">
+    <img src="http://cdn.last.fm/flatness/anon-homepage/footer_as.png" class="media-pull-right" width="50" height="30" alt="Watch Out, There's a Last.fm About.">
+    <div class="media-body">
+      <blockquote class="site-footer-legalese-strapline">“Watch Out, There's a Last.fm About.”</blockquote>
+
+      <p>
+      © 2013 Last.fm Ltd. All rights reserved. |
+      <a href="/legal/terms" data-analytics-action="FooterClick" data-analytics-label="Terms of Use">Terms of Use</a>,
+      <a href="/legal/privacy" data-analytics-action="FooterClick" data-analytics-label="Privacy Policy">Privacy Policy</a> and
+      <a href="/legal/cookies" data-analytics-action="FooterClick" data-analytics-label="Cookie Policy">Cookie Policy</a> -
+      <span class="date">Updated 15 Jan 2013</span>
+      </p>
+
+    </div>
+  </div>
+
+  <div id="cbsi_f">
+    <form>
+    </form>
+</div><a class="gamespot" href="http://www.gamespot.com"><img src="http://cdn.last.fm/flatness/responsive/footer/logo_gamespot.png" alt="Gamespot logo"></a>    </div>
+</footer>
 
     <script>
       var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];

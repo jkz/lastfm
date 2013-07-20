@@ -80,7 +80,7 @@ angular.module( 'lastfm', [
             'topArtists': {
                 templateUrl: 'lastfm/views/user/profile/top.artists.tpl.html'
             },
-            'topFriends': {
+            'topTracks': {
                 templateUrl: 'lastfm/views/user/profile/top.tracks.tpl.html'
             }
         }

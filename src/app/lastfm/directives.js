@@ -41,5 +41,21 @@ angular.module('lastfm.directives')
     }
   };
 })
+
+.directive('periodStipulator', function () {
+  return {
+    restrict: 'A',
+    scope: {
+      collection: '=periodStipulator'
+    },
+    templateUrl: 'lastfm/directives/stipulator.period.tpl.html',
+    link: function ($scope) {
+      $scope.stipulate = function (value) {
+        $scope.collection.params.period = value;
+        $scope.collection.request();
+      };
+    }
+  }
+})
 ;
 

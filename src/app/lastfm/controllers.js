@@ -90,11 +90,20 @@ angular.module('lastfm.controllers')
           period: 'overall',
       }
   });
+})
 
-    $scope.setPeriod = function (value) {
-      $scope.artists.params.period = value;
-      $scope.artists.request();
-    };
+.controller( 'TopTrackCtrl', function ($scope, $stateParams, lastfm, collection) {
+  $scope.tracks = collection({
+      endpoint: lastfm.user.top.tracks,
+      $scope: $scope,
+      page: {
+        limit: 15,
+      },
+      params: {
+          user: $stateParams.user,
+          period: 'overall',
+      }
+  });
 })
 
 ;

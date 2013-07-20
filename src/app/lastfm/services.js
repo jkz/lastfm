@@ -113,6 +113,11 @@ angular.module('lastfm.services')
                   method: 'user.getTopArtists',
                   collection: 'topartists',
                   entity: 'artist'
+              }),
+              tracks: endpoint({
+                  method: 'user.getTopTracks',
+                  collection: 'toptracks',
+                  entity: 'track'
               })
           }
       }
