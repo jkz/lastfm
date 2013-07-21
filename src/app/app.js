@@ -53,14 +53,13 @@ angular.module( 'lastfm', [
   })
   .state( 'content.intro', {
     url: '',
-    onEnter: function(titleService, $state, $rootScope, $location, lastfm, $cookies) {
+    onEnter: function(titleService, $state, $rootScope, $window, $location, lastfm, $cookies) {
         var token = $location.search().token;
-        $location.search(' ');
-        //$location.path('');
         if (token) {
-           if (!$rootScope.session) {
-             $rootScope.session = new lastfm.Session(token);
-           }
+            if (!$rootScope.session) {
+                $cookies.sessionToken = token;
+            }
+            $window.location.href = 'http://lastfm.pewpew.nl';
         }
 
         titleService.setTitle('Intro - Last.fm');
