@@ -22,7 +22,7 @@ angular.module('lastfm.controllers')
   });
 })
 
-.controller( 'UserCtrl', function UserCtrl ( $scope, $stateParams, lastfm) {
+.controller( 'UserCtrl', function UserCtrl ( $scope, $state, $stateParams, lastfm) {
     $scope.user = {name: $stateParams.user};
   /*
   lastfm.user.info({
@@ -43,6 +43,21 @@ angular.module('lastfm.controllers')
           $scope.user = data;
       }
   });
+
+  $scope.secondaryNav = [
+    {
+      slug: 'library',
+      name: 'Library',
+    },
+    {
+      slug: 'friends',
+      name: 'Friends',
+    },
+  ]
+
+  $scope.isUserState = function (name) {
+    return $state.includes('user.' + name);
+  }
 })
 
 .controller( 'LibraryArtistCtrl', function ($scope, $stateParams, lastfm, collection) {

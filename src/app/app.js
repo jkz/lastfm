@@ -95,7 +95,7 @@ angular.module( 'lastfm', [
     url: '/user/:user',
     controller: 'UserCtrl',
     abstract: true,
-    templateUrl: 'lastfm/views/user/profile/tpl.html',
+    templateUrl: 'lastfm/views/user/tpl.html',
   })
       .state( 'user.profile', {
         onEnter: function(titleService, $stateParams) {
@@ -103,22 +103,25 @@ angular.module( 'lastfm', [
         },
         url: '',
         views: {
-            'scrobbles': {
+            '': {
+                templateUrl: 'lastfm/views/user/profile/tpl.html',
+            },
+            'scrobbles@user.profile': {
                 templateUrl: 'lastfm/views/user/profile/scrobbles.tpl.html'
             },
-            'badge': {
+            'badge@user.profile': {
                 templateUrl: 'lastfm/views/user/profile/badge.tpl.html'
             },
-            'taste': {
+            'taste@user.profile': {
                 templateUrl: 'lastfm/views/user/profile/taste.tpl.html'
             },
-            'friends': {
+            'friends@user.profile': {
                 templateUrl: 'lastfm/views/user/profile/friends.tpl.html'
             },
-            'topArtists': {
+            'topArtists@user.profile': {
                 templateUrl: 'lastfm/views/user/profile/top.artists.tpl.html'
             },
-            'topTracks': {
+            'topTracks@user.profile': {
                 templateUrl: 'lastfm/views/user/profile/top.tracks.tpl.html'
             }
         }
@@ -127,7 +130,7 @@ angular.module( 'lastfm', [
         url: '/library',
         abstract: true,
         views: {
-          '@': {
+          '': {
               templateUrl: 'lastfm/views/user/library/tpl.html',
           }
         }

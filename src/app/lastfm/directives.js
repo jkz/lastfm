@@ -54,11 +54,9 @@ angular.module('lastfm.directives')
       collection: '=',
     },
     link: function ($scope) {
-      console.log('SCOOP');
         $scope.page = $scope.collection.page;
 
         $scope.$watch('collection.page.index', function (newVal, oldVal) {
-          console.log('RAWR', newVal, oldVal);
             if ((newVal + $scope.page.count) % $scope.page.count  == oldVal + 1) {
               $scope.transition = 'next';
             } else if ((newVal + $scope.page.count) % $scope.page.count  == oldVal - 1) {
@@ -71,7 +69,7 @@ angular.module('lastfm.directives')
             $timeout(function () {
               $scope.transition = undefined;
               $scope.index = newVal;
-            }, 500);
+            }, 620);
         });
     }
   };

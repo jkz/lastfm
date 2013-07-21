@@ -149,6 +149,9 @@ console.log(this);
   }
 
   Paginator.prototype.jump = function (index) {
+    if (typeof index === 'string') {
+        index = parseInt(index);
+    }
     if (this.count > 1) {
       this.index = (index + this.count - 1) % this.count + 1;
       return this.update;

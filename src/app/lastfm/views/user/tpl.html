@@ -1,0 +1,39 @@
+<header class="page-head clearit"
+ng-class="{
+separated: isUserState('profile'),
+'without-crumbtrail': isUserState('profile'),
+'without-image': isUserState('profile'),
+'with-crumbtrail': !isUserState('profile'),
+'with-image': !isUserState('profile')
+}">
+  <h1 ng-show="isUserState('profile')">{{user.name}}</h1>
+
+  <div ng-show="!isUserState('profile')" class="crumb-wrapper">
+    <div class="top-crumb">
+      <a href="#/user/{{user.name}}">
+        <img class="crumb-image"
+        ng-src="{{user.image[1]['#text']}}" alt="Thumbnail of {{user.name}}" width="60" height="60" />
+        jessethegame
+      </a>
+    </div>
+    <h1 ng-repeat="nav in secondaryNav"
+        ng-show="isUserState(nav.slug)">{{nav.name}}</h1>
+  </div>
+
+  <nav class="secondary-nav" role="navigation" data-require="secondarynav"
+    ng-class="{'more-visible': isUserState('profile')}">
+    <ul class="visible-menu">
+      <li ng-repeat="nav in secondaryNav"
+          ng-class="{first: $first, current: isUserState(nav.slug)}">
+          <a ng-href="#/user/{{user.name}}/{{nav.slug}}">{{nav.name}}</a>
+    </ul>
+    <!--
+    <div class="drop-down-menu more">
+      <a href="#" class="menu-toggle">more…</a>
+      <ul class="hidden-menu"></ul>
+    </div>
+    -->
+  </nav>
+</header>
+
+<div ui-view></div>

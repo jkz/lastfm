@@ -2,10 +2,10 @@ Page <span class="pagenumber">{{page.index}}</span> of {{page.count}}
 
 <form method="get" class="jumpto">
   <select name="page"  class="jumpto" ng-model="jumpTarget">
-      <option value="0" selected>Jump to…</option>
-      <option value="1">1</option>
-      <option ng-repeat="n in [10, page.count - 1, 10] | range" value="{{n}}">{{n}}</option>
-      <option value="{{page.count}}">{{page.count}}</option>
+      <option value=0 selected>Jump to…</option>
+      <option value=1>1</option>
+      <option ng-repeat="n in [10, page.count - 1, 10] | range" value={{n}}>{{n}}</option>
+      <option value={{page.count}}>{{page.count}}</option>
   </select>
   <button type="submit" name="go" class="nonJs"
     ng-click="jumpTarget && page.jump(jumpTarget)">Go</button>
