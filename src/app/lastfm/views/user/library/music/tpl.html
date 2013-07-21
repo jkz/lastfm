@@ -31,7 +31,7 @@
 <div ng-switch-when='prev' artist-gallery=collection.data[index-1]></div>
 <div ng-switch-default     artist-gallery=collection.data[index]></div>
 <div ng-switch-when='next' artist-gallery=collection.data[index+1]></div>
-<div ng-switch-jump='jump' artist-gallery=target></div>
+<div ng-switch-when='jump' artist-gallery=collection.data[target]></div>
 </ng-switch>
 </page-slider>
 

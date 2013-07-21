@@ -137,7 +137,7 @@ angular.module( 'lastfm', [
       })
           .state( 'user.library.music', {
             url: '',
-            templateUrl: 'lastfm/views/user/library/music.tpl.html',
+            templateUrl: 'lastfm/views/user/library/music/tpl.html',
             controller: 'LibraryArtistCtrl'
           })
           .state( 'user.library.loved', {
@@ -147,7 +147,7 @@ angular.module( 'lastfm', [
           })
       .state( 'user.friends', {
         url: '/friends',
-        templateUrl: 'lastfm/views/user/friends.tpl.html',
+        templateUrl: 'lastfm/views/user/friends/tpl.html',
         controller: 'FriendCtrl'
       })
   ;

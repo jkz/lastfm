@@ -5,8 +5,7 @@ angular.module('lastfm.directives')
     scope: {
       artists: '=artistGallery'
     },
-    templateUrl: 'lastfm/views/user/library/music.gallery.tpl.html',
+    templateUrl: 'lastfm/views/user/library/music/gallery.tpl.html',
   }
 })
-
 ;

@@ -4,6 +4,9 @@ angular.module('lastfm.controllers')
   $scope.friends = collection({
     endpoint: lastfm.user.friends,
     $scope: $scope,
+    page: {
+      limit: 20
+    },
     params: {
       user: $stateParams.user,
       recenttracks: 1

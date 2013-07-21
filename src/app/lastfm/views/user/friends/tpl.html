@@ -1,0 +1,31 @@
+<div class="skyWrap">
+  <!--
+  <div class="clear">
+    <div class="userIntro">
+      <p>
+      See <a href="/home/friends">what your friends are listening to now</a> or look at their <a href="/home/friendsloved">loved tracks</a>.
+      </p>
+    </div>
+  </div>
+  -->
+
+  <paginator-ellipsis paginator=friends>
+  </paginator-ellipsis>
+
+  <page-slider collection=friends>
+  <ng-switch on=transition ng-animate="{
+  prev: 'up',
+  next: 'down',
+  up: 'up'
+  }[transition]">
+  <div ng-switch-when='prev' friend-gallery=collection.data[index-1]></div>
+  <div ng-switch-default     friend-gallery=collection.data[index]></div>
+  <div ng-switch-when='next' friend-gallery=collection.data[index+1]></div>
+  <div ng-switch-when='jump' friend-gallery=collection.data[target]></div>
+  </ng-switch>
+  </page-slider>
+
+  <paginator-ellipsis ng-show="page.count > 1" paginator=friends>
+  </paginator-ellipsis>
+
+</div><!-- .skyWrap -->
