@@ -110,9 +110,9 @@ angular.module('lastfm.services')
 
         console.log('COLLECTION', collection);
 
-        // If a decorator is present, map it on the collection
-        if (resource.decorator) {
-          collection = collection.map(resource.model);
+        // If a decorator model is present, map it on the collection
+        if (resource.model) {
+            collection = collection.map(resource.model);
             console.log('MAPPED', collection);
         }
 
@@ -192,6 +192,10 @@ angular.module('lastfm.services')
   function image(data, def) {
     def = def || 'http://placekitten.com/g/256';
 
+    if (!data) {
+        return;
+    }
+
     return {
       small:      data[0]['#text'] || def,
       medium:     data[1]['#text'] || def,
@@ -215,13 +219,12 @@ angular.module('lastfm.services')
   models.artist = function (obj) {
     obj.url = url(obj.url);
     obj.image = image(obj.image, 'http://cdn.last.fm/flatness/responsive/2/noimage/default_user_140_g2.png');
-    obj = models.base(obj);
     return obj;
   };
   models.track = function (obj) {
     obj.url = url(obj.url);
     obj.image = image(obj.image, '');
-    obj.artist = models.artist(obj);
+    obj.artist = models.artist(obj.artist);
     return obj;
   };
 
