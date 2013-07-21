@@ -59,10 +59,9 @@ angular.module('lastfm.directives')
 
         $scope.$watch('collection.page.index', function (newVal, oldVal) {
           console.log('RAWR', newVal, oldVal);
-            //XXX Does not wrap!
-            if (newVal == oldVal + 1) {
+            if ((newVal + $scope.page.count) % $scope.page.count  == oldVal + 1) {
               $scope.transition = 'next';
-            } else if (newVal == oldVal - 1) {
+            } else if ((newVal + $scope.page.count) % $scope.page.count  == oldVal - 1) {
               $scope.transition = 'prev';
             } else {
               $scope.target = newVal;
@@ -72,44 +71,10 @@ angular.module('lastfm.directives')
             $timeout(function () {
               $scope.transition = undefined;
               $scope.index = newVal;
-            }, 1000);
+            }, 500);
         });
     }
   };
-
-    return {
-        restrict: 'E',
-        scope: {
-            collection: '='
-        },
-        link: function ($scope) {
-            $scope.idx = 1;
-
-            $scope.update = function (target, name) {
-              $timeout(function () {
-                $scope.animation = undefined;
-              }, options.delay[name+'Delay']);
-            }
-
-            $scope.jump = function (target) {
-              target %= $scope.data.length;
-              $scope.animation = name;
-              $scope.target = $scope.data.target
-              $timeout(function () {
-                $scope.update(target, 'jump');
-                $scope.idx = target;
-              }, options.delay.prejump);
-            }
-
-            $scope.next = function () {
-              $scope.update($scope.idx + 1, 'next');
-            }
-
-            $scope.prev = function () {
-              $scope.update($scope.idx - 1, 'prev');
-            }
-        }
-    };
 })
 
 .directive('periodStipulator', function () {

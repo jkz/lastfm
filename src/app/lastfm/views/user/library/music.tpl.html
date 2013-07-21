@@ -23,15 +23,14 @@
 <div paginator-dropdown id="paginationTop" class="ajaxpagination" paginator="artists"></div>
 
 <page-slider collection=artists>
-{{index}}--{{page.index}}
 <ng-switch on=transition ng-animate="{
   prev: 'right',
   next: 'left',
   up: 'up'
 }[transition]">
-<div ng-switch-when='prev' artist-gallery=collection.data[index-1]>xxx</div>
-<div ng-switch-default     artist-gallery=collection.data[index]>xxx</div>
-<div ng-switch-when='next' artist-gallery=collection.data[index+1]>xxx</div>
+<div ng-switch-when='prev' artist-gallery=collection.data[index-1]></div>
+<div ng-switch-default     artist-gallery=collection.data[index]></div>
+<div ng-switch-when='next' artist-gallery=collection.data[index+1]></div>
 <div ng-switch-jump='jump' artist-gallery=target></div>
 </ng-switch>
 </page-slider>
