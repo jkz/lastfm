@@ -126,6 +126,8 @@ angular.module('lastfm.services')
     options.api_key = apiKey;
     options.format = 'json';
 
+    console.log('REQUESTING', options);
+
     $http.get('http://ws.audioscrobbler.com/2.0/', {params: options})
       .error(function (data, status, headers, config) {
         // Known errors are dispatched to the error handler
@@ -285,12 +287,19 @@ angular.module('lastfm.services')
   Paginator.prototype.convert = function (index) {
     // Some input (e.g. the paging data from lastfm api...) is given as string
     // in stead of integer. We take care of that here.
+    console.log('INDEX', index);
     if (typeof index === 'string') {
       index = parseInt(index);
     }
-    if (typeof index !== 'number' || !(this.circular || (index > 0 && index <= this.count))) {
+    // Invalid types
+    if (typeof index !== 'number'
+        // Negative pages without count or circularity
+        || (!(this.count && this.circular) && index < 1)
+        // Non-circular out of bounds
+        || (this.count && !this.circular && index > this.count)) {
+      // Are not invited
       return;
-    } else if (this.circular) {
+    } else if (this.circular && this.count) {
       return (index + this.count - 1) % this.count + 1;
     } else {
       return index;
@@ -345,7 +354,7 @@ angular.module('lastfm.services')
     this.data = {};
     this.page = new Paginator(this.page);
     if (this.autoload) {
-      this.update();
+      this.fetch({page: 1});
     }
   }
 

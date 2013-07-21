@@ -21,22 +21,14 @@ angular.module('lastfm.controllers')
       extended: 1
     }
   });
+  console.log('trax', $scope.tracks);
+  $scope.$watch('tracks', function (nw, od) {
+    console.log('WATCHTRAK', nw, od);
+  });
 })
 
 .controller( 'UserCtrl', function UserCtrl ( $scope, $state, $stateParams, lastfm) {
-    $scope.user = {name: $stateParams.user};
-  /*
-  lastfm.user.info({
-      user: $stateParams.user,
-  }, {
-      success: function (data) {
-        $scope.$apply(function () {
-            $scope.user = data;
-        });
-      }
-  });
-  */
-
+  $scope.user = {name: $stateParams.user};
   lastfm.user.info({
       user: $stateParams.user,
   }, {
