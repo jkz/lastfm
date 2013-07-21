@@ -35,18 +35,53 @@ angular.module( 'lastfm', [
   $urlRouterProvider.otherwise( '/404' );
 
   $stateProvider
-  .state( 'home', {
-    url: '/',
-    onEnter: function(titleService) {
-        titleService.setTitle('Home - Last.fm');
-    },
-    resolve: { title: function(){ return 'Home - Last.fm' } },
-    templateUrl: 'index.tpl.html'
+  .state( 'content', {
+    url: '',
+    abstract: true,
+    template: '<markdown src="template($state.current.name)"></markdown>',
+    controller: function ($scope, $state) {
+        $scope.template = function (name) {
+            if (name) {
+                return '/assets/content/' + name + '.md';
+            }
+        }
+    }
   })
-  .state( 'intro', {
-    url: '/intro',
-    controller: 'AppCtrl',
-    templateUrl: 'index.tpl.html'
+  .state( 'content.intro', {
+    url: '/home',
+    onEnter: function(titleService) {
+        titleService.setTitle('Intro - Last.fm');
+    },
+  })
+  .state( 'content.jesse', {
+    url: '/jesse',
+    onEnter: function(titleService) {
+        titleService.setTitle('Jesse - Last.fm');
+    },
+  })
+  .state( 'content.thegame', {
+    url: '/thegame',
+    onEnter: function(titleService) {
+        titleService.setTitle('The Game - Last.fm');
+    },
+  })
+  .state( 'content.resume', {
+    url: '/resume',
+    onEnter: function(titleService) {
+        titleService.setTitle('Resume - Last.fm');
+    },
+  })
+  .state( 'content.code', {
+    url: '/code',
+    onEnter: function(titleService) {
+        titleService.setTitle('Code - Last.fm');
+    },
+  })
+  .state( 'content.help', {
+    url: '/help',
+    onEnter: function(titleService) {
+        titleService.setTitle('Help - Last.fm');
+    },
   })
   .state( '404', {
     url: '/404',

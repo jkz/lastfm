@@ -20,9 +20,23 @@
 <div class="wrapper">
   <div id="page1" class="page">
 
-<div paginator-dropdown id="paginationTop" class="ajaxpagination"
-  paginator="artists"></div>
+<div paginator-dropdown id="paginationTop" class="ajaxpagination" paginator="artists"></div>
 
+<page-slider collection=artists>
+{{index}}--{{page.index}}
+<ng-switch on=transition ng-animate="{
+  prev: 'right',
+  next: 'left',
+  up: 'up'
+}[transition]">
+<div ng-switch-when='prev' artist-gallery=collection.data[index-1]>xxx</div>
+<div ng-switch-default     artist-gallery=collection.data[index]>xxx</div>
+<div ng-switch-when='next' artist-gallery=collection.data[index+1]>xxx</div>
+<div ng-switch-jump='jump' artist-gallery=target></div>
+</ng-switch>
+</page-slider>
+
+<!--
     <ul class="libraryItems artistsLarge">
       <li ng-repeat="artist in artists.current()" class="first" id="r6_19498076">
       <a ng-href="{{artist.url}}">
@@ -47,6 +61,7 @@
         <a ng-href="/user/{{user.name}}/library/music/{{artist.name}}?remove=1"     title="Delete this artist from your library" class="remove">
           <img class="transparent_png dismiss_dark_icon" width="13" height="13" src="http://cdn.last.fm/flatness/global/icon_delete_dark.png" style="" />
         </a>
+-->
 
   </div><!-- #page1 -->
 </div><!-- .wrapper -->

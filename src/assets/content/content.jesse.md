@@ -25,4 +25,6 @@ Glad you thought that.
  4.  I could provide you with many other ways to exploit the powerful scrobble data.
  5.  I will bring cake along to the office for the job interview
  6.  I could help with anything dutch
+ 7.  I am already familiar with the internals of the current website
+ 8.  Dropouts are in high demand (source: [vooza](http://vooza.com/videos/job-requirements/))
 

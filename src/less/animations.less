@@ -1,0 +1,85 @@
+@import 'less-kit/tools';
+
+.left-enter, .left-leave,
+.right-enter, .right-leave,
+.down-enter, .down-leave,
+.up-enter, .up-leave {
+    .transition(0.3s);
+}
+
+.left-enter {
+  position:absolute;
+  left:100%;
+}
+.left-enter-active {
+  left:0;
+}
+.left-leave {
+  position:absolute;
+  left:0;
+}
+.left-leave-active {
+  left:-100%;
+}
+
+.right-enter {
+  position:absolute;
+  left:-100%;
+}
+.right-enter-active {
+  left:0;
+}
+.right-leave {
+  position:absolute;
+  left:0;
+}
+.right-leave-active {
+  left:100%;
+}
+
+.up-enter {
+  position:absolute;
+  top:100%;
+}
+.up-enter-active {
+  top:0;
+}
+.up-leave {
+  position:absolute;
+  top:0;
+}
+.up-leave-active {
+  top:-100%;
+}
+
+.down-enter {
+  position:absolute;
+  left:-100%;
+}
+.down-enter-active {
+  left:0;
+}
+.down-leave {
+  position:absolute;
+  left:0;
+}
+.down-leave-active {
+  left:100%;
+}
+
+
+.fade-enter {
+  position:absolute;
+  opacity: 0;
+}
+.fade-enter-active {
+  opacity: 1;
+}
+.fade-leave {
+  position:absolute;
+  opacity: 1;
+}
+.fade-leave-active {
+  opacity: 0;
+}
+

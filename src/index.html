@@ -82,7 +82,16 @@
     <div id="header" class="clearit responsive-container" role="banner">
       <div id="headerWrapper">
         <a href="#/home" id="lastfmLogo">Last.fm</a>
-        <ul id="primaryNav" role="navigation" ng-show=false>
+        <ul id="primaryNav" role="navigation">
+          <li class="navItem">
+            <a href="#/jesse" class="nav-link">Jesse</a>
+          <li class="navItem">
+            <a href="#/thegame" class="nav-link">the Game</a>
+          <li class="navItem">
+            <a href="#/resume" class="nav-link">Resume</a>
+          <li class="navItem">
+            <a href="#/code" class="nav-link">Code</a>
+          <!--
           <li id="musicNav" class="navItem">
             <a href="/music" class="nav-link">Music</a>
           <li id="eventsNav" class="navItem">
@@ -93,6 +102,7 @@
             <a href="/community" class="nav-link">Community</a>
           <li id="originalsNav" class="navItem">
             <a href="http://originals.last.fm" class="nav-link">Originals</a>
+            -->
         </ul>
 
         <div id="profileLinks">
@@ -152,9 +162,7 @@
           <span ng-switch-when="blue">
             <a href="" title="Switch Colour Style" ng-click="paintIt('red')">Simply Red</a></span>
           </ng-switch>
-          <!--
-          | <a href="/help">Help</a>
-          -->
+          | <a href="#/help">Help</a>
         </div>
 
         <form id="siteSearch" method="get" class="search-autocomplete" role="search" data-require="search/sitesearch" data-template="search" data-url="/search/autocomplete">
@@ -181,7 +189,9 @@
 
 
 
-    <div ui-view id=content data-require="core/page"></div><!-- #content -->
+    <div ui-view id=content data-require="core/page">
+    </div><!-- #content -->
+
 
 
 

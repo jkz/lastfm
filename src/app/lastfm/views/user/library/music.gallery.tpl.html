@@ -1,0 +1,24 @@
+<ul class="libraryItems artistsLarge">
+  <li ng-repeat="artist in artists" class="first" id="r6_19498076">
+  <a ng-href="{{artist.url}}">
+      <span class="pictureFrame">
+        <span class="image">
+          <img style="min-width: 126px; min-height: 126px; " alt="" ng-src="{{
+            artist.image[2]['#text'] ||
+            'http://cdn.last.fm/flatness/catalogue/noimage/2/default_artist_large.png'
+          }}" />
+          <img ng-show=false height="126" width="126" alt="" ng-src="{{
+            artist.image[2]['#text'] ||
+            'http://cdn.last.fm/flatness/catalogue/noimage/2/default_artist_large.png'
+          }}" />
+        </span>
+        <span class="overlay"></span>
+      </span>
+      <strong class="name">{{artist.name}}</strong>
+    </a>
+    <a ng-href="#/user/{{user.name}}/library/music/{{artist.name}}?sortOrder=desc&amp;sortBy=plays"     class="plays" rel="nofollow">
+      <span dir="ltr">({{artist.playcount}}&nbsp;plays)</span>
+    </a>
+    <a ng-href="/user/{{user.name}}/library/music/{{artist.name}}?remove=1"     title="Delete this artist from your library" class="remove">
+      <img class="transparent_png dismiss_dark_icon" width="13" height="13" src="http://cdn.last.fm/flatness/global/icon_delete_dark.png" style="" />
+    </a>
