@@ -74,6 +74,7 @@ angular.module('lastfm.services')
   function handler(resource, callback) {
     return function (data) {
 
+
       // Collection resources take callback functions with signature
       // (collection, meta)
       if (resource.collection) {
@@ -86,9 +87,12 @@ angular.module('lastfm.services')
             // and optionally the provided user name
             meta = data[resource.collection]['@attr'];
 
+        console.log('COLLECTION', collection);
+
         // If a decorator is present, map it on the collection
         if (resource.decorator) {
           collection = collection.map(resource.model);
+            console.log('MAPPED', collection);
         }
 
         return callback(collection, meta);
@@ -97,8 +101,10 @@ angular.module('lastfm.services')
       // (entity)
       } else {
         var entity = data[resource.entity];
+        console.log('ENTITY', entity);
         if (resource.model) {
           entity = resource.model(data[resource.entity]);
+            console.log('MAPPED', entity);
         }
 
         return callback(entity);
@@ -107,7 +113,7 @@ angular.module('lastfm.services')
   }
 
   function request(resource, options, callbacks) {
-    var success = handler(resource, callbacks.success || console.log),
+    var success = callbacks.success || console.log,
         error = callbacks.error || errorHandler;
 
     // Don't perform any requests when rate limited
@@ -138,7 +144,7 @@ angular.module('lastfm.services')
           return error(data)
         }
 
-        return handler(data);
+        return success(data);
       });
   }
 
@@ -166,8 +172,37 @@ angular.module('lastfm.services')
 
   function url(data) {
     // Replace the host by a '#' for the ui-router
-    return data.replace(/^http:\/\/last.fm/, '#');
+    return data.replace(/^http:\/\/www.last.fm/, '#');
   }
+
+
+  var models = {
+    base: function (obj) {
+      if(obj.image) {
+          obj.image = image(obj.image);
+      }
+      if(obj.url) {
+          obj.url = url(obj.url);
+      }
+      return obj;
+    }
+  };
+  models.user = function (obj) {
+    obj = models.base(obj);
+    obj.suburl = function (page) {
+      return obj.url + '/' + page;
+    }
+    return obj;
+  };
+  models.artist = function (obj) {
+    obj = models.base(obj);
+    return obj;
+  };
+  models.track = function (obj) {
+    obj = models.base(obj);
+    obj.artist = models.artist(obj);
+    return obj;
+  };
 
   return {
     // The service exposes last.fm resources. To obtain the data, they should
@@ -183,44 +218,44 @@ angular.module('lastfm.services')
       info: resource({
         method: 'user.getInfo',
         entity: 'user',
-        model: function (obj) {
-          obj.image = image(obj.image);
-          obj.url = url(obj.url);
-          obj.suburl = function (page) {
-            return obj.url + '/' + page;
-          }
-        }
+        model: models.user
       }),
       friends: resource({
         method: 'user.getFriends',
         collection: 'friends',
-        entity: 'user'
+        entity: 'user',
+        model: models.user
       }),
       scrobbles: resource({
         method: 'user.getRecentTracks',
         collection: 'recenttracks',
-        entity: 'track'
+        entity: 'track',
+        model: models.track
       }),
       loved: resource({
         method: 'user.getLovedTracks',
         collection: 'lovedtracks',
-        entity: 'track'
+        entity: 'track',
+        model: models.track
       }),
       artists: resource({
         method: 'library.getArtists',
         collection: 'artists',
-        entity: 'artist'
+        entity: 'artist',
+        model: models.artist
       }),
       top: {
         artists: resource({
           method: 'user.getTopArtists',
           collection: 'topartists',
-          entity: 'artist'
+          entity: 'artist',
+          model: models.artist
         }),
         tracks: resource({
           method: 'user.getTopTracks',
           collection: 'toptracks',
-          entity: 'track'
+          entity: 'track',
+          model: models.track
         })
       }
     }
@@ -253,11 +288,11 @@ angular.module('lastfm.services')
     if (typeof index === 'string') {
       index = parseInt(index);
     }
-    if (typeof index !== 'number' || !(this.circular || (index > 0 && index <= this.count)) {
+    if (typeof index !== 'number' || !(this.circular || (index > 0 && index <= this.count))) {
       return;
     } else if (this.circular) {
       return (index + this.count - 1) % this.count + 1;
-    } else (
+    } else {
       return index;
     }
   }
@@ -317,7 +352,7 @@ angular.module('lastfm.services')
   Collection.prototype.defaults = {
     // When on, the collection automatically fetches the first page on when
     // created.
-    autoload: true;
+    autoload: true
   };
 
   // The callback function passed to resource requests.

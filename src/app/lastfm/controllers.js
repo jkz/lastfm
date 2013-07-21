@@ -1,9 +1,8 @@
 angular.module('lastfm.controllers')
 
-.controller( 'FriendCtrl', function ($scope, $stateParams, lastfm, collection) {
-  $scope.friends = collection({
-    endpoint: lastfm.user.friends,
-    $scope: $scope,
+.controller( 'FriendCtrl', function ($scope, $stateParams, lastfm, Collection) {
+  $scope.friends = new Collection({
+    resource: lastfm.user.friends,
     page: {
       limit: 20
     },
@@ -14,10 +13,9 @@ angular.module('lastfm.controllers')
   });
 })
 
-.controller( 'ScrobbleCtrl', function ($scope, $stateParams, lastfm, collection) {
-  $scope.tracks = collection({
-    endpoint: lastfm.user.scrobbles,
-    $scope: $scope,
+.controller( 'ScrobbleCtrl', function ($scope, $stateParams, lastfm, Collection) {
+  $scope.tracks = new Collection({
+    resource: lastfm.user.scrobbles,
     params: {
       user: $stateParams.user,
       extended: 1
@@ -43,6 +41,7 @@ angular.module('lastfm.controllers')
       user: $stateParams.user,
   }, {
       success: function (data) {
+          console.log('USER', data);
           $scope.user = data;
       }
   });
@@ -63,10 +62,9 @@ angular.module('lastfm.controllers')
   }
 })
 
-.controller( 'LibraryArtistCtrl', function ($scope, $stateParams, lastfm, collection) {
-    $scope.artists = collection({
-        endpoint: lastfm.user.artists,
-        $scope: $scope,
+.controller( 'LibraryArtistCtrl', function ($scope, $stateParams, lastfm, Collection) {
+    $scope.artists = new Collection({
+        resource: lastfm.user.artists,
         page: {
             limit: 18,
         },
@@ -79,10 +77,9 @@ angular.module('lastfm.controllers')
     console.log('ARTIST', $scope);
 })
 
-.controller( 'LibraryLoveCtrl', function ($scope, $stateParams, lastfm, collection) {
-  $scope.tracks = collection({
-      endpoint: lastfm.user.loved,
-      $scope: $scope,
+.controller( 'LibraryLoveCtrl', function ($scope, $stateParams, lastfm, Collection) {
+  $scope.tracks = new Collection({
+      resource: lastfm.user.loved,
       page: {
         limit: 50,
       },
@@ -95,7 +92,7 @@ angular.module('lastfm.controllers')
       }
   });
 
-  // This watcher resets the collection whenever query parameters change.
+  // This watcher resets the Collection whenever query parameters change.
   $scope.$watch('tracks.params', function () {
       $scope.tracks.data = {};
       $scope.tracks.update();
@@ -103,10 +100,9 @@ angular.module('lastfm.controllers')
 
 })
 
-.controller( 'TopArtistCtrl', function ($scope, $stateParams, lastfm, collection) {
-  $scope.artists = collection({
-      endpoint: lastfm.user.top.artists,
-      $scope: $scope,
+.controller( 'TopArtistCtrl', function ($scope, $stateParams, lastfm, Collection) {
+  $scope.artists = new Collection({
+      resource: lastfm.user.top.artists,
       page: {
         limit: 15,
       },
@@ -117,10 +113,9 @@ angular.module('lastfm.controllers')
   });
 })
 
-.controller( 'TopTrackCtrl', function ($scope, $stateParams, lastfm, collection) {
-  $scope.tracks = collection({
-      endpoint: lastfm.user.top.tracks,
-      $scope: $scope,
+.controller( 'TopTrackCtrl', function ($scope, $stateParams, lastfm, Collection) {
+  $scope.tracks = new Collection({
+      resource: lastfm.user.top.tracks,
       page: {
         limit: 15,
       },

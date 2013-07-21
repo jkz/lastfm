@@ -52,9 +52,9 @@ angular.module('lastfm.directives')
         $scope.page = $scope.collection.page;
 
         $scope.$watch('collection.page.index', function (newVal, oldVal) {
-            if ((newVal + $scope.page.count) % $scope.page.count  == oldVal + 1) {
+            if ($scope.page.convert(newVal) == $scope.page.convert(oldVal + 1)) {
               $scope.transition = 'next';
-            } else if ((newVal + $scope.page.count) % $scope.page.count  == oldVal - 1) {
+            } else if ($scope.page.convert(newVal) == $scope.page.convert(oldVal - 1)) {
               $scope.transition = 'prev';
             } else {
               $scope.target = newVal;
