@@ -165,6 +165,13 @@ angular.module( 'lastfm', [
     $rootScope.$watch('user.name', function () {
         console.log('CHANGE!');
     })
+
+    function randint(min, max) {
+      return Math.floor(Math.random() * (max - min) + 0.5) + min;
+    };
+    $rootScope.$watch('$state.current', function () {
+        $rootScope.promo = randint(1, 2);
+    })
 })
 
 .controller( 'AppCtrl', function AppCtrl ( $scope, $cookies) {
@@ -176,9 +183,7 @@ angular.module( 'lastfm', [
     $cookies.skinColor = color;
     $scope.skinColor = color;
   };
-  $scope.randint = function (min, max) {
-    return Math.floor(Math.random() * (max - min) + 0.5) + min;
-  };
+
 })
 
 ;

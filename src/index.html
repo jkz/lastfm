@@ -173,7 +173,7 @@
         </form>
 
         <div id="headerPromo">
-          <ng-switch on="randint(1,2)">
+          <ng-switch on="promo">
             <a ng-switch-when="1" href="//twitter.com/jessethegame">
               Get updates from Jesse, follow me on Twitter »
             </a>
@@ -186,18 +186,6 @@
       </div><!-- #headerWrapper -->
     </div><!-- #header -->
 
-
-    <ng-switch on=foo ng-animate="'left'">
-      <div ng-switch-when=1>YAY ONE</div>
-      <div ng-switch-when=2>BOO TWO</div>
-      <div ng-switch-when=3>WEE THREE</div>
-      <div ng-switch-default>MEH</div>
-    </ng-switch>
-
-    <button ng-click="foo=1">Set 1</button>
-    <button ng-click="foo=2">Set 2</button>
-    <button ng-click="foo=3">Set 3</button>
-    <button ng-click="foo=4">Set 4</button>
 
     <div ui-view id=content data-require="core/page">
     </div><!-- #content -->
