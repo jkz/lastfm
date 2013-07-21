@@ -113,8 +113,7 @@ angular.module('lastfm.directives')
 
         $scope.$watch('collection.params', function (nw, od) {
             console.log('CHANGED!', nw, od);
-            $scope.collection.data = {};
-            $scope.collection.update();
+            $scope.collection.reset();
         });
     }
   }
