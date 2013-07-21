@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html;charset=utf-8">
 
-    <title>Title</title>
+    <title>Last.fm - Wob Application</title>
 
     <!-- social media tags -->
     <meta name="twitter:card" content="">
@@ -81,7 +81,7 @@
 
     <div id="header" class="clearit responsive-container" role="banner">
       <div id="headerWrapper">
-        <a href="#/home" id="lastfmLogo">Last.fm</a>
+        <a href="#" id="lastfmLogo">Last.fm</a>
         <ul id="primaryNav" role="navigation">
           <li class="navItem">
             <a href="#/jesse" class="nav-link">Jesse</a>
@@ -106,42 +106,43 @@
         </ul>
 
         <div id="profileLinks">
-          <ul>
+          <ul ng-show=!session>
             <li id="loginLink" class="profileItem">
-                <a href="/login" class="profile-link"><strong>Login</strong></a>
+                <a ng-click=login() class="profile-link"><strong>Login</strong></a>
             </li>
             <li id="signupLink" class="profileItem">
                 <a href="/join" class="profile-link"><strong>Join</strong></a>
             </li>
           </ul>
-        </div>
 
-        <div id="profileLinks" ng-show="false">
-          <ul>
+          <ul ng-show=session>
             <li class="profileItem">
               <div id="idBadger" >
-                <a href="/user/jessethegame" id="idBadgerUser" title="Jesse the Game, Male, Netherlands">
-                  <img ng-src="{{user.image[0]['#text']}}" width="16" height="16" />{{user.name}}
-                </a><a href="/user/jessethegame" id="idBadgerDropper" title="Jesse the Game, Male, Netherlands"><span>▼</span></a>
-
+                <a ng-href="{{session.url}}" id="idBadgerUser"
+                  title="{{session.realname || session.name}}, {{session.gender|gender}}, {{session.country|country}}">
+                  <img ng-src="{{session.image.small}}" width="16" height="16" />{{session.name}}
+                  </a><a ng-href="{{session.url}}" id="idBadgerDropper"
+                  title="{{session.realname || session.name}}, {{session.gender|gender}}, {{session.country|country}}"><span>▼</span></a>
                 <ul id="idBadgerDropDown">
-                  <li class="home"><a href="/home">Home</a></li>
-                  <li class="profile"><a href="/user/jessethegame"     title="Jesse the Game, Male, Netherlands">Profile</a></li>
-                  <li class="friends"><a href="/user/jessethegame/friends"     title="">Friends</a></li>
-                  <li class="recs"><a href="/home/recs">Recommended</a></li>
-                  <li class="library"><a href="/user/jessethegame/library"     title="">Library</a></li>
-                  <li class="events"><a href="/user/jessethegame/events"     title="">Events</a></li>
-                  <li class="settings"><a href="/settings">Settings</a></li>
+                  <li class="home"><a ng-href="/home">Home</a></li>
+                  <li class="profile"><a ng-href="{{session.url}}" title="{{session.realname || session.name}}, {{session.gender|gender}}, {{session.country|country}}">Profile</a></li>
+                  <li class="friends"><a ng-href="{{session.url}}/friends" title="">Friends</a></li>
+                  <li class="recs"><a ng-href="/home/recs">Recommended</a></li>
+                  <li class="library"><a ng-href="{{session.url}}/library" title="">Library</a></li>
+                  <li class="events"><a ng-href="{{session.url}}/events" title="">Events</a></li>
+                  <li class="settings"><a ng-href="/settings">Settings</a></li>
                   <li><a href="/subscribe"><strong>Subscribe</strong></a></li>
                 </ul>
               </div>
             </li>
             <li id="logoutLink" class="profileItem">
-                <a href="/login/logout?shake-it-all-about" class="profile-link">Logout</a>
+                <a ng-click=logout() class="profile-link">Logout</a>
             </li>
+            <!--
             <li id="inboxLink" class="profileItem divider">
                 <a href="/inbox" class="profile-link">Inbox</a>
             </li>
+            -->
           </ul>
         </div>
         <div id="headerLinks">

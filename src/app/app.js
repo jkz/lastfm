@@ -35,7 +35,8 @@ angular.module( 'lastfm', [
 })
 
 .config( function myAppConfig ( $stateProvider, $urlRouterProvider ) {
-  $urlRouterProvider.otherwise( '/404' );
+  $urlRouterProvider
+    .otherwise( '/404' );
 
   $stateProvider
   .state( 'content', {
@@ -51,8 +52,17 @@ angular.module( 'lastfm', [
     }
   })
   .state( 'content.intro', {
-    url: '/home',
-    onEnter: function(titleService) {
+    url: '',
+    onEnter: function(titleService, $state, $rootScope, $location, lastfm, $cookies) {
+        var token = $location.search().token;
+        $location.search(' ');
+        //$location.path('');
+        if (token) {
+           if (!$rootScope.session) {
+             $rootScope.session = new lastfm.Session(token);
+           }
+        }
+
         titleService.setTitle('Intro - Last.fm');
     },
   })
@@ -162,7 +172,7 @@ angular.module( 'lastfm', [
 })
 */
 
-.run(function ($rootScope, $state, $stateParams) {
+.run(function ($rootScope, $state, $stateParams, lastfm, $cookies, $window) {
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
 
@@ -170,6 +180,27 @@ angular.module( 'lastfm', [
 
     $rootScope.$watch('user.name', function () {
         console.log('CHANGE!');
+    })
+
+    if ($cookies.sessionToken) {
+        $rootScope.session = new lastfm.Session($cookies.sessionToken);
+    }
+
+    $rootScope.login = function () {
+        //$window.open('http://www.last.fm/api/auth/?api_key=' + lastfm.apiKey);
+        $window.location.href = 'http://www.last.fm/api/auth/?api_key=' + lastfm.apiKey;
+    }
+
+    $rootScope.logout = function () {
+        delete $rootScope.session;
+    }
+
+    $rootScope.$watch('session', function (session) {
+        if (!session) {
+            delete $cookies.sessionToken;
+        } else {
+            $cookies.sessionToken = session.token;
+        }
     })
 
     function randint(min, max) {
@@ -180,7 +211,7 @@ angular.module( 'lastfm', [
     })
 })
 
-.controller( 'AppCtrl', function AppCtrl ( $scope, $cookies) {
+.controller( 'AppCtrl', function AppCtrl ($scope, $rootScope, $cookies) {
   $scope.skinColor = $cookies.skinColor || 'red'
 
     console.log('COOK', $cookies);
@@ -189,7 +220,6 @@ angular.module( 'lastfm', [
     $cookies.skinColor = color;
     $scope.skinColor = color;
   };
-
 })
 
 ;

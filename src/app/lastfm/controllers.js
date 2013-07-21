@@ -2,7 +2,7 @@ angular.module('lastfm.controllers')
 
 .controller( 'FriendCtrl', function ($scope, $stateParams, lastfm, Collection) {
   $scope.friends = new Collection({
-    resource: lastfm.user.friends,
+    resource: lastfm.user.getFriends,
     page: {
       limit: 20
     },
@@ -15,7 +15,7 @@ angular.module('lastfm.controllers')
 
 .controller( 'ScrobbleCtrl', function ($scope, $stateParams, lastfm, Collection) {
   $scope.tracks = new Collection({
-    resource: lastfm.user.scrobbles,
+    resource: lastfm.user.getRecentTracks,
   page: {limit: 20},
     params: {
       user: $stateParams.user,
@@ -30,7 +30,7 @@ angular.module('lastfm.controllers')
 
 .controller( 'UserCtrl', function UserCtrl ( $scope, $state, $stateParams, lastfm) {
   $scope.user = {name: $stateParams.user};
-  lastfm.user.info({
+  lastfm.user.getInfo({
       user: $stateParams.user,
   }, {
       success: function (data) {
@@ -57,7 +57,7 @@ angular.module('lastfm.controllers')
 
 .controller( 'LibraryArtistCtrl', function ($scope, $stateParams, lastfm, Collection) {
     $scope.artists = new Collection({
-        resource: lastfm.user.artists,
+        resource: lastfm.library.getArtists,
         page: {
             limit: 18,
         },
@@ -72,7 +72,7 @@ angular.module('lastfm.controllers')
 
 .controller( 'LibraryLoveCtrl', function ($scope, $stateParams, lastfm, Collection) {
   $scope.tracks = new Collection({
-      resource: lastfm.user.loved,
+      resource: lastfm.user.getLovedTracks,
       page: {
         limit: 50,
       },
@@ -95,7 +95,7 @@ angular.module('lastfm.controllers')
 
 .controller( 'TopArtistCtrl', function ($scope, $stateParams, lastfm, Collection) {
   $scope.artists = new Collection({
-      resource: lastfm.user.top.artists,
+      resource: lastfm.user.getTopArtists,
       page: {
         limit: 15,
       },
@@ -108,7 +108,7 @@ angular.module('lastfm.controllers')
 
 .controller( 'TopTrackCtrl', function ($scope, $stateParams, lastfm, Collection) {
   $scope.tracks = new Collection({
-      resource: lastfm.user.top.tracks,
+      resource: lastfm.user.getTopTracks,
       page: {
         limit: 15,
       },
@@ -117,6 +117,18 @@ angular.module('lastfm.controllers')
           period: 'overall',
       }
   });
+})
+
+.controller( 'SessionCtrl', function ($scope, $rootScope, $cookies, $window, lastfm) {
+    if (!$rootScope.session) {
+        $window.location.href = 'http://www.last.fm/api/auth/?api_key=' + lastfm.apiKey;
+    };
+})
+
+.controller( 'CallbackCtrl', function ($scope, $rootScope, $stateParams, $cookies, $location) {
+    console.log('TOKEN', $stateParams.token);
+    console.log('TOKEN2', $location.search());
+    console.log('TOKEN3', $location.search('token'));
 })
 
 ;

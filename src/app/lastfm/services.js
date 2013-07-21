@@ -3,9 +3,30 @@ angular.module('lastfm.services')
 .service('lastfm', function ($http) {
 
   // This is hardcoded for now, of course it should be configurable elsewhere.
-  var apiKey = '96b7891388b19f60761d5cb03fcd88ff';
+  var apiKey = '96b7891388b19f60761d5cb03fcd88ff',
+  //XXX This secret is meh, perhaps I should ask a server to sign my requests.
+      apiSecret = '1082aebf524eb701491422ccc096bde8';
+
 
   var rateLimited = false;
+
+  //XXX Please disambiguate step 6 of the signature guide in the documentation
+  //    It took me far too long to figure out (again...) that 'all parameters'
+  //    here means 'only the required parameters'
+  function signature(params) {
+    var a = [];
+    a.push('api_key');
+    a.push(apiKey);
+    a.push('method');
+    a.push(params.method);
+    if (params.token) {
+        a.push('token');
+        a.push(params.token);
+    }
+    a.push(apiSecret);
+    return md5(a.join(''));
+  }
+
 
   function errorHandler(caller) {
     return function (code, message) {
@@ -126,10 +147,16 @@ angular.module('lastfm.services')
     options.api_key = apiKey;
     options.format = 'json';
 
+    if (resource.signed) {
+        options.api_sig = signature(options);
+    }
+
+
     console.log('REQUESTING', options);
 
     $http.get('http://ws.audioscrobbler.com/2.0/', {params: options})
       .error(function (data, status, headers, config) {
+          console.log('ERROR', data);
         // Known errors are dispatched to the error handler
         if (data.error) {
           return error(error.code, error.message);
@@ -141,6 +168,7 @@ angular.module('lastfm.services')
       })
 
       .success(function (data) {
+          console.log('SUCCESS', data);
         // Errors without error status are dispatched here
         if (data.error) {
           return error(data)
@@ -197,7 +225,7 @@ angular.module('lastfm.services')
     return obj;
   };
 
-  return {
+  var resources = {
     // The service exposes last.fm resources. To obtain the data, they should
     // be called with callback functions.
     //
@@ -207,52 +235,91 @@ angular.module('lastfm.services')
     //    collection (optional) - when presents, implies entity arrays in
     //        responses with given name
     //    model (optional) - decorates response entities for internal convenience
+    auth: {
+      getSession: resource({
+        method: 'auth.getSession',
+        entity: 'session',
+        signed: true
+      })
+    },
     user: {
-      info: resource({
+      getInfo: resource({
         method: 'user.getInfo',
         entity: 'user',
         model: models.user
       }),
-      friends: resource({
+      getFriends: resource({
         method: 'user.getFriends',
         collection: 'friends',
         entity: 'user',
         model: models.user
       }),
-      scrobbles: resource({
+      getRecentTracks: resource({
         method: 'user.getRecentTracks',
         collection: 'recenttracks',
         entity: 'track',
         model: models.track
       }),
-      loved: resource({
+      getLovedTracks: resource({
         method: 'user.getLovedTracks',
         collection: 'lovedtracks',
         entity: 'track',
         model: models.track
       }),
-      artists: resource({
+      getTopArtists: resource({
+        method: 'user.getTopArtists',
+        collection: 'topartists',
+        entity: 'artist',
+        model: models.artist
+      }),
+      getTopTracks: resource({
+        method: 'user.getTopTracks',
+        collection: 'toptracks',
+        entity: 'track',
+        model: models.track
+      }),
+    },
+    library: {
+      getArtists: resource({
         method: 'library.getArtists',
         collection: 'artists',
         entity: 'artist',
         model: models.artist
       }),
-      top: {
-        artists: resource({
-          method: 'user.getTopArtists',
-          collection: 'topartists',
-          entity: 'artist',
-          model: models.artist
-        }),
-        tracks: resource({
-          method: 'user.getTopTracks',
-          collection: 'toptracks',
-          entity: 'track',
-          model: models.track
-        })
-      }
     }
+  };
+
+
+  function Session(token) {
+      this.token = token;
+      console.log('getKey()', token);
+      this.getKey();
   }
+
+  Session.prototype.getKey = function () {
+    var that = this;
+    resources.auth.getSession({
+        token: this.token
+    }, {
+        success: function (data) {
+          angular.extend(that, data);
+          console.log('KEY', data);
+          resources.user.getInfo({
+              user: that.name
+          }, {
+              success: function (data) {
+                console.log('USER', data);
+                angular.extend(that, data);
+              }
+          });
+        }
+    });
+  };
+
+  resources.apiKey = apiKey;
+  resources.Session = Session;
+
+  return resources;
 })
 
 .factory('Paginator', function () {
