@@ -162,6 +162,11 @@ angular.module( 'lastfm', [
         templateUrl: 'lastfm/views/user/friends/tpl.html',
         controller: 'FriendCtrl'
       })
+      .state( 'user.tracks', {
+        url: '/tracks',
+        templateUrl: 'lastfm/views/user/tracks.tpl.html',
+        controller: 'TrackCtrl'
+      })
   ;
 })
 
@@ -176,10 +181,6 @@ angular.module( 'lastfm', [
     $rootScope.$stateParams = $stateParams;
 
     $rootScope.user = $stateParams;
-
-    $rootScope.$watch('user.name', function () {
-        console.log('CHANGE!');
-    })
 
     if ($cookies.sessionToken) {
         $rootScope.session = new lastfm.Session($cookies.sessionToken);
@@ -212,8 +213,6 @@ angular.module( 'lastfm', [
 
 .controller( 'AppCtrl', function AppCtrl ($scope, $rootScope, $cookies) {
   $scope.skinColor = $cookies.skinColor || 'red'
-
-    console.log('COOK', $cookies);
 
   $scope.paintIt = function (color) {
     $cookies.skinColor = color;

@@ -16,15 +16,11 @@ angular.module('lastfm.controllers')
 .controller( 'ScrobbleCtrl', function ($scope, $stateParams, lastfm, Collection) {
   $scope.tracks = new Collection({
     resource: lastfm.user.getRecentTracks,
-  page: {limit: 20},
+    page: {limit: 20},
     params: {
       user: $stateParams.user,
       extended: 1
     }
-  });
-  console.log('trax', $scope.tracks);
-  $scope.$watch('tracks', function (nw, od) {
-    console.log('WATCHTRAK', nw, od);
   });
 })
 
@@ -34,7 +30,6 @@ angular.module('lastfm.controllers')
       user: $stateParams.user,
   }, {
       success: function (data) {
-          console.log('USER', data);
           $scope.user = data;
       }
   });
@@ -47,6 +42,10 @@ angular.module('lastfm.controllers')
     {
       slug: 'friends',
       name: 'Friends',
+    },
+    {
+      slug: 'tracks',
+      name: 'Tracks',
     },
   ]
 
@@ -84,11 +83,9 @@ angular.module('lastfm.controllers')
       }
   });
 
-$scope.scrobbles = {data: ['', DATA.lovedtracks.track]};
-
   // This watcher resets the Collection whenever query parameters change.
   $scope.$watch('tracks.params', function () {
-      $scope.tracks.reset();
+      //$scope.tracks.reset();
   }, true);
 
 })
@@ -115,6 +112,19 @@ $scope.scrobbles = {data: ['', DATA.lovedtracks.track]};
       params: {
           user: $stateParams.user,
           period: 'overall'
+      }
+  });
+})
+
+.controller( 'TrackCtrl', function ($scope, $stateParams, lastfm, Collection) {
+  $scope.tracks = new Collection({
+      resource: lastfm.user.getRecentTracks,
+      page: {
+        limit: 50
+      },
+      params: {
+          user: $stateParams.user,
+          extended: 1
       }
   });
 })
