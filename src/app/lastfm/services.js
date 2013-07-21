@@ -1,49 +1,104 @@
 angular.module('lastfm.services')
-.service('lastfm', function ($http) {
-    var apiKey = '96b7891388b19f60761d5cb03fcd88ff';
 
-    var handlers = {
-      7: function () {
-          console.log(7);
-          $paginator.transitionTo('404');
-      },
-      29: function () {
-          console.log(29);
-      }
-    };
+.service('lastfm', function ($http) {
+
+    // This is hardcoded for now, of course it should be configurable elsewhere.
+    var apiKey = '96b7891388b19f60761d5cb03fcd88ff';
 
     function errorHandler(caller) {
       return function (code, message) {
-        console.log(code, message);
-        handlers[code]();
+        console.log('LAST.FM REST API Error!', code, message);
+
         switch(code) {
+        // 1 : This error does not exist
+        // 2 : Invalid service -This service does not exist
+        // 3 : Invalid Method - No method with that name in this package
+        // 4 : Authentication Failed - You do not have permissions to access the
+        //     service
+        // 5 : Invalid format - This service doesn't exist in that format
+        // 6 : Invalid parameters - Your request is missing a required parameter
+        // 7 : Invalid resource specified
         case 7:
             $paginator.transitionTo('404');
             break;
+        // 8 : Operation failed - Most likely the backend service failed.
+        //     Please try again.
+        // 9 : Invalid session key - Please re-authenticate
+        // 10 : Invalid API key - You must be granted a valid key by last.fm
+        // 11 : Service Offline - This service is temporarily offline. Try again
+        //      later.
+        // 12 : Subscribers Only - This station is only available to paid
+        //      last.fm subscribers
+        // 13 : Invalid method signature supplied
+        // 14 : Unauthorized Token - This token has not been authorized
+        // 15 : This item is not available for streaming.
+        // 16 : The service is temporarily unavailable, please try again.
+        // 17 : Login: User requires to be logged in
+        // 18 : Trial Expired - This user has no free radio plays left.
+        //      Subscription required.
+        // 19 : This error does not exist
+        // 20 : Not Enough Content - There is not enough content to play this
+        //      station
+        // 21 : Not Enough Members - This group does not have enough members for
+        //      radio
+        // 22 : Not Enough Fans - This artist does not have enough fans for for
+        //      radio
+        // 23 : Not Enough Neighbours - There are not enough neighbours for
+        //      radio
+        // 24 : No Peak Radio - This user is not allowed to listen to radio
+        //      during peak usage
+        // 25 : Radio Not Found - Radio station not found
+        // 26 : API Key Suspended - This application is not allowed to make
+        //      requests to the web services
+        // 27 : Deprecated - This type of request is no longer supported
+        // 29 : Rate Limit Exceded - Your IP has made too many requests
+        //      in a short period, exceeding our API guidelines
         case 29:
           $timeout(function () {
             caller();
           }, 60000);
           break;
         default:
-            console.log('NOOP');
+            console.log('Did nothing.');
         }
       };
     }
 
     function handler(endpoint, callback) {
-        return function (data) {
-            if (endpoint.collection) {
-                return callback(
-                    data[endpoint.collection][endpoint.entity],
-                    data[endpoint.collection]['@attr']
-                )
-            } else {
-                return callback(
-                    data[endpoint.entity]
-                )
-            }
+      // Decoratores a callback function with endpoint specific parsing.
+      // Extracts the actual data and applies optional models.
+      return function (data) {
+
+        // Collection endpoints take callback functions with signature
+        // (collection, meta)
+        if (endpoint.collection) {
+
+          // Last.fm collections with a single member are not returned
+          // as arrays. (Which I would argue against).
+          // The little concat thingy makes sure an array os returned.
+          var collection = [].concat(data[endpoint.collection][endpoint.entity]),
+          // The meta information consists of paging and aggregate data
+          // and optionally the provided user name
+              meta = data[endpoint.collection]['@attr'];
+
+          // If a decorator is present, map it on the collection
+          if (endpoint.decorator) {
+            collection = collection.map(endpoint.model);
+          }
+
+          return callback(collection, meta);
+
+        // Entity endpoints take callback functions with signature
+        // (entity)
+        } else {
+          var entity = data[endpoint.entity];
+          if (endpoint.model) {
+            entity = endpoint.model(data[endpoint.entity]);
+          }
+
+          return callback(entity);
         }
+      }
     }
 
     function request(endpoint, options, callbacks) {

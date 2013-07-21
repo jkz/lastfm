@@ -84,14 +84,23 @@ angular.module('lastfm.controllers')
       endpoint: lastfm.user.loved,
       $scope: $scope,
       page: {
-        limit: 18,
+        limit: 50,
       },
       params: {
           user: $stateParams.user,
+
+          //Sadly, these paramters are not available in the public api.
           sortBy: 'plays',
           sortOrder: 'desc'
       }
   });
+
+  // This watcher resets the collection whenever query parameters change.
+  $scope.$watch('tracks.params', function () {
+      $scope.tracks.data = {};
+      $scope.tracks.update();
+  }, true);
+
 })
 
 .controller( 'TopArtistCtrl', function ($scope, $stateParams, lastfm, collection) {

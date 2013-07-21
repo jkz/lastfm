@@ -1,0 +1,24 @@
+<table class="candyStriped tracklist" id="lovedTracks" odd="1">
+  <tbody>
+    <tr ng-repeat="track in tracks"
+        ng-class="{first: $first, last: $last, odd: ($index + 1) % 2}"
+        id="r9_305835854_282612734" data-track-id="305835854" >
+      <td class="playbuttonCell"></td>
+      <td class="subjectCell">
+        <a ng-href="track.artist.url">{{track.artist.name}}</a>
+        – <a ng-href="{{track.url}}">{{track.name}}</a>
+      </td>
+      <td class="lovedCell">
+        <img title="A loved track" alt="Loved track" class="icon loved_indicator_icon" width="11" height="9" src="http://cdn.last.fm/flatness/clear.gif" style="" />
+      </td>
+      <td class="smallmultibuttonCell">
+        <a ng-href="{{track.url}}" class="mRemoveFromLibrary mSend mAddTags mAddToPlaylist mUnlove
+          lfmButton lfmMultiButton lfmButtonFortrack lfmSmallButton lfmSmallMultiButton lfmMultiButtonFull" forcelink="1">
+          <span></span></a>
+        </td>
+        <td class="dateCell" ng-class="{last: $last}">
+          <!-- Date not available :< -->
+        </td>
+    </tr>
+  </tbody>
+</table>

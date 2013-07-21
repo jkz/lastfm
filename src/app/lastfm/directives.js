@@ -32,11 +32,6 @@ angular.module('lastfm.directives')
         $scope.$watch('page.index', function () {
             $scope.paginator.update();
         });
-
-        $scope.$watch('paginator.params', function () {
-            $scope.paginator.data = {};
-            $scope.paginator.update();
-        });
     }
   };
 })
@@ -84,12 +79,46 @@ angular.module('lastfm.directives')
     templateUrl: 'lastfm/directives/stipulator.period.tpl.html',
     link: function ($scope) {
       $scope.stipulate = function (value) {
-        $scope.collection.params.period = value;
+        if (value) {
+          $scope.collection.params.period = value;
+        } else {
+          delete $scope.collection.params.period;
+        }
         $scope.collection.request();
       };
     }
   }
 })
+
+.directive('paramsWatcher', function () {
+  return {
+    restrict: 'A',
+    scope: {
+      collection: '=paramsWatcher',
+    },
+    link: function ($scope) {
+        /*
+        $scope.params = $scope.collection.params;
+
+        $scope.del = function (key) {
+            delete $scope.params[key];
+            //delete $scope.collection.params[key];
+        };
+
+        $scope.set = function (params) {
+            angular.extend($scope.params, params || {});
+            //angular.extend($scope.collection.params, params || {});
+        }
+        */
+
+        $scope.$watch('collection.params', function (nw, od) {
+            console.log('CHANGED!', nw, od);
+            $scope.collection.data = {};
+            $scope.collection.update();
+        });
+    }
+  }
+});
 
 ;
 

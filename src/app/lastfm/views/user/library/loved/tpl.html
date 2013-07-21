@@ -1,0 +1,55 @@
+<a href="http://ws.audioscrobbler.com/2.0/user/jessethegame/lovedtracks.rss" class="icon">
+  <img class="icon feed_small_icon" width="10" height="10" src="http://cdn.last.fm/flatness/clear.gif" style="" />
+  <span>RSS</span>
+</a>
+<div id="libraryTop">
+
+<div id="lovedTracksWrapper">
+  <div class="messageBox infoMessage">
+    <span class="messageWrapper">New! See <a href="/home/friendsloved">what your friends are loving</a>.</span>
+  </div>
+
+  <div class=" messageBox infoMessage exportMessage exportLoved">
+    <span class="messageWrapper"><a href="#" id="exportLink">Export Loved Tracks</a></span>
+  </div>
+  <p id="librarySubNav" params-watcher=tracks>
+  {{collection.params}}
+    <span ng-class="{current: !collection.params.sortBy}">
+      <a ng-click="del('sortBy')">Recently Added</a>
+      <a ng-click="collection.params.sortBy = undefined">By Artist</a>
+    </span>
+    |
+    <span ng-class="{current: collection.params.sortBy == 'plays'}">
+      <a ng-click="set({sortBy: 'plays'})">By Plays</a>
+      <a ng-click="collection.params.sortBy = 'plays'">By Artist</a>
+    </span>
+    |
+    <span ng-class="{current: collection.params.sortBy == 'artist'}">
+      <a ng-click="set({sortBy: 'artist'})">By Artist</a>
+      <a ng-click="collection.params.sortBy = 'artist'">By Artist</a>
+    </span>
+  </p>
+
+  <paginator-ellipsis ng-show="page.count > 1" paginator=tracks>
+  </paginator-ellipsis>
+
+
+  <page-slider collection=tracks>
+  <ng-switch on=transition>
+  <div ng-switch-when='prev' love-list=collection.data[index-1]></div>
+  <div ng-switch-default     love-list=collection.data[index]></div>
+  <div ng-switch-when='next' love-list=collection.data[index+1]></div>
+  <div ng-switch-when='jump' love-list=collection.data[target]></div>
+  </ng-switch>
+  </page-slider>
+
+  <paginator-ellipsis ng-show="page.count > 1" paginator=tracks>
+  </paginator-ellipsis>
+
+  </div>
+  <div class="messageBox infoMessage">
+    <span class="messageWrapper">
+      Psst! Looking for your <a href="#/user/{{user.name}}/library/banned">banned tracks</a>?
+    </span>
+  </div>
+</div>

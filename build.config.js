@@ -54,7 +54,9 @@ module.exports = {
       'vendor/angular-cookies/angular-cookies.min.js',
       'vendor/placeholders/angular-placeholders-0.0.1-SNAPSHOT.min.js',
       'vendor/angular-ui-router/release/angular-ui-router.js',
+      'vendor/angular-ui-utils/modules/event/event.js',
       'vendor/angular-ui-utils/modules/route/route.js',
+      'vendor/angular-ui-utils/modules/keypress/keypress.js',
       'vendor/showdown/compressed/showdown.js'
     ],
     css: [

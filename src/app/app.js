@@ -12,9 +12,12 @@ angular.module( 'lastfm', [
   'templates-app',
   'templates-common',
 
-  'ngCookies',
   'ui.state',
   'ui.route',
+  'ui.event',
+  'ui.keypress',
+
+  'ngCookies',
   'titleService',
 
   'kit',
@@ -142,7 +145,7 @@ angular.module( 'lastfm', [
           })
           .state( 'user.library.loved', {
             url: '/loved',
-            templateUrl: 'lastfm/views/user/library/loved.tpl.html',
+            templateUrl: 'lastfm/views/user/library/loved/tpl.html',
             controller: 'LibraryLoveCtrl'
           })
       .state( 'user.friends', {
