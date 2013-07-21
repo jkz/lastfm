@@ -67,11 +67,10 @@ angular.module('lastfm.controllers')
             sortOrder: 'desc'
         }
     });
-    console.log('ARTIST', $scope);
 })
 
 .controller( 'LibraryLoveCtrl', function ($scope, $stateParams, lastfm, Collection) {
-  $scope.tracks = new Collection({
+  $scope.scrobbles = new Collection({
       resource: lastfm.user.getLovedTracks,
       page: {
         limit: 50,
@@ -85,10 +84,11 @@ angular.module('lastfm.controllers')
       }
   });
 
+$scope.scrobbles = {data: ['', DATA.lovedtracks.track]};
+
   // This watcher resets the Collection whenever query parameters change.
   $scope.$watch('tracks.params', function () {
-      $scope.tracks.data = {};
-      $scope.tracks.update();
+      $scope.tracks.reset();
   }, true);
 
 })
@@ -97,11 +97,11 @@ angular.module('lastfm.controllers')
   $scope.artists = new Collection({
       resource: lastfm.user.getTopArtists,
       page: {
-        limit: 15,
+        limit: 15
       },
       params: {
           user: $stateParams.user,
-          period: 'overall',
+          period: 'overall'
       }
   });
 })
@@ -110,25 +110,13 @@ angular.module('lastfm.controllers')
   $scope.tracks = new Collection({
       resource: lastfm.user.getTopTracks,
       page: {
-        limit: 15,
+        limit: 15
       },
       params: {
           user: $stateParams.user,
-          period: 'overall',
+          period: 'overall'
       }
   });
-})
-
-.controller( 'SessionCtrl', function ($scope, $rootScope, $cookies, $window, lastfm) {
-    if (!$rootScope.session) {
-        $window.location.href = 'http://www.last.fm/api/auth/?api_key=' + lastfm.apiKey;
-    };
-})
-
-.controller( 'CallbackCtrl', function ($scope, $rootScope, $stateParams, $cookies, $location) {
-    console.log('TOKEN', $stateParams.token);
-    console.log('TOKEN2', $location.search());
-    console.log('TOKEN3', $location.search('token'));
 })
 
 ;

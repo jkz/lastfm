@@ -116,6 +116,7 @@ angular.module('lastfm.services')
             console.log('MAPPED', collection);
         }
 
+
         return callback(collection, meta);
 
       // Entity resources take callback functions with signature
@@ -441,11 +442,11 @@ angular.module('lastfm.services')
 
     // Setup the query parameters
         params = angular.extend({
-          page: this.page.index,
-          limit: this.page.limit,
-        }, this.params, options);
+          page: that.page.index,
+          limit: that.page.limit,
+        }, that.params, options);
 
-    return this.resource(params, {
+    return that.resource(params, {
       // Wrap the callback call, for the right 'this'
       success: function (data, meta) {
         that.callback(data, meta);
