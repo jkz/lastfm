@@ -17,13 +17,15 @@
 
   <h2 class="heading">
     <span class="h2Wrapper">
-      <a href="/user/jessethegame/charts?subtype=artists" title="">
+      <a ng-href="{{user.url}}/charts?subtype=artists" title="">
         Top Artists
       </a>
     </span>
   </h2>
 
   <div period-stipulator=artists class="horizontalOptions clearit"></div>
+
+  {{artists}}
 
   <div class="module-body chart chartoverall current" id="charts271350">
     <table class="candyStriped chart" odd="1">
@@ -57,7 +59,7 @@
 
           <td class="chartbarCell">
             <div style="width:{{10 + 90 * artist.playcount / artists.data[1][0].playcount}}%;" class="chartbar">
-              <a ng-href="#/user/{{user.name}}/library/music/{{artist.name}}">
+              <a ng-href="{user.url}}/library/music/{{artist.name}}">
                 <span>{{artist.playcount}}</span>
               </a>
             </div>
@@ -68,7 +70,7 @@
     </table>
 
     <div class="moduleOptions">
-      <a ng-href="#/user/{{user.name}}/charts?rangetype=overall&amp;subtype=artists" title="">
+      <a ng-href="{{user.url}}/charts?rangetype=overall&amp;subtype=artists" title="">
         See more
       </a>
     </div>

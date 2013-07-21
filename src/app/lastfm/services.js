@@ -178,30 +178,21 @@ angular.module('lastfm.services')
   }
 
 
-  var models = {
-    base: function (obj) {
-      if(obj.image) {
-          obj.image = image(obj.image);
-      }
-      if(obj.url) {
-          obj.url = url(obj.url);
-      }
-      return obj;
-    }
-  };
+  var models = {};
   models.user = function (obj) {
-    obj = models.base(obj);
-    obj.suburl = function (page) {
-      return obj.url + '/' + page;
-    }
+    obj.url = url(obj.url);
+    obj.image = image(obj.image, 'http://cdn.last.fm/flatness/responsive/2/noimage/default_user_140_g2.png');
     return obj;
   };
   models.artist = function (obj) {
+    obj.url = url(obj.url);
+    obj.image = image(obj.image, 'http://cdn.last.fm/flatness/responsive/2/noimage/default_user_140_g2.png');
     obj = models.base(obj);
     return obj;
   };
   models.track = function (obj) {
-    obj = models.base(obj);
+    obj.url = url(obj.url);
+    obj.image = image(obj.image, '');
     obj.artist = models.artist(obj);
     return obj;
   };

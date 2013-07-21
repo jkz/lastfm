@@ -1,10 +1,10 @@
 <div class="leftCol">
   <div class="leftColWrapper">
     <div ui-view=badge></div>
-    <div ui-view=scrobbles ng-controller=ScrobbleCtrl>:DDD</div>
+    <div ui-view=scrobbles ng-show=tracks.count ng-controller=ScrobbleCtrl></div>
     <div ui-view=taste></div>
-    <div ui-view=topArtists ng-controller=TopArtistCtrl></div>
-    <div ui-view=topTracks ng-controller=TopTrackCtrl></div>
+    <div ui-view=topArtists ng-show=artists.count ng-controller=TopArtistCtrl></div>
+    <div ui-view=topTracks ng-show=tracks.count ng-controller=TopTrackCtrl></div>
   </div><!-- .leftColWrapper -->
 </div><!-- .leftCol -->
 
@@ -13,7 +13,9 @@
   <div ui-view=friends ng-controller=FriendCtrl></div>
 </div>
 
-<div ng-show=false class="module">
+
+<!--
+<div class="module">
 <h2 class="heading">
   <span class="h2Wrapper">
     <a href="/user/jessethegame/groups" title="">Groups (1)</a>
@@ -32,7 +34,9 @@
   </li>
 </ul>
 </div>
+-->
 
+<!--
 <a name="shoutbox"></a>
 <div class="deferred widget widget-lazy/shoutbox"
 data-url="/user/jessethegame/shoutbox"
@@ -103,6 +107,7 @@ data-require="lazy/shoutbox"
     </li>
   </ul>
 </div>
+-->
 
 
 

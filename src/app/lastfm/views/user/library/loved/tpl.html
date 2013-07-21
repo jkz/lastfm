@@ -5,15 +5,16 @@
 <div id="libraryTop">
 
 <div id="lovedTracksWrapper">
+  <!--
   <div class="messageBox infoMessage">
     <span class="messageWrapper">New! See <a href="/home/friendsloved">what your friends are loving</a>.</span>
   </div>
+  -->
 
   <div class=" messageBox infoMessage exportMessage exportLoved">
     <span class="messageWrapper"><a href="#" id="exportLink">Export Loved Tracks</a></span>
   </div>
   <p id="librarySubNav" params-watcher=tracks>
-  {{collection.params}}
     <span ng-class="{current: !collection.params.sortBy}">
       <a ng-click="del('sortBy')">Recently Added</a>
       <a ng-click="collection.params.sortBy = undefined">By Artist</a>
@@ -47,9 +48,11 @@
   </paginator-ellipsis>
 
   </div>
+  <!--
   <div class="messageBox infoMessage">
     <span class="messageWrapper">
-      Psst! Looking for your <a href="#/user/{{user.name}}/library/banned">banned tracks</a>?
+      Psst! Looking for your <a href="{{user.name}}/library/banned">banned tracks</a>?
     </span>
   </div>
+  -->
 </div>

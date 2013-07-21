@@ -11,30 +11,30 @@
 
   <h2 class="heading">
     <span class="h2Wrapper">
-      <a ng-href="#/user/{{user.name}}/library" title="">{{user.name}}’s Library</a>
+      <a ng-href="{{user.url}}/library" title="">{{user.name}}’s Library</a>
     </span>
   </h2>
 
   <div class="module-body" ng-controller=LibraryArtistCtrl>
     <p class="libraryInfo clearit">
-    <a ng-href="#/user/{{user.name}}/library" class="total" title="">{{artists.count}} Artists in total</a>
+    <a ng-href="{{user.url}}/library" class="total" title="">{{artists.count}} Artists in total</a>
     <br>
     <span class="rangetype">Showing: Overall</span>
     </p>
 
     <ul class="libraryItems artistsLarge">
       <li ng-repeat="artist in artists.data[1]" ng-class="{first: $first}" id="r6_19498076">
-      <a href="{{artist.url}}">
+      <a ng-href="{{artist.url}}">
         <span class="pictureFrame">
           <span class="image">
-            <img style="min-width: 126px; min-height: 126px;" alt="" ng-src="{{artist.image[2]['#text']}}">
+            <img style="min-width: 126px; min-height: 126px;" alt="" ng-src="{{artist.image.large}}">
           </span>
           <span class="overlay">
           </span>
         </span>
         <strong class="name">{{artist.name}}</strong>
       </a>
-      <a href="#/user/{{user.name}}/library/music/{{artist.name}}?rangetype=overall" class="plays" rel="nofollow">
+      <a ng-href="{{user.url}}/library/music/{{artist.name}}?rangetype=overall" class="plays" rel="nofollow">
         <span dir="ltr">({{artist.playcount}}&nbsp;plays)</span>
       </a>
       </li>
@@ -49,30 +49,37 @@
      <div class="lovedTracks leftColumn" ng-controller=LibraryLoveCtrl>
        <div class="wrapper" ng-show="tracks.count">
          <h3>
-           <a href="#/user/{{user.name}}/library/loved" class="icon" title="">
+           <a ng-href="{{user.url}}/library/loved" class="icon" title="">
              <img class="icon loved_indicator_icon" width="11" height="9" src="http://cdn.last.fm/flatness/clear.gif" style="">
              <span>Loved Tracks ({{tracks.count}})</span>
            </a>
-           <a href="http://ws.audioscrobbler.com/2.0/user/{{user.name}}/lovedtracks.rss" class="icon">
+           <a ng-href="http://ws.audioscrobbler.com/2.0/user/{{user.name}}/lovedtracks.rss" class="icon">
              <img class="icon feed_small_icon" width="10" height="10" src="http://cdn.last.fm/flatness/clear.gif" style=""></a>
          </h3>
-         <p>
-         Last loved: <a href="{{tracks.data[1][0].artist.url}}">{{tracks.data[1][0].artist.name}}</a>
+         <p ng-show=tracks.data[1][0]>
+         Last loved: <a ng-href="{{tracks.data[1][0].artist.url}}">{{tracks.data[1][0].artist.name}}</a>
          – <a href="{{tracks.data[1][0].url}}">{{tracks.data[1][0].name}}</a>
          </p>
        </div>
      </div>
 
-     <div class="playlists rightColumn" ng-show=false>
+     <!--
+     <div class="playlists rightColumn">
        <div class="wrapper" ng-show="tracks.count">
-         <h3><a href="/user/jessethegame/library/playlists" class="icon" title=""><img class="transparent_png playlist_icon" width="13" height="10" src="http://cdn.last.fm/flatness/global/icon_playlist.png" style=""><span>Playlists (1)</span></a></h3>
-         <p>
-         Including: <a href="/user/jessethegame/library/playlists/6pznu_" class="topPlaylist">untitled playlist, 0 tracks</a> </p>
+         <h3>
+           <a href="{{user.url}}/library/playlists" class="icon" title="">
+             <img class="transparent_png playlist_icon" width="13" height="10" src="http://cdn.last.fm/flatness/global/icon_playlist.png" style="">
+             <span>Playlists (1)</span>
+         </a>
+       </h3>
+       <p>
+       Including: <a href="/user/jessethegame/library/playlists/6pznu_" class="topPlaylist">untitled playlist, 0 tracks</a> </p>
        </div>
      </div>
+     -->
    </div><!-- .twoCols -->
 
  </div><!-- #tasteCocktail -->
- <span class="moduleOptions"><a href="#/user/{{user.name}}/library">See more</a></span>
+ <span class="moduleOptions"><a ng-href="{{user.url}}/library">See more</a></span>
  </div>
  </div>

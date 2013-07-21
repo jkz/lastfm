@@ -6,11 +6,9 @@
     <div class="userContainer">
       <div id="hcard-reframe-music" class="vcard">
         <strong>
-          <a ng-href="#/user/{{friend.name}}" title="{{friend.realname}}, {{friend.age}}, {{friend.country|country}}">
+          <a ng-href="{{friend.url}}" title="{{friend.realname}}, {{friend.age}}, {{friend.country|country}}">
             <span class="userImage">
-              <img height="64" width="64" alt="" ng-src="{{
-                  friend.image[1]['#text'] || 'http://cdn.last.fm/flatness/responsive/2/noimage/default_user_60_g1.png'
-              }}" />
+              <img height="64" width="64" alt="" ng-src="{{friend.image.medium}}" />
           </span>
           {{friend.name}}
         </a>

@@ -10,10 +10,10 @@ separated: isUserState('profile'),
 
   <div ng-show="!isUserState('profile')" class="crumb-wrapper">
     <div class="top-crumb">
-      <a href="#/user/{{user.name}}">
+      <a href="{{user.url}}">
         <img class="crumb-image"
-        ng-src="{{user.image[1]['#text']}}" alt="Thumbnail of {{user.name}}" width="60" height="60" />
-        jessethegame
+        ng-src="{{user.image.medium}}" alt="Thumbnail of {{user.name}}" width="60" height="60" />
+        {{user.name}}
       </a>
     </div>
     <h1 ng-repeat="nav in secondaryNav"
@@ -25,7 +25,7 @@ separated: isUserState('profile'),
     <ul class="visible-menu">
       <li ng-repeat="nav in secondaryNav"
           ng-class="{first: $first, current: isUserState(nav.slug)}">
-          <a ng-href="#/user/{{user.name}}/{{nav.slug}}">{{nav.name}}</a>
+          <a ng-href="{{user.url}}/{{nav.slug}}">{{nav.name}}</a>
     </ul>
     <!--
     <div class="drop-down-menu more">

@@ -2,10 +2,7 @@
 
   <div class="badgeAvatar">
     <span class="userImage">
-      <img class="photo" height="126" width="126" alt="" ng-src="{{
-        user.image[2]['#text'] ||
-        'http://cdn.last.fm/flatness/responsive/2/noimage/default_user_140_g2.png'
-      }}" />
+      <img class="photo" height="126" width="126" alt="" ng-src="{{user.image.large}}" />
     </span>
   </div>
 
@@ -19,7 +16,8 @@
       <strong class="fn">{{user.realname || user.name}}</strong>,
       {{user.gender|gender}},
       <span class="country-name">{{user.country|country}}</span><br>
-      <a href="http://jessethegame.net" rel="me nofollow" class="url homepage">jessethegame.net</a>
+      <!--a href="http://example.net" rel="me nofollow" class="url
+      homepage">example.net</a-->
     </p>
 
     <div class="userData">
@@ -29,9 +27,9 @@
           <span class="count" ng-bind-html-unsafe="user.playcount|flipping"></span>&nbsp;salary expectation
       </strong> <small>{{user.registered['#text']}}</small></span>
         <p class="userActivity" ng-show=false>
-        <a ng-href="#/user/{{user.name}}/library/loved" title="">{{}} Loved Track</a>
-        | <a ng-href="#/user/{{user.name}}/grapevine" title="">{{}} Posts</a>
-        | <a ng-href="#/user/{{user.name}}/playlists" title="">{{}} Playlists</a>
+        <a ng-href="{{user.url}}/library/loved" title="">{{}} Loved Track</a>
+        | <a ng-href="{{user.url}}/grapevine" title="">{{}} Posts</a>
+        | <a ng-href="{{user.url}}/playlists" title="">{{}} Playlists</a>
           | <span class="shoutCount">
             <a href="#shoutbox" id="shoutBoxLink" class="icon" data-analytics-action="ShoutCountLink">
             <img class="icon comment_icon" width="13" height="11" src="http://cdn.last.fm/flatness/clear.gif" style="" /><span>{{}} shout</span>

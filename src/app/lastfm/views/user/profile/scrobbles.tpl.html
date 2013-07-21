@@ -1,9 +1,8 @@
-{{tracks}}
 <div class="module moduletracks" id="recentTracks">
 
   <h2 class="heading">
     <span class="h2Wrapper">
-      <a href="#/user/{{user.name}}/tracks" title="">Recently Listened Tracks</a>
+      <a ng-href="{{user.user}}/tracks" title="">Recently Listened Tracks</a>
     </span>
   </h2>
 
@@ -28,7 +27,7 @@ target="_blank"
 >Tweet</a>
     |
 -->
-    <a href="http://ws.audioscrobbler.com/1.0/user/{{user.name}}/recenttracks.rss"><img class="icon feed_small_icon" width="10" height="10" src="http://cdn.last.fm/flatness/clear.gif" style="" /></a>
+    <a ng-href="http://ws.audioscrobbler.com/1.0/user/{{user.name}}/recenttracks.rss"><img class="icon feed_small_icon" width="10" height="10" src="http://cdn.last.fm/flatness/clear.gif" style="" /></a>
   </div>
 
   <div class="module-body">
@@ -42,7 +41,7 @@ target="_blank"
       </div>
 -->
 
-
+      {{tracks}}
       <table class="tracklist withimages" id="recentTracks">
         <tbody>
           <tr ng-repeat="track in tracks.data[1]" ng-class="{streamable: track.streamable == 1}" id="recent_{{track.id}}" data-track-id="{{track.id}}">
@@ -55,13 +54,13 @@ target="_blank"
               <a href="{{track.url}}" ng-switch="track['@attr'].nowplaying == 'true'">
                 <img ng-switch-when=true height="64" width="64" alt=""
                 ng-src="{{
-                  track.image[1]['#text'] ||
-                  track.artist.image[1]['#text'] ||
+                  track.image.medium ||
+                  track.artist.image.medium ||
                   'http://cdn.last.fm/flatness/catalogue/noimage/2/default_artist_large.png'}}" />
                 <img ng-switch-default height="34" width="34" alt=""
                 ng-src="{{
-                track.image[0]['#text'] ||
-                track.artist.image[0]['#text'] ||
+                track.image.small ||
+                track.artist.small ||
                 'http://cdn.last.fm/flatness/catalogue/noimage/2/default_artist_small.png'}}" />
               </a>
             </td>

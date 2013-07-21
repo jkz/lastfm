@@ -1,18 +1,18 @@
 <div id="libraryTopWrapper" class="clearit" ng-show=false>
   <p id="librarySubNav">
     <span ng-class="{current: artists.params.sortBy == 'plays'}">
-      <a ng-href="#/user/{{user.name}}/library"
+      <a ng-href="{{user.name}}/library"
          ng-click="artists.sort('plays')">By Plays</a>
        {{sortBy}}
     </span>
     |
     <span ng-class="{current: artists.params.sortBy == 'name'}">
-      <a ng-href="#/user/{{user.name}}/library"
+      <a ng-href="{{user.name}}/library"
          ng-click="artists.sort('name')">A–Z</a>
     </span>
     |
     <span>
-      <a ng-href="#/user/{{user.name}}/library/recent">Recently Added</a>
+      <a ng-href="{{user.name}}/library/recent">Recently Added</a>
     </span>
   </p>
 </div><!-- .libraryTopWrapper -->
