@@ -16,7 +16,7 @@ angular.module('lastfm.controllers')
 .controller( 'ScrobbleCtrl', function ($scope, $stateParams, lastfm, Collection) {
   $scope.tracks = new Collection({
     resource: lastfm.user.getRecentTracks,
-    page: {limit: 20},
+    page: {limit: 10},
     params: {
       user: $stateParams.user,
       extended: 1

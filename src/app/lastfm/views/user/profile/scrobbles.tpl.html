@@ -41,7 +41,6 @@ target="_blank"
       </div>
 -->
 
-      {{tracks}}
       <table class="tracklist withimages" id="recentTracks">
         <tbody>
           <tr ng-repeat="track in tracks.data[1]" ng-class="{streamable: track.streamable == 1}" id="recent_{{track.id}}" data-track-id="{{track.id}}">

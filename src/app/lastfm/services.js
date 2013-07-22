@@ -415,11 +415,11 @@ angular.module('lastfm.services')
   //
   function Collection(conf) {
     conf = conf || {};
-    angular.extend(this, conf);
+    angular.extend(this, this.defaults, conf);
     this.data = {};
     this.page = new Paginator(this.page);
     if (this.autoload) {
-      this.fetch({page: 1});
+      this.request({page: 1});
     }
   }
 
