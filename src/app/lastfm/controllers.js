@@ -69,7 +69,7 @@ angular.module('lastfm.controllers')
 })
 
 .controller( 'LibraryLoveCtrl', function ($scope, $stateParams, lastfm, Collection) {
-  $scope.scrobbles = new Collection({
+  $scope.tracks = new Collection({
       resource: lastfm.user.getLovedTracks,
       page: {
         limit: 50,

@@ -155,12 +155,8 @@ angular.module('lastfm.services')
         options.api_sig = signature(options);
     }
 
-
-    console.log('REQUESTING', options);
-
     $http.get('http://ws.audioscrobbler.com/2.0/', {params: options})
       .error(function (data, status, headers, config) {
-          console.log('ERROR', data);
         // Known errors are dispatched to the error handler
         if (data.error) {
           return error(error.code, error.message);
@@ -172,7 +168,6 @@ angular.module('lastfm.services')
       })
 
       .success(function (data) {
-          console.log('SUCCESS', data);
         // Errors without error status are dispatched here
         if (data.error) {
           return error(data)
@@ -299,7 +294,6 @@ angular.module('lastfm.services')
 
   function Session(token) {
       this.token = token;
-      console.log('getKey()', token);
       this.getKey();
   }
 
@@ -310,12 +304,10 @@ angular.module('lastfm.services')
     }, {
         success: function (data) {
           angular.extend(that, data);
-          console.log('KEY', data);
           resources.user.getInfo({
               user: that.name
           }, {
               success: function (data) {
-                console.log('USER', data);
                 angular.extend(that, data);
               }
           });
