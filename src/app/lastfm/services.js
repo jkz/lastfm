@@ -1,6 +1,6 @@
 angular.module('lastfm.services')
 
-.service('lastfm', function ($http) {
+.service('lastfm', function ($http, $cookies) {
 
   // This is hardcoded for now, of course it should be configurable elsewhere.
   var apiKey = '96b7891388b19f60761d5cb03fcd88ff',
@@ -47,6 +47,9 @@ angular.module('lastfm.services')
         // 8 : Operation failed - Most likely the backend service failed.
         //     Please try again.
         // 9 : Invalid session key - Please re-authenticate
+        case 9:
+            alert('Your session has expired, please login again');
+            break;
         // 10 : Invalid API key - You must be granted a valid key by last.fm
         // 11 : Service Offline - This service is temporarily offline. Try again
         //      later.
