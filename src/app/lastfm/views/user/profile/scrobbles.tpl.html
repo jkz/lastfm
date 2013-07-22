@@ -2,7 +2,7 @@
 
   <h2 class="heading">
     <span class="h2Wrapper">
-      <a ng-href="{{user.user}}/tracks" title="">Recently Listened Tracks</a>
+      <a ng-href="{{user.url}}/tracks" title="">Recently Listened Tracks</a>
     </span>
   </h2>
 
@@ -106,7 +106,7 @@ target="_blank"
             <td
               ng-class="{highlight: track.nowplaying}"
               class="subjectCell">
-              <a ng-href="{{track.artist.url}}"> {{track.artist.name}}</a>
+              <a ng-href="{{track.artist.url}}">{{track.artist.name}}</a>
               – <a ng-href="{{track.url}}" >{{track.name}}</a>
             </td>
 

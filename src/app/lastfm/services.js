@@ -225,6 +225,10 @@ angular.module('lastfm.services')
   };
   models.artist = function (obj) {
     obj.url = url(obj.url);
+    //XXX The user.getRecentTracks?extended=1 endpoint has artists names as url
+    if (obj.url == obj.name) {
+        obj.url = '#/music/' + obj.name;
+    }
     obj.image = image(obj.image, 'http://cdn.last.fm/flatness/responsive/2/noimage/default_user_140_g2.png');
     if (obj.similar) {
         obj.similar = obj.similar.artist.map(models.artist);

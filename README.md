@@ -1,4 +1,4 @@
-# [Last.fm](//lastfm.pewpew.nl)
+# [Last.fm](http://lastfm.pewpew.nl)
 
 ## Brief
 
