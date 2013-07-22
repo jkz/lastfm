@@ -1,0 +1,300 @@
+<article class="content artist-overview" data-require="music/artistpage"
+itemscope="" itemtype="http://schema.org/MusicGroup">
+
+  <header class="
+  page-head
+  without-crumbtrail
+  without-image
+  clearit">
+    <h1 itemprop="name">{{artist.name}}</h1>
+      <nav class="secondary-nav more-visible" role="navigation" data-require="secondarynav">
+      <ul class="visible-menu" style="margin-right: 45px; margin-left: 0px; visibility: visible;">
+        <li ng-repeat="nav in secodaryNav" ng-class="{first: $first}">
+          <a ng-href="{{artist.url}}/+{{nav.slug}}">{{nav.name}}</a>
+        </li>
+      </div>
+    </nav>
+  </header>
+
+
+  <div class="r artist-header" ng-show=false>
+    <a ng-show=artist.ontour ng-href="{{artist.url}}/+events" class="btn btn--on-tour">
+      On tour
+    </a>
+    <section class="g8 artist-images">
+      <div class="widget widget-music/heroimage" data-url="/music/Microtrauma/+modules/herosidekickimages" data-template="resourceimages/herosidekick_images" data-require="music/heroimage">
+        <div class="resource-images">
+          <h2 class="rm">Pictures</h2>
+          <img itemprop="image" ng-src="{{artist.image.mega}}">
+        </div>
+      </div>
+    </section>
+
+    <section class="g4 artist-actions remove-bottom-margin">
+      <div class="r r--reverse">
+        <div class="g4 artist-action-area">
+          <h2 class="rm">Listen to, buy or share</h2>
+          <div class="user-actions" data-require="music/actionarea">
+            <div class="user-actions-btn-wrap user-actions-btn-wrap--add">
+              <button class=" btn btn--full-width btn--primary
+                      iconleft
+                      iconleft--add
+                      js-add
+                  " title="Add to library">
+                  Add to library
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="g4 artist-stats-area">
+          <div class="media media--overflow-visible music-resource-stats" data-require="music/artiststatsarea">
+            <meta itemprop="interactionCount" content="UserPlays:{{artist.stats.playcount}}">
+            <ul class="media-body">
+              <li class="scrobbles">
+                <b data-count="{{artist.stats.playcount}}">
+                  {{artist.stats.playcount}}
+                </b>
+                <div class="lite">scrobbles</div>
+              </li>
+              <li class="listeners">
+                <b id="listenerCount" data-count="{{artist.stats.listeners}}">
+                  {{artist.stats.listeners}}
+                </b>
+                <div class="lite">listeners</div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+
+<div class="r">
+  <div class="g8">
+    <section>
+      <h2 class="rm">Tags</h2>
+        <section class="global-tags">
+          <h3 class="rm">Everyone’s tags</h3>
+          <ul class="tags">
+            <li ng-repeat="tag in artist.tags">
+              <a ng-href="{{tag.url}}" rel="tag">{{tag.name}}</a>
+            </li>
+          </ul>
+          <button title="Tag Microtrauma" class="
+                      btn
+                      btn--brand-blue
+                      btn--small
+                      iconleft
+                      iconleft--tag
+                      btn--icon-only
+                      add-tag
+                      needs-js
+                  " data-require="tagbutton">Tag Microtrauma</button>
+          <a href="/music/Microtrauma/+tags" class="more-tags">More tags</a>
+      </section>
+    </section>
+
+    <section class="artist-wiki">
+      <header>
+        <hgroup>
+          <h2 class="rm">Biography</h2>
+        </hgroup>
+      </header>
+
+      <div class="wiki">
+        <div id="wikiAbstract" class="wiki-abstract" data-require="music/wiki">
+          <div class="wiki-text"><span
+              ng-bind-html-unsafe=artist.bio.summary></span>
+            <span class=hide ng-show="expandSummary" ng-click="expandSummary = true"></span>
+          </div>
+          <!--
+          <div class="wiki-options">
+            <a href="/music/Microtrauma/+wiki" class="wiki-read-more">
+              <span data-read-all="Read full bio">
+                Read more…
+              </span>
+            </a>
+            <a href="/music/Microtrauma/+wiki/edit" class="hide">
+              Edit bio
+            </a>
+          </div>
+          -->
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="g4 g--padded artist-bio-sidebar">
+    <aside class="similar-artists">
+      <h2><a href="{{artist.url}}/+similar">Similar Artists</a></h2>
+
+      <ul class="r">
+        <li ng-repeat="artist in artist.similar" class="g2 g--padded" ng-class="{first: $first}">
+          <a href="{{artist.url}}" class="artist-artist">
+            <img class="cover-image-image" ng-src="{{artist.image.medium}}" alt="">
+            <div class="cover-image " style="background-image: url('{{artist.image.medium}}');">
+              <img class="cover-image-image" ng-src="{{artist.image.medium}}" alt="">
+              <div class="text-over-image ">
+                <span class="text-over-image-text">{{artist.name}}</span>
+              </div>
+            </div>
+          </a>
+        </li>
+
+      </ul>
+    </aside>
+  </div>
+
+
+  <section id="artist-top-tracks" class="artist-top-tracks">
+<div class="module modulecharts modulechartstracks" data-require="affiliation/multiaffiliationarea" data-placement="" id="switcher514746">
+
+  <h2 class="heading">
+    <span class="h2Wrapper">
+      <a href="{{artist.url}}/+charts">
+        Top Tracks
+      </a>
+    </span>
+  </h2>
+
+<!--
+  <div class="horizontalOptions clearit" period-stipulator=topTracks></div>
+    <ul>
+      <li class="first chartweek" ng-class="{
+      current: tracks.params.period == '7days'
+      }">
+        <a ng-click="tracks.params.period == '7days'">
+          Last Week
+        </a>
+      </li>
+
+      <li class="first chartweek" ng-class="{
+      current: tracks.params.period == '6month'
+      }">
+        <a ng-click="tracks.params.period == '6months'">
+          Last 6 months
+        </a>
+      </li>
+
+      <li class="chartoverall" ng-class="{
+      current: tracks.params.period == 'overall'
+      }">
+        <a ng-click="tracks.params.period == 'overall'">
+          Overall
+        </a>
+      </li>
+    </ul>
+  </div>
+  -->
+  <!-- .horizontalOptions -->
+  <div candy-tracks=topTracks.data[1] top-count=topTracks.data[1][0].playcount></div>
+
+  <div class="module-body chart chartweek current" id="charts960078">
+    <table class="candyStriped chart" odd="1">
+      <tbody>
+
+        <tr data-track-id="519115818" itemprop="tracks" itemscope="" itemtype="http://schema.org/MusicRecording"
+          ng-class="{
+            first: $first,
+            odd: ($index + 1) % 2,
+            streamable: track.streamable
+          }"
+          ng-repeat="track in topTracks.data[1]">
+
+          <td class="positionCell">{{track.rank}}</td>
+
+          <td class="playbuttonCell">
+            <a class="previewbutton preview-track" href="http://play.last.fm/preview/129447211.mp3" data-analytics-redirect="false" rel="nofollow">
+              <img class="icon preview_icon" width="16" height="16" src="http://cdn.last.fm/flatness/clear.gif" style="">
+            </a>
+          </td>
+
+          <td class="subjectCell" title="{{track.name}}, {{track.listeners}} listeners">
+            <div>
+              <!--
+              XXX {{track.duration|somefilter}}
+              <meta itemprop="duration" content="PT0M30S">
+              <meta itemprop="url" content="{{FQDN}}{{track.url}}">
+              XXX Album not exposed in api
+              <meta itemprop="inAlbum" content="ALBUM">
+              XXX {{track.playcount|separateThousands:,}}
+              <meta itemprop="interactionCount" content="UserPlays:x,xxx">
+              -->
+
+              <a href="{{track.url}}">
+                <span itemprop="name">{{track.name}}</span>
+              </a>
+            </div>
+          </td>
+
+          <td class="lovedCell"></td>
+
+          <td class="multibuttonCell">
+            <a href="{{track.url}}" class="
+              mAddToLibrary
+              mSend mAddTags
+              mAddToPlaylist
+              lfmButton lfmMultiButton lfmButtonFortrack lfmSmallButton lfmSmallMultiButton lfmMultiButtonFull
+              " forcelink="1">
+              <span></span>
+            </a>
+          </td>
+
+          <td class="chartbarCell">
+            <div style="width:{{10 + (90 * track.playcount) / topTracks.data[1][0].playcount}}%;" class="chartbar">
+              <span>{{track.playcount}}</span>
+            </div>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+
+    <div class="moduleOptions">
+      <a href="{{artist.url}}/+charts?rangetype=week&amp;subtype=tracks">
+        See more
+      </a>
+    </div>
+  </div>
+
+</div><!-- #chartsswitcher514746 -->
+
+  </section>
+
+
+<!--
+<section class="artist-top-albums"></section>
+<section class="artist-events"></section>
+-->
+
+<section class="r">
+        <div class="g8 artist-listening-trend">
+            <h2>Listening Trend</h2>
+
+        <script src="https://www.google.com/jsapi?autoload={&quot;modules&quot;:[{&quot;name&quot;:&quot;visualization&quot;,&quot;version&quot;:&quot;1&quot;,&quot;packages&quot;:[&quot;corechart&quot;]}]}"></script><script src="https://www.google.com/uds/api/visualization/1.0/00133a5412d5113dfca30a1ffd3afe93/format+en,default,corechart.I.js" type="text/javascript"></script>
+
+    <div class="catalogue-scrobble-graph needs-js" data-source="scrobblegraph" data-require="music/scrobblegraph">
+        <div class="catalogue-scrobble-graph-top-data">
+          <strong>{{listeners|sep1000}}</strong>
+          <span class="lite">listeners all time</span>
+        </div>
+        <div class="catalogue-scrobble-graph-top-data">
+          <strong>{{playcount|sep1000}}</strong>
+          <span class="lite">scrobbles all time</span>
+        </div>
+        <div ng-show="track.userplaycount"class="catalogue-scrobble-graph-top-data">
+          <a ng-href="{{session.url}}/library/music/{{artist.name}}">
+            <strong>{{track.playcount|sep1000}}</strong>
+          </a>
+          <span class="lite">scrobbles all time</span>
+        </div>
+      </div>
+    </div>
+</section>
+
+<!--
+<section class="r remove-bottom-margin"></section>
+-->
+
+</article>

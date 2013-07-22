@@ -39,4 +39,25 @@ angular.module('lastfm.filters')
     };
 })
 
+.filter('sep1000', function () {
+    return function (original, separator) {
+        var number,
+            result = '',
+            separator = separator === undefined ? ',' : separator;
+        if (typeof original === 'number') {
+            number = number.toString();
+        } else if (typeof number === 'string') {
+            number = parseInt(number);
+            if (number === undefined) {
+                return original
+            }
+        } else {
+            return original;
+        }
+
+        //TODO the actual separation
+        return original
+    };
+})
+
 ;

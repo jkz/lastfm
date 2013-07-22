@@ -54,6 +54,57 @@ angular.module('lastfm.controllers')
   }
 })
 
+.controller( 'ArtistCtrl', function ArtistCtrl ( $scope, $state, $stateParams, lastfm, Collection) {
+  $scope.artist = {name: $stateParams.artist};
+
+  lastfm.artist.getInfo({
+      artist: $stateParams.artist,
+  }, {
+      success: function (data) {
+          $scope.artist = data;
+      }
+  });
+
+  $scope.secondaryNav = [
+    {
+      slug: 'tracks',
+      name: 'Tracks',
+    },
+    {
+      slug: 'albums',
+      name: 'Albums',
+    }
+  ];
+
+  $scope.topTracks = new Collection({
+      resource: lastfm.artist.getTopTracks,
+      page: {
+        limit: 15
+      },
+      params: {
+          artist: $stateParams.artist,
+          period: 'overall'
+      }
+  });
+
+})
+
+.controller( 'ArtistTopTrackCtrl', function ($scope, $stateParams, lastfm, Collection) {
+  $scope.tracks = new Collection({
+      resource: lastfm.artist.getTopTracks,
+      page: {
+        limit: 15
+      },
+      params: {
+          user: $stateParams.artist,
+          period: 'overall'
+      }
+  });
+
+
+})
+
+
 .controller( 'LibraryArtistCtrl', function ($scope, $stateParams, lastfm, Collection) {
     $scope.artists = new Collection({
         resource: lastfm.library.getArtists,
@@ -90,7 +141,7 @@ angular.module('lastfm.controllers')
 
 })
 
-.controller( 'TopArtistCtrl', function ($scope, $stateParams, lastfm, Collection) {
+.controller( 'UserTopArtistCtrl', function ($scope, $stateParams, lastfm, Collection) {
   $scope.artists = new Collection({
       resource: lastfm.user.getTopArtists,
       page: {
@@ -103,7 +154,7 @@ angular.module('lastfm.controllers')
   });
 })
 
-.controller( 'TopTrackCtrl', function ($scope, $stateParams, lastfm, Collection) {
+.controller( 'UserTopTrackCtrl', function ($scope, $stateParams, lastfm, Collection) {
   $scope.tracks = new Collection({
       resource: lastfm.user.getTopTracks,
       page: {

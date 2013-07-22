@@ -27,7 +27,12 @@ target="_blank"
 >Tweet</a>
     |
 -->
-    <a ng-href="http://ws.audioscrobbler.com/1.0/user/{{user.name}}/recenttracks.rss"><img class="icon feed_small_icon" width="10" height="10" src="http://cdn.last.fm/flatness/clear.gif" style="" /></a>
+    <a ng-href="http://ws.audioscrobbler.com/1.0/user/{{user.name}}/recenttracks.rss">
+      <img
+        class="icon feed_small_icon"
+        width="10" height="10"
+        src="http://cdn.last.fm/flatness/clear.gif">
+    </a>
   </div>
 
   <div class="module-body">
@@ -43,44 +48,83 @@ target="_blank"
 
       <table class="tracklist withimages" id="recentTracks">
         <tbody>
-          <tr ng-repeat="track in tracks.data[1]" ng-class="{streamable: track.streamable == 1}" id="recent_{{track.id}}" data-track-id="{{track.id}}">
+          <tr
+            ng-repeat="track in tracks.data[1]"
+            ng-class="{streamable: track.streamable}"
+            id="recent_{{track.id}}"
+            data-track-id="{{track.id}}">
 
-            <td colspan="{{track['@attr'].nowplaying == 'true' && 2 || 1}}" ng-class="{
-              highlight: track['@attr'].nowplaying == 'true',
-              imageSmall: track['@attr'].nowplaying != 'true',
-              imageMedium: track['@attr'].nowplaying == 'true'}"
-              class="imageCell">
-              <a href="{{track.url}}" ng-switch="track['@attr'].nowplaying == 'true'">
-                <img ng-switch-when=true height="64" width="64" alt=""
+            <td
+              class="imageCell"
+              ng-class="{
+                highlight: track.nowplaying,
+                imageSmall: !track.nowplaying,
+                imageMedium: track.nowplaying
+              }"
+              colspan="{{track.nowplaying && 2 || 1}}">
+              <a
+                ng-switch="track.nowplaying"
+                ng-href="{{track.url}}">
+                <img
+                ng-switch-when=true
+                height="64" width="64" alt=""
                 ng-src="{{
                   track.image.medium ||
                   track.artist.image.medium ||
-                  'http://cdn.last.fm/flatness/catalogue/noimage/2/default_artist_large.png'}}" />
-                <img ng-switch-default height="34" width="34" alt=""
+                  'http://cdn.last.fm/flatness/catalogue/noimage/2/default_artist_large.png'
+                }}">
+                <img
+                ng-switch-default
+                height="34" width="34" alt=""
                 ng-src="{{
-                track.image.small ||
-                track.artist.small ||
-                'http://cdn.last.fm/flatness/catalogue/noimage/2/default_artist_small.png'}}" />
+                  track.image.small ||
+                  track.artist.small ||
+                  'http://cdn.last.fm/flatness/catalogue/noimage/2/default_artist_small.png'
+                }}">
               </a>
             </td>
 
-            <td ng-show="!track['@attr'].nowplaying == 'true'" ng-class="{highlight: track['@attr'].nowplaying == 'true'}" class="playbuttonCell">
+            <td
+              ng-show="!track.nowplaying"
+              ng-class="{highlight: track.nowplaying}"
+              class="playbuttonCell">
               <div>
-                <a ng-show="track.streamable" class="previewbutton preview-track" href="http://play.last.fm/preview/133036575.mp3" data-analytics-redirect="false" rel="nofollow" >
-                  <img class="icon preview_icon" width="16" height="16" src="http://cdn.last.fm/flatness/clear.gif" style="" />
+                <a
+                  ng-show="track.streamable"
+                  class="previewbutton preview-track"
+                  TODO_href="http://play.last.fm/preview/133036575.mp3"
+                  data-analytics-redirect="false"
+                  rel="nofollow">
+                  <img
+                    class="icon preview_icon"
+                    width="16" height="16"
+                    src="http://cdn.last.fm/flatness/clear.gif">
                 </a>
               </div>
             </td>
 
-            <td ng-class="{highlight: track['@attr'].nowplaying == 'true'}" class="subjectCell ">
-              <a ng-href="{{track.artist.url}}">{{track.artist.name}}</a> – <a ng-href="{{track.url}}" >{{track.name}}</a>
+            <td
+              ng-class="{highlight: track.nowplaying}"
+              class="subjectCell">
+              <a ng-href="{{track.artist.url}}"> {{track.artist.name}}</a>
+              – <a ng-href="{{track.url}}" >{{track.name}}</a>
             </td>
 
-            <td ng-class="{highlight: track['@attr'].nowplaying == 'true'}" class="lovedCell">
-              <img ng-show="track.loved" title="A loved track" alt="Loved track" class="icon loved_indicator_icon" width="11" height="9" src="http://cdn.last.fm/flatness/clear.gif" style="">
+            <td
+              ng-class="{highlight: track.nowplaying}"
+              class="lovedCell">
+              <img
+                ng-show="track.loved"
+                title="A loved track"
+                alt="Loved track"
+                class="icon loved_indicator_icon"
+                width="11" height="9"
+                src="http://cdn.last.fm/flatness/clear.gif">
             </td>
 
-            <td ng-class="{highlight: track['@attr'].nowplaying == 'true'}" class="smallmultibuttonCell">
+            <td
+              ng-class="{highlight: track.nowplaying}"
+              class="smallmultibuttonCell">
               <!--
               <a ng-href="{{track.url}}" class="
                mRemoveFromLibrary
@@ -92,11 +136,19 @@ target="_blank"
               -->
             </td>
 
-            <td ng-class="{highlight: track['@attr'].nowplaying == 'true'}" class="dateCell" ng-switch=track['@attr'].nowplaying>
+            <td
+              ng-switch=track.nowplaying
+              ng-class="{highlight: track.nowplaying}"
+              class="dateCell">
+
               <span ng-switch-when="true">
-                <img class="transparent_png playingnow_icon" width="12" height="12" src="http://cdn.last.fm/flatness/global/icon_eq.gif" style="" />
+                <img
+                  class="transparent_png playingnow_icon"
+                  width="12" height="12"
+                  src="http://cdn.last.fm/flatness/global/icon_eq.gif">
                 <span> Listening now</span>
               </span>
+
               <span ng-switch-default class="date">{{track.date['#text']}}</span>
             </td>
           </tr>

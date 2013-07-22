@@ -1,0 +1,44 @@
+<table class="candyStriped chart" odd="1">
+  <tbody>
+
+    <tr ng-repeat="artist in artists" ng-class="{
+      first: $first,
+      odd: ($index + 1) % 2
+    }">
+      <td class="positionCell">{{artist.rank}}</td>
+
+      <td class="subjectCell" title="{{artist.name}}, played {{artist.playcount}} times">
+        <div>
+          <a ng-href="{{artist.url}}">{{artist.name}}</a>
+        </div>
+      </td>
+
+      <td class="lovedCell">
+
+      </td>
+
+      <td class="multibuttonCell">
+        <!--
+        <a ng-href="{{artist.url}}" class="
+          mRemoveFromLibrary
+          mSend mAddTags
+          lfmButton lfmMultiButton lfmButtonForartist lfmSmallButton lfmSmallMultiButton lfmMultiButtonFull"
+          forcelink="1">
+          <span></span>
+        </a>
+        -->
+      </td>
+
+      <td class="chartbarCell">
+        <div style="width:{{10 + 90 * artist.playcount / highest}}%;" class="chartbar">
+          <a ng-show=user ng-href={{user.url}}/library/music/{{artist.name}}>
+            <span>{{artist.playcount}}</span>
+          </a>
+          <span ng-show=!user>{{artist.playcount}}</span>
+        </div>
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+

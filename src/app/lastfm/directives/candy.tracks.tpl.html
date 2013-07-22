@@ -1,0 +1,85 @@
+<table class="candyStriped chart" odd="1">
+  <tbody>
+
+    <tr ng-repeat="track in tracks"
+        itemprop="tracks"
+        itemscope=""
+        itemtype="http://schema.org/MusicRecording"
+        ng-class="{
+          first: $first,
+          odd: ($index + 1) % 2,
+          streamable: track.streamable
+        }"
+        TODO-data-track-id="">
+
+      <td class="positionCell">{{track.rank}}</td>
+
+      <td class="playbuttonCell">
+        <a class="previewbutton preview-track"
+           rel="nofollow"
+           TODO_href="/preview.mp3"
+           data-analytics-redirect="false"
+           ng-show=track.streamable>
+          <img class="icon preview_icon"
+               width="16" height="16"
+               src="http://cdn.last.fm/flatness/clear.gif" style="">
+        </a>
+      </td>
+
+      <td class="subjectCell"
+          title="{{track.name}}, {{track.listeners}} listeners">
+        <div>
+          <!--
+          TODO {{track.duration|somefilter}}
+          <meta itemprop="duration" content="PT0M30S">
+          <meta itemprop="url" content="{{FQDN}}{{track.url}}">
+          TODO Album not exposed in api
+          <meta itemprop="inAlbum" content="ALBUM">
+          TODO {{track.playcount|separateThousands:,}}
+          <meta itemprop="interactionCount" content="UserPlays:x,xxx">
+          -->
+
+          <a href="{{track.url}}">
+            <span itemprop="name">{{track.name}}</span>
+          </a>
+        </div>
+      </td>
+
+      <td class="lovedCell">
+        <img ng-show={{track.loved}}
+             class="icon loved_indicator_icon"
+             title="A loved track"
+             alt="Loved track"
+             width="11" height="9"
+             src="http://cdn.last.fm/flatness/clear.gif">
+      </td>
+
+      <td class="multibuttonCell">
+        <a href="{{track.url}}"
+           class="
+              mAddToLibrary
+              mSend mAddTags
+              mAddToPlaylist
+              lfmButton lfmMultiButton lfmButtonFortrack lfmSmallButton
+              lfmSmallMultiButton lfmMultiButtonFull
+           "
+           forcelink="1">
+          <span></span>
+        </a>
+      </td>
+
+      <td class="chartbarCell">
+        <div style="width:{{10 + (90 * track.playcount) / highest}}%;"
+             class="chartbar">
+        <a ng-show=user
+           ng-href={{user.url}}/library/music/{{track.artist.name}}/{{track.name}}>
+            <span>{{track.playcount}}</span>
+          </a>
+          <span ng-show=!user>{{track.playcount}}</span>
+        </div>
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+

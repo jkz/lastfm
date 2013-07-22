@@ -38,6 +38,9 @@ angular.module('lastfm.services')
         // 3 : Invalid Method - No method with that name in this package
         // 4 : Authentication Failed - You do not have permissions to access the
         //     service
+        case 4:
+            alert('Your session has expired, please login again');
+            break;
         // 5 : Invalid format - This service doesn't exist in that format
         // 6 : Invalid parameters - Your request is missing a required parameter
         // 7 : Invalid resource specified
@@ -200,6 +203,7 @@ angular.module('lastfm.services')
       medium:     data[1]['#text'] || def,
       large:      data[2]['#text'] || def,
       extralarge: data[3]['#text'] || def,
+      mega:       (data[4] && data[4]['#text']) || def,
     }
   }
 
@@ -210,6 +214,10 @@ angular.module('lastfm.services')
 
 
   var models = {};
+  models.tag = function (obj) {
+    obj.url = url(obj.url);
+    return obj;
+  };
   models.user = function (obj) {
     obj.url = url(obj.url);
     obj.image = image(obj.image, 'http://cdn.last.fm/flatness/responsive/2/noimage/default_user_140_g2.png');
@@ -218,12 +226,45 @@ angular.module('lastfm.services')
   models.artist = function (obj) {
     obj.url = url(obj.url);
     obj.image = image(obj.image, 'http://cdn.last.fm/flatness/responsive/2/noimage/default_user_140_g2.png');
+    if (obj.similar) {
+        obj.similar = obj.similar.artist.map(models.artist);
+        console.log('SIMILAR!', obj.similar);
+    }
+    if (obj.playcount) {
+        obj.playcount = parseInt(obj.playcount);
+    }
+    if (obj.listeners) {
+        obj.listeners = parseInt(obj.listeners);
+    }
+    if (obj.ontour) {
+        obj.ontour = obj.ontour == '1';
+    }
+    if (obj.tags) {
+        obj.tags = obj.tags.tag.map(models.tag);
+    }
+    if (obj['@attr']) {
+        if (obj['@attr'].rank) {
+            obj.rank = parseInt(obj['@attr'].rank);
+        }
+    }
     return obj;
   };
   models.track = function (obj) {
     obj.url = url(obj.url);
     obj.image = image(obj.image, '');
     obj.artist = models.artist(obj.artist);
+    if (obj['@attr']) {
+        if (obj['@attr'].rank) {
+            obj.rank = parseInt(obj['@attr'].rank);
+        }
+        if (obj['@attr'].nowplaying) {
+            obj.nowplaying = obj['@attr'].nowplaying == 'true';
+        }
+    }
+    if (obj.streamable) {
+      obj.streamable = obj.streamable['#text'] == '1';
+    }
+    //TODO loved
     return obj;
   };
 
@@ -242,6 +283,19 @@ angular.module('lastfm.services')
         method: 'auth.getSession',
         entity: 'session',
         signed: true
+      })
+    },
+    artist: {
+      getInfo: resource({
+        method: 'artist.getInfo',
+        entity: 'artist',
+        model: models.artist
+      }),
+      getTopTracks: resource({
+        method: 'artist.getTopTracks',
+        collection: 'toptracks',
+        entity: 'track',
+        model: models.track
       })
     },
     user: {

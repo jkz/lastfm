@@ -1,4 +1,11 @@
-<div class="module modulecharts modulechartstracks" data-require="affiliation/multiaffiliationarea" data-placement="" id="switcher645093">
+<div
+  class="
+  module
+  modulecharts
+  modulechartstracks"
+  data-require="affiliation/multiaffiliationarea"
+  data-placement=""
+  id="switcher645093">
 
 <!--
   <div id="switcher645093Buttons" class="moduleButtons">
@@ -15,65 +22,25 @@
 
   <h2 class="heading">
     <span class="h2Wrapper">
-      <a ng-href="{{user.url}}/charts?subtype=tracks" title="">
+      <a ng-href="{{user.url}}/charts/tracks" title="">
         Top Tracks
       </a>
     </span>
   </h2>
 
-
   <div period-stipulator=tracks class="horizontalOptions clearit"></div>
 
   <div class="module-body chart chartoverall current" id="charts163175">
+    <candy-stripe-tracks
+      tracks=tracks.data[1]
+      highest=tracks.data[1][0].playcount>
+    </candy-stripe-tracks>
+  </div>
 
-    <table class="candyStriped chart" odd="1">
-      <tbody>
-
-        <tr ng-repeat="track in tracks.data[1]" ng-class="{first: $first, odd: ($index + 1) % 2}">
-          <td class="positionCell">
-            {{track['@attr'].rank}}
-          </td>
-
-          <td class="playbuttonCell">
-            <a ng-show="track.streamable['#text'] == 1" class="previewbutton preview-track" href="http://play.last.fm/preview/120866631.mp3" data-analytics-redirect="false" rel="nofollow">
-              <img class="icon preview_icon" width="16" height="16" src="http://cdn.last.fm/flatness/clear.gif" style="">
-          </a>
-          </td>
-
-          <td class="subjectCell" title="{{track.name}}, played {{track.playcount}} times">
-            <div>
-              <a ng-href="{{track.artist.url}}">{{track.artist.name}}</a>
-              – <a ng-href="{{track.url}}">{{track.name}}</a>
-            </div>
-          </td>
-          <td class="lovedCell">
-            <img ng-show="{{track.userloved}}" title="A loved track" alt="Loved track" class="icon loved_indicator_icon" width="11" height="9" src="http://cdn.last.fm/flatness/clear.gif" style="">
-          </td>
-
-          <td class="multibuttonCell">
-            <!--
-            <a ng-href="{{track.url}}" class="
-              mRemoveFromLibrary mSend mAddTags mAddToPlaylist mUnlove lfmButton lfmMultiButton lfmButtonFortrack lfmSmallButton lfmSmallMultiButton lfmMultiButtonFull" forcelink="1">
-              <span></span>
-            </a>
-            -->
-          </td>
-
-          <td class="chartbarCell">
-            <div style="width:{{10 + 90 * track.playcount / tracks.data[1][0].playcount}}%;" class="chartbar">
-              <a
-                ng-href="{{user.url}}/library/music/{{track.artist.name}}/{{track.name}}">
-                <span>{{track.playcount}}</span>
-              </a>
-            </div>
-          </td>
-        </tr>
-
-      </tbody>
-    </table>
-
-    <div class="moduleOptions">
-      <a ng-href="{{user.url}}/charts?rangetype=overall&amp;subtype=tracks" title="">See more</a> </div>
+  <div class="moduleOptions">
+    <a ng-href="{{user.url}}/charts/tracks" title="">
+      See more
+    </a>
   </div>
 
 </div>

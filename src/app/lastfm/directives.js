@@ -117,7 +117,30 @@ angular.module('lastfm.directives')
         });
     }
   }
-});
+})
 
+.directive('candyStripeTracks', function () {
+  return {
+    restrict: 'E',
+    templateUrl: 'lastfm/directives/candy.tracks.tpl.html',
+    scope: {
+      tracks: '=',
+      highest: '=',
+      user: '='
+    }
+  };
+})
+
+.directive('candyStripeArtists', function () {
+  return {
+    restrict: 'E',
+    templateUrl: 'lastfm/directives/candy.artists.tpl.html',
+    scope: {
+      artists: '=',
+      highest: '=',
+      user: '='
+    }
+  };
+})
 ;
 

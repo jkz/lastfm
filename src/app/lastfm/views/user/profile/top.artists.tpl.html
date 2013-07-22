@@ -1,4 +1,11 @@
-<div class="module modulecharts modulechartsartists" data-require="affiliation/multiaffiliationarea" data-placement="" id="switcher457243">
+<div
+  class="
+    module
+    modulecharts
+    modulechartsartists"
+  data-require="affiliation/multiaffiliationarea"
+  data-placement=""
+  id="switcher457243">
 
 <!--
   <div id="switcher457243Buttons" class="moduleButtons">
@@ -14,7 +21,6 @@
   </div>
 -->
 
-
   <h2 class="heading">
     <span class="h2Wrapper">
       <a ng-href="{{user.url}}/charts?subtype=artists" title="">
@@ -25,52 +31,16 @@
 
   <div period-stipulator=artists class="horizontalOptions clearit"></div>
 
-  <div class="module-body chart chartoverall current" id="charts271350">
-    <table class="candyStriped chart" odd="1">
-      <tbody>
+  <candy-stripe-artists
+    artists=artists.data[1]
+    highest=artists.data[1][0].playcount
+    user=user
+  ></candy-stripe-artists>
 
-        <tr ng-repeat="artist in artists.data[1]" ng-class="{first: $first, odd: ($index + 1) % 2}">
-          <td class="positionCell">
-            {{artist['@attr'].rank}}
-          </td>
-
-          <td class="subjectCell" title="{{artist.name}}, played {{artist.playcount}} times">
-            <div>
-              <a ng-href="{{artist.url}}">{{artist.name}}</a>
-            </div>
-          </td>
-
-          <td class="lovedCell">
-          </td>
-
-          <td class="multibuttonCell">
-            <!--
-            <a ng-href="{{artist.url}}" class="
-              mRemoveFromLibrary
-              mSend mAddTags
-              lfmButton lfmMultiButton lfmButtonForartist lfmSmallButton lfmSmallMultiButton lfmMultiButtonFull"
-              forcelink="1">
-              <span></span>
-            </a>
-            -->
-          </td>
-
-          <td class="chartbarCell">
-            <div style="width:{{10 + 90 * artist.playcount / artists.data[1][0].playcount}}%;" class="chartbar">
-              <a ng-href="{user.url}}/library/music/{{artist.name}}">
-                <span>{{artist.playcount}}</span>
-              </a>
-            </div>
-          </td>
-        </tr>
-
-      </tbody>
-    </table>
-
-    <div class="moduleOptions">
-      <a ng-href="{{user.url}}/charts?rangetype=overall&amp;subtype=artists" title="">
-        See more
-      </a>
-    </div>
+  <div class="moduleOptions">
+    <a ng-href="{{user.url}}/charts" title="">
+      See more
+    </a>
   </div>
+
 </div>

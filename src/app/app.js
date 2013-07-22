@@ -103,6 +103,25 @@ angular.module( 'lastfm', [
     url: '/user404',
     templateUrl: 'lastfm/views/user/404.tpl.html'
   })
+  .state( 'artist', {
+    url: '/music/:artist',
+    controller: 'ArtistCtrl',
+    //abstract: true,
+    templateUrl: 'lastfm/views/music/tpl.html'
+  })
+  /*
+      .state( 'artist.profile', {
+        onEnter: function(titleService, $stateParams) {
+            titleService.setTitle($stateParams.artist + "- Discover music, concerts, stats and pictures at Last.fm.");
+        },
+        url: 'REMOVEME',
+        views: {
+            '': {
+                templateUrl: 'lastfm/views/music/profile/tpl.html',
+            },
+        }
+      })
+      */
   .state( 'user', {
     url: '/user/:user',
     controller: 'UserCtrl',
@@ -134,11 +153,11 @@ angular.module( 'lastfm', [
             },
             'topArtists@user.profile': {
                 templateUrl: 'lastfm/views/user/profile/top.artists.tpl.html',
-                controller: 'TopArtistCtrl'
+                controller: 'UserTopArtistCtrl'
             },
             'topTracks@user.profile': {
                 templateUrl: 'lastfm/views/user/profile/top.tracks.tpl.html',
-                controller: 'TopTrackCtrl'
+                controller: 'UserTopTrackCtrl'
             }
         }
       })

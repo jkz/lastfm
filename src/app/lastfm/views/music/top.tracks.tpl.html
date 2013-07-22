@@ -1,0 +1,101 @@
+<div class="module modulecharts modulechartstracks" data-require="affiliation/multiaffiliationarea" data-placement="" id="switcher514746">
+
+  <h2 class="heading">
+    <span class="h2Wrapper">
+      <a href="{{artist.url}}/+charts">
+        Top Tracks
+      </a>
+    </span>
+  </h2>
+
+  <div class="horizontalOptions clearit">
+    <ul>
+      <li class="first chartweek" ng-class="{current: tracks.params.period == '7days'">
+        <a ng-click="tracks.params.period == '7days'">
+          Last Week
+        </a>
+      </li>
+
+      <li class="chart6month">
+        <a ng-click="tracks.params.period == '6months'">
+          Last 6 months
+        </a>
+      </li>
+
+      <li class="overall">
+        <a ng-click="tracks.params.period == 'overall'">
+          Overall
+        </a>
+      </li>
+    </ul>
+  </div><!-- .horizontalOptions -->
+
+  <div class="module-body chart chartweek current" id="charts960078">
+    <table class="candyStriped chart" odd="1">
+      <tbody>
+
+        <tr class="first odd streamable" data-track-id="519115818" itemprop="tracks" itemscope="" itemtype="http://schema.org/MusicRecording"
+          ng-class="{
+            first: $first,
+            odd: ($index + 1) % 2,
+            streamable: track.streamable
+        }">
+
+          <td class="positionCell">{{track['@attr'].rank}}</td>
+
+          <td class="playbuttonCell">
+            <a class="previewbutton preview-track" href="http://play.last.fm/preview/129447211.mp3" data-analytics-redirect="false" rel="nofollow">
+              <img class="icon preview_icon" width="16" height="16" src="http://cdn.last.fm/flatness/clear.gif" style="">
+            </a>
+          </td>
+
+          <td class="subjectCell" title="{{track.name}}, {{track.listeners}} listeners">
+            <div>
+              <!--
+              XXX {{track.duration|somefilter}}
+              <meta itemprop="duration" content="PT0M30S">
+              <meta itemprop="url" content="{{FQDN}}{{track.url}}">
+              XXX Album not exposed in api
+              <meta itemprop="inAlbum" content="ALBUM">
+              XXX {{track.playcount|separateThousands:,}}
+              <meta itemprop="interactionCount" content="UserPlays:x,xxx">
+              -->
+
+              <a href="{{track.url}}">
+                <span itemprop="name">{{track.name}}</span>
+              </a>
+            </div>
+          </td>
+
+          <td class="lovedCell"></td>
+
+          <td class="multibuttonCell">
+            <a href="{{track.url}}" class="
+              mAddToLibrary
+              mSend mAddTags
+              mAddToPlaylist
+              lfmButton lfmMultiButton lfmButtonFortrack lfmSmallButton lfmSmallMultiButton lfmMultiButtonFull
+              " forcelink="1">
+              <span></span>
+            </a>
+          </td>
+
+          <td class="chartbarCell">
+            <div style="width:{{10 + (90 * track.playcount) / tracks[1][0].playcount}}%;" class="chartbar">
+              <span>{{track.playcount}}</span>
+            </div>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+
+    <div class="moduleOptions">
+      <a href="{{artist.url}}/+charts?rangetype=week&amp;subtype=tracks">
+        See more
+      </a>
+    </div>
+  </div>
+
+</div><!-- #chartsswitcher514746 -->
+
