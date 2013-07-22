@@ -119,22 +119,26 @@ angular.module( 'lastfm', [
                 templateUrl: 'lastfm/views/user/profile/tpl.html',
             },
             'scrobbles@user.profile': {
-                templateUrl: 'lastfm/views/user/profile/scrobbles.tpl.html'
+                templateUrl: 'lastfm/views/user/profile/scrobbles.tpl.html',
+                controller: 'ScrobbleCtrl',
             },
             'badge@user.profile': {
-                templateUrl: 'lastfm/views/user/profile/badge.tpl.html'
+                templateUrl: 'lastfm/views/user/profile/badge.tpl.html',
             },
             'taste@user.profile': {
                 templateUrl: 'lastfm/views/user/profile/taste.tpl.html'
             },
             'friends@user.profile': {
-                templateUrl: 'lastfm/views/user/profile/friends.tpl.html'
+                templateUrl: 'lastfm/views/user/profile/friends.tpl.html',
+                controller: 'FriendCtrl'
             },
             'topArtists@user.profile': {
-                templateUrl: 'lastfm/views/user/profile/top.artists.tpl.html'
+                templateUrl: 'lastfm/views/user/profile/top.artists.tpl.html',
+                controller: 'TopArtistCtrl'
             },
             'topTracks@user.profile': {
-                templateUrl: 'lastfm/views/user/profile/top.tracks.tpl.html'
+                templateUrl: 'lastfm/views/user/profile/top.tracks.tpl.html',
+                controller: 'TopTrackCtrl'
             }
         }
       })
