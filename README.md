@@ -2,16 +2,16 @@
 
 ## Brief
 
-This Wob Application™ is an Angular demo, as a clone of the official
-Last.fm Web application. Also it is a showcase of my ability to complement my
-Job application for the Web Developer position at Last.fm.
+This Wob Application™ is a clone of the official Last.fm Web application.
+It is a showcase of my ability and dedication to complement my Job Application
+for the Web Developer position at Last.fm.
 
 ## Principles
 
 * It is a one-page app.
 * Everything clickable should work as expected.
-* The code is written without demo comprimises, including documentation and
-  tests. (TODO: tests)
+* The code is documented
+* The code is test driven (TODO: tests)
 
 ## Technologies
 
@@ -23,3 +23,4 @@ Job application for the Web Developer position at Last.fm.
   The project template used as a starting point
 * [Angular Kit](//github.com/jessethegame/angular-kit)
   A collection of reusable components
+
