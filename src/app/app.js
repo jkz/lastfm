@@ -37,11 +37,13 @@ angular.module( 'lastfm', [
   delete $httpProvider.defaults.headers.common['X-Requested-With'];
 })
 
+/*
 .config(function (lastfm) {
   //XXX This secret is meh, I should actually ask a server to sign requests
   lastfm.key = '96b7891388b19f60761d5cb03fcd88ff';
   lastfm.secret = '1082aebf524eb701491422ccc096bde8';
 })
+*/
 
 .config( function myAppConfig ( $stateProvider, $urlRouterProvider ) {
   $urlRouterProvider
@@ -75,10 +77,10 @@ angular.module( 'lastfm', [
     },
   })
   .state( 'content.jesse', {
-    url: '/jesse',
+    url: '/bio',
     templateUrl: '/assets/content/bio.md',
     onEnter: function(titleService) {
-        titleService.setTitle('Jesse - Last.fm');
+        titleService.setTitle('Bio - Last.fm');
     },
   })
   .state( 'content.thegame', {
@@ -88,7 +90,7 @@ angular.module( 'lastfm', [
         titleService.setTitle('The Game - Last.fm');
     },
   })
-  .state( 'content.resume', {
+  .state( 'content.cv', {
     url: '/cv',
     templateUrl: '/assets/content/cv.md',
     onEnter: function(titleService) {
@@ -97,7 +99,7 @@ angular.module( 'lastfm', [
   })
   .state( 'content.code', {
     url: '/code',
-    templateUrl: '//raw.github.com/jessethegame/lastfm/master/README.md',
+    templateUrl: '/assets/content/code.md',
     onEnter: function(titleService) {
         titleService.setTitle('Code - Last.fm');
     },
@@ -225,30 +227,7 @@ angular.module( 'lastfm', [
 
     $rootScope.user = $stateParams;
 
-    if ($cookies.sessionToken) {
-        $rootScope.session = new lastfm.Session($cookies.sessionToken);
-    }
-
-    console.log('LASTFM', lastfm);
     $rootScope.lastfm = lastfm;
-    $rootScope.love = lastfm.track.love;
-
-    $rootScope.login = function () {
-      //$window.open('http://www.last.fm/api/auth/?api_key=' + lastfm.apiKey);
-      $window.location.href = 'http://www.last.fm/api/auth/?api_key=' + lastfm.apiKey;
-    }
-
-    $rootScope.logout = function () {
-      delete $rootScope.session;
-    }
-
-    $rootScope.$watch('session', function (session) {
-      if (!session) {
-        delete $cookies.sessionToken;
-      } else {
-        $cookies.sessionToken = session.token;
-      }
-    })
 
     function randint(min, max) {
       return Math.floor(Math.random() * (max - min) + 0.5) + min;

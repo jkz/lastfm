@@ -10,8 +10,8 @@ angular.module('lastfm.services')
 
 */
 
-.service('lastfm', function ($http, $cookies, $window) {
-  var lastfm = {
+.service('lastfm', function ($http, $cookies, $window, $location) {
+    var lastfm = {
 
     // When lastfm notifies us of exceeding the rate limit, this flag turns on
     // and disables requesting for a while.
@@ -261,7 +261,7 @@ angular.module('lastfm.services')
     return {
       small:      data[0]['#text'] || options.small || def ||small,
       medium:     data[1]['#text'] || options.medium ||def || medium,
-      large:      data[2]['#text'] || options.large || def || large
+      large:      data[2]['#text'] || options.large || def || large,
       extralarge: data[3]['#text'] || options.extralarge || def || extralarge,
       mega:      (data[4] && data[4]['#text']).mega || options.mega || def || mega,
     }
@@ -365,6 +365,7 @@ angular.module('lastfm.services')
                 angular.extend(lastfm.session, data);
               }
             });
+          }
         }
       })
     },
@@ -469,7 +470,8 @@ angular.module('lastfm.services')
     }
   }
 
-  return resources;
+  angular.extend(lastfm, resources);
+  return lastfm;
 })
 
 // Load an active session from cookies, if present

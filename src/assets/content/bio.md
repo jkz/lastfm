@@ -32,5 +32,5 @@ Academical Computer Science is important, but arcane and static. It covers
 critical basic concepts of correctness, complexity and security, but lacks flux
 of <abbr title="For the true geeks, yes I did card games too. I was a fanatic Magic the Gathering player and competed in Nationals multiple times.">accumulated knowledge</abbr> and notions of innovation and social influence. I dropped out with 2/3rd study credits pocketed and started my freelance company *pewpew ict*.
 
- [1]: (//www.youtube.com/watch?v=zSEMCb6DpZU&list=PL87E472931A2C3B15)
+ [1]: (http://www.youtube.com/watch?v=zSEMCb6DpZU&list=PL87E472931A2C3B15)
 

@@ -1,6 +1,6 @@
 #Welcome
 
-## Dear reader,
+## Dear reader!
 You have safely landed on the homepage of a Wob Application&tm;: a clone of
 the official Last.fm Web Application and a token of my ability and dedication
 to complement my Job Application for the Web Developer position at Last.fm.
@@ -34,7 +34,7 @@ I am Jesse the Game, avid pop programmer and [aspiring world dominator](#/thegam
 * I have a fair hunch of the actual site, by reverse engineering it. That could
   prove a considerable headstart.
 
-##What&rquo;s on this site?
+##What&rsquo;s on this site?
 On this site you can find more information about myself:
 
 * [bio](#/bio)
