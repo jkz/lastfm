@@ -1,6 +1,7 @@
 angular.module('lastfm.directives', []);
 angular.module('lastfm.services', [])
 angular.module('lastfm.filters', [])
+angular.module('lastfm.factories', [])
 angular.module('lastfm.controllers', ['lastfm.services'])
 
 angular.module( 'lastfm', [
@@ -8,6 +9,7 @@ angular.module( 'lastfm', [
   'lastfm.directives',
   'lastfm.services',
   'lastfm.filters',
+  'lastfm.factories',
 
   'templates-app',
   'templates-common',
@@ -49,18 +51,8 @@ angular.module( 'lastfm', [
   .state( 'content', {
     url: '',
     abstract: true,
-    template: '<markdown src="template($state.current.name)"></markdown>',
-    controller: function ($scope, $state) {
-        $scope.template = function (name) {
-            if (name) {
-                return '/assets/content/' + name + '.md';
-            }
-        }
-    }
-  })
-  .state( 'content.intro', {
-    url: '',
-    onEnter: function(titleService, $state, $rootScope, $window, $location, lastfm, $cookies) {
+    template: '<markdown src=$state.current.templateUrl></markdown>',
+    onEnter: function($state, $rootScope, $window, $location, lastfm, $cookies) {
         var promise = lastfm.callback();
         if (promise) {
           promise.then(function () {
@@ -73,36 +65,46 @@ angular.module( 'lastfm', [
             $window.location.href = 'http://lastfm.pewpew.nl';
           });
         }
-
+    },
+  })
+  .state( 'content.intro', {
+    url: '',
+    templateUrl: '/assets/content/intro.md',
+    onEnter: function(titleService) {
         titleService.setTitle('Intro - Last.fm');
     },
   })
   .state( 'content.jesse', {
     url: '/jesse',
+    templateUrl: '/assets/content/bio.md',
     onEnter: function(titleService) {
         titleService.setTitle('Jesse - Last.fm');
     },
   })
   .state( 'content.thegame', {
     url: '/thegame',
+    templateUrl: '/assets/content/thegame.md',
     onEnter: function(titleService) {
         titleService.setTitle('The Game - Last.fm');
     },
   })
   .state( 'content.resume', {
-    url: '/resume',
+    url: '/cv',
+    templateUrl: '/assets/content/cv.md',
     onEnter: function(titleService) {
-        titleService.setTitle('Resume - Last.fm');
+        titleService.setTitle('CV - Last.fm');
     },
   })
   .state( 'content.code', {
     url: '/code',
+    templateUrl: '//raw.github.com/jessethegame/lastfm/master/README.md',
     onEnter: function(titleService) {
         titleService.setTitle('Code - Last.fm');
     },
   })
   .state( 'content.help', {
     url: '/help',
+    templateUrl: '/assets/content/help.md',
     onEnter: function(titleService) {
         titleService.setTitle('Help - Last.fm');
     },
