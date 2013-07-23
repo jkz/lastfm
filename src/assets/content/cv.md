@@ -8,26 +8,22 @@
 ## Professional Experience
 
 ### [shortstaybreakfast](//hethoutenhuisje.com/shortstaybreakfast)
-
 A shopping cart for a small breakfast delivery service, built with Angularjs.
 
 ### [proudmom.nl](//en.proudmom.nl)
-2012
-
+####2012
 A small startup for carreermoms, which I provided with a custom wordpress
 solution.
 
-### [C2V](//boothurenamsterdam.com)
-### 2012 and 2010
+### [Amsterdam-Boats](//boothurenamsterdam.com)
+#### 2012 and 2010
 A boat rental company, I made the old site (in Django). I was rehired in 2012 to
 work on the revamped version in RoR.
 
-### [C2V](//c2v.nl) (a discontinued branch of Thermofischer Scientific)
-### 2011
+### [C2V](//www.c2v.nl) (a discontinued branch of Thermofischer Scientific)
+#### 2011
 
 I spent about a year programming firmware for a microgaschromatograph in C.
-
-## Personal Experience
 
 ## Skills
 ### Languages

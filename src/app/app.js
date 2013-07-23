@@ -235,6 +235,8 @@ angular.module( 'lastfm', [
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
 
+    $rootScope.email = 'jesse@jessethegame.net';
+
     $rootScope.user = $stateParams;
 
     function randint(min, max) {
