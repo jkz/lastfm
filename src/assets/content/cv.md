@@ -1,9 +1,9 @@
-# Resume
+# CV
 
 ## Education
 
-* 2000-2006 Vossius Gymnasium (Nature + Science)
-* 2006-2009 University of Amsterdam - Bachelor Computer Science (120 of 180 credits)
+* **2000-2006** Vossius Gymnasium - Nature &amp; Science
+* **2006-2009** University of Amsterdam - Bachelor Computer Science (120 of 180 credits)
 
 ## Professional Experience
 
@@ -11,18 +11,17 @@
 A shopping cart for a small breakfast delivery service, built with Angularjs.
 
 ### [proudmom.nl](//en.proudmom.nl)
-####2012
+**2012**<br>
 A small startup for carreermoms, which I provided with a custom wordpress
 solution.
 
 ### [Amsterdam-Boats](//boothurenamsterdam.com)
-#### 2012 and 2010
+**2012 &amp; 2010**<br>
 A boat rental company, I made the old site (in Django). I was rehired in 2012 to
 work on the revamped version in RoR.
 
 ### [C2V](//www.c2v.nl) (a discontinued branch of Thermofischer Scientific)
-#### 2011
-
+**2011**<br>
 I spent about a year programming firmware for a microgaschromatograph in C.
 
 ## Skills

@@ -1,5 +1,6 @@
 @import 'paint';
 @import 'animations';
+@import 'less-kit/brands';
 
 [ng-click] {
     cursor: pointer;
@@ -75,5 +76,55 @@ markdown {
     ul {
         list-style-type: circle;
         margin: 10px 15px;
+    }
+
+    h1 {
+        clear: both;
+        margin: 10px -15px 2px;
+        padding: 0;
+        color: #D51007;
+        font-size: 18px;
+        line-height: 13px;
+        border-top: 1px dotted #ccc;
+        padding: 15px;
+    }
+}
+
+.social {
+    a[href^='https://twitter.com'] {
+        background-image: url(//icons.pewpew.nl/twitter/twitter-32.png);
+    }
+    a[href^='https://facebook.com'] {
+        background-image: url(//icons.pewpew.nl/facebook/facebook-32.png);
+    }
+    a[href^='https://soundcloud.com'] {
+        background-image: url(//icons.pewpew.nl/soundcloud/soundcloud-32.png);
+    }
+    a[href^='http://linkedin.com'] {
+        background-image: url(//icons.pewpew.nl/linkedin/linkedin-32.png);
+    }
+    a {
+        background-repeat: no-repeat;
+        background-size: 2em;
+        padding-left: 2em;
+        line-height: 2em;
+        height: 2em;
+        display: block;
+    }
+}
+
+.cover-badge {
+    dl {
+        line-height: 2em;
+        margin: 0.5em 0;
+    }
+    dt {
+        font-weight: bold;
+        display: inline-block;
+        width: 40%;
+    }
+    dd {
+        display: inline-block;
+        width: 60%;
     }
 }

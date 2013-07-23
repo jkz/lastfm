@@ -1,7 +1,7 @@
 #Welcome
 
 ## Dear reader!
-You have safely landed on the homepage of a Wob Application™: a clone of
+You have landed safely on the homepage of a Wob Application™. A clone of
 the official Last.fm Web Application and a token of my ability and dedication
 to complement my Job Application for the Web Developer position at Last.fm.
 
@@ -45,7 +45,11 @@ Or browse like you were on //last.fm. You could start at my profile:
 
 [jessethegame](#/user/jessethegame)
 
-Yours passionately,
+I tried to make a lot of stuff work and tried to remove as many void clickables
+without breaking the design and feel, but you may still encouter the dreaded
+ #/404.
+
+Yours passionately,<br>
 Jesse the Game
 
 

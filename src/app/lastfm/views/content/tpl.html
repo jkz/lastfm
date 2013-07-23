@@ -31,7 +31,7 @@
           </span>
         </div>
 
-        <div class="badgeInfo">
+        <div class="badgeInfo cover-badge">
           <p class="userInfo adr">
             <a ng-href={{jesse.url}}><strong class="fn">{{jesse.realname || jesse.name}}</strong></a>,
             {{jesse.gender|gender}},
@@ -45,8 +45,13 @@
                 <span class="count" ng-bind-html-unsafe="jesse.playcount|flipping"></span>
                 &nbsp;salary expectation
               </strong>
-              <p>current notice period: 0 seconds
-              <p>eligibility to work in UK: full (EU citizen)
+              <dl>
+                <dt>current notice period
+                <dd>0 seconds
+
+                <dt>eligibility to work in UK
+                <dd>full (EU citizen)
+              </dl>
               <p><a ng-href=#/cv>cv</a>
             </span>
           </div><!--.userData-->

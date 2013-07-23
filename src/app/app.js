@@ -244,7 +244,7 @@ angular.module( 'lastfm', [
       return Math.floor(Math.random() * (max - min) + 0.5) + min;
     };
     $rootScope.$watch('$state.current', function () {
-        $rootScope.promo = randint(1, 2);
+        $rootScope.promo = randint(1, 3);
         $rootScope.quote = [
           "Let me take you down with my lasergun.",
           "Don't call me a player.",

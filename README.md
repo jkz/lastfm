@@ -2,16 +2,15 @@
 
 ## Brief
 
-This Wob Application™ is a clone of the official Last.fm Web application.
-It is a showcase of my ability and dedication to complement my Job Application
-for the Web Developer position at Last.fm.
+This web application strives to be as close a copy to [http://www.last.fm] as
+possible.
 
 ## Principles
 
 * It is a one-page app.
-* Everything clickable should work as expected.
 * The code is documented
 * The code is test driven (TODO: tests)
+* <abbr title="Keep it Subtle &amp; Sexy">KISS</abbr>
 
 ## Technologies
 
