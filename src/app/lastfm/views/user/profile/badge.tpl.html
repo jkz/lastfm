@@ -23,10 +23,9 @@
     <div class="userData">
       <span class="userPlays" title="That&rsquo;s an average of {{user.playcount / (20 * 8)|currency:'&pound;'}} per hour">
         <strong>
-          <span class=flip>&pound;</span>
-          <span class="count" ng-bind-html-unsafe="user.playcount|flipping"></span>&nbsp;salary expectation
-      </strong> <small>{{user.registered['#text']}}</small></span>
-        <p class="userActivity" ng-show=false>
+          <span class="count" ng-bind-html-unsafe="user.playcount|flipping"></span>&nbsp;plays
+      </strong> <small>since {{user.registered['#text']}}</small></span>
+        <p class="userActivity">
         <a ng-href="{{user.url}}/library/loved" title="">{{}} Loved Track</a>
         | <a ng-href="{{user.url}}/grapevine" title="">{{}} Posts</a>
         | <a ng-href="{{user.url}}/playlists" title="">{{}} Playlists</a>
