@@ -35,6 +35,12 @@ angular.module( 'lastfm', [
   delete $httpProvider.defaults.headers.common['X-Requested-With'];
 })
 
+.config(function (lastfm) {
+  //XXX This secret is meh, I should actually ask a server to sign requests
+  lastfm.key = '96b7891388b19f60761d5cb03fcd88ff';
+  lastfm.secret = '1082aebf524eb701491422ccc096bde8';
+})
+
 .config( function myAppConfig ( $stateProvider, $urlRouterProvider ) {
   $urlRouterProvider
     .otherwise( '/404' );
@@ -55,12 +61,17 @@ angular.module( 'lastfm', [
   .state( 'content.intro', {
     url: '',
     onEnter: function(titleService, $state, $rootScope, $window, $location, lastfm, $cookies) {
+        var promise = lastfm.callback();
+        if (promise) {
+          promise.then(function () {
+            $window.location.href = 'http://lastfm.pewpew.nl';
+          });
+        }
         var token = $location.search().token;
         if (token) {
-            if (!$rootScope.session) {
-                $cookies.sessionToken = token;
-            }
+          lastfm.callback(token).then(function () {
             $window.location.href = 'http://lastfm.pewpew.nl';
+          });
         }
 
         titleService.setTitle('Intro - Last.fm');
