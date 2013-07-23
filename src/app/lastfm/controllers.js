@@ -58,7 +58,7 @@ angular.module('lastfm.controllers')
   $scope.artist = {name: $stateParams.artist};
 
   lastfm.artist.getInfo({
-      artist: $stateParams.artist,
+      artist: $stateParams.artist
   }, {
       success: function (data) {
           $scope.artist = data;
@@ -85,6 +85,19 @@ angular.module('lastfm.controllers')
           artist: $stateParams.artist,
           period: 'overall'
       }
+  });
+
+  $scope.$watch('topTracks.data[1]', function (tracks) {
+    if (!tracks) {
+      return;
+    }
+    tracks.sort(function (x, y) {
+      return y.playcount - x.playcount;
+    });
+    var i;
+    for (i = 0; i < tracks.length; i++) {
+      tracks[i].rank = i + 1;
+    }
   });
 
 })

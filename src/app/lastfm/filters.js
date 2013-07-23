@@ -60,4 +60,10 @@ angular.module('lastfm.filters')
     };
 })
 
+.filter('slice', function() {
+  return function(arr, start, end, step) {
+    return arr.slice(start, end, step);
+  };
+});
+
 ;

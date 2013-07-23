@@ -103,11 +103,17 @@ angular.module( 'lastfm', [
     url: '/user404',
     templateUrl: 'lastfm/views/user/404.tpl.html'
   })
-  .state( 'artist', {
+  .state( 'music', {
+    pageHack: true,
+    responsive: true,
+
     url: '/music/:artist',
     controller: 'ArtistCtrl',
     //abstract: true,
-    templateUrl: 'lastfm/views/music/tpl.html'
+    templateUrl: 'lastfm/views/music/tpl.html',
+    onEnter: function ($stateParams) {
+      $stateParams.artist = $stateParams.artist.replace(/\+/, ' ');
+    }
   })
   /*
       .state( 'artist.profile', {

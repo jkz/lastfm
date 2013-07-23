@@ -18,14 +18,14 @@
     <meta property="og:image" content="" />
     <meta property="og:description" content="">
 
-    <link rel="stylesheet" href="//cdn.last.fm/css/css/227358/responsive/responsive.css" />
-    <link rel="stylesheet" href="//cdn.last.fm/css/css/227358/music/artist/overview.css" />
-    <link rel="stylesheet" href="//cdn.last.fm/css/css/227358/video/module.css" />
-    <link rel="stylesheet" href="//cdn.last.fm/css/css/227358/events/module.css" />
-    <link rel=stylesheet href="//cdn.last.fm/css/css/227249/user/overview.css">
-    <link rel=stylesheet href="//cdn.last.fm/css/css/227358/user/library.css">
-    <link rel=stylesheet href="//cdn.last.fm/css/css/227249/master.css">
-    <!--link rel=stylesheet href="//cdn.last.fm/css/css/227358/master.css"-->
+    <link rel=stylesheet href=//cdn.last.fm/css/css/227358/responsive/responsive.css>
+    <link rel=stylesheet href=//cdn.last.fm/css/css/227358/music/artist/overview.css>
+    <link rel=stylesheet href=//cdn.last.fm/css/css/227358/video/module.css>
+    <link rel=stylesheet href=//cdn.last.fm/css/css/227249/user/overview.css>
+    <link rel=stylesheet href=//cdn.last.fm/css/css/227358/user/library.css>
+    <!--link rel=stylesheet href="//cdn.last.fm/css/css/227249/master.css"-->
+    <link rel=stylesheet href=//cdn.last.fm/css/css/227358/master.css>
+    <link rel=stylesheet href=//cdn.last.fm/css/css/227358/events/module.css>
 
     <link rel="shortcut icon" href="http://cdn.last.fm/flatness/favicon.2.ico">
 
@@ -65,7 +65,14 @@
     <script type="text/javascript" src="<%= file %>"></script><% }); %>
 
   </head>
-  <body class=not-responsive ng-class="{black: 'lfmBlack', brown: 'lfmBrown', blue: 'lfmBlue'}[skinColor]">
+  <body
+    ng-class="{
+      responsive: $state.responsive,
+      'not-responsive': !$state.responsive,
+      lfmBlack: skinColor == 'black',
+      lfmBrown:  skinColor == 'brown',
+      lfmBlue:  skinColor == 'blue'
+    }">
 
 
 
@@ -73,7 +80,8 @@
   <div id="fauxHeader"></div>
 </div>
 
-<div id="page">
+<div id="page" class=page-hack ng-show=$state.pageHack></div>
+<div id="{{!$state.pageHack && 'page' || ''}}">
   <!-- is404="{{$state.current.name == '404' && 1 || 0}}" -->
   <div
     id=library
