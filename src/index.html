@@ -201,7 +201,6 @@
       </div><!-- #headerWrapper -->
     </div><!-- #header -->
 
-
     <div ui-view id=content data-require="core/page">
     </div><!-- #content -->
 
@@ -217,31 +216,32 @@
 <div class="responsive-container">
   <nav class="site-footer-nav">
   <div class="r add-bottom-margin">
-    <a href="/uploadmusic" class="g6 call-to-action call-to-action--upload" data-analytics-action="FooterClick" data-analytics-label="Artists and Labels">
+    <a ng-href="mailto:{{email}}" class="g6 call-to-action call-to-action--upload">
       <div>
-        <h2>Artists and Labels</h2>
-        <p>Upload your music and connect with 40 million music fans</p>
+        <h2>Ask your questions</h2>
+        <p>Feel free to ask me anything</p>
       </div>
     </a>
-    <a href="/download" class="g6 call-to-action call-to-action--download" data-analytics-action="FooterClick" data-analytics-label="Download Desktop App">
+    <a ng-href="mailto:{{email}}" class="g6 call-to-action call-to-action--download">
       <div>
-        <h2>Download Desktop App</h2>
-        <p>Get the desktop app for Windows, Mac, or Linux and start scrobbling</p>
+        <h2>Hire this guy</h2>
+        <p>Let me know when you know, and I'll be there in a snap</p>
       </div>
     </a>
   </div>
   <hr class="separator">
+  <!--
   <ul class="r add-bottom-margin">
     <li class="g3">
     <h2>Find out more</h2>
     <ul>
-      <li><a href="/about" data-analytics-action="FooterClick" data-analytics-label="About us">About us</a></li>
-      <li><a href="http://blog.last.fm" data-analytics-action="FooterClick" data-analytics-label="Blog">Blog</a></li>
-      <li><a href="/about/contact" data-analytics-action="FooterClick" data-analytics-label="Contact us">Contact us</a></li>
-      <li><a href="/about/jobs" data-analytics-action="FooterClick" data-analytics-label="Jobs">Jobs</a></li>
-      <li><a href="/resources" data-analytics-action="FooterClick" data-analytics-label="Logo &amp; badges">Logo &amp; badges</a></li>
-      <li><a href="/advertise" data-analytics-action="FooterClick" data-analytics-label="Advertise">Advertise</a></li>
-      <li><a href="/legal" data-analytics-action="FooterClick" data-analytics-label="Legal">Legal</a></li>
+      <li><a href="/about">About us</a></li>
+      <li><a href="http://blog.last.fm">Blog</a></li>
+      <li><a href="/about/contact">Contact us</a></li>
+      <li><a href="/about/jobs">Jobs</a></li>
+      <li><a href="/resources">Logo &amp; badges</a></li>
+      <li><a href="/advertise">Advertise</a></li>
+      <li><a href="/legal">Legal</a></li>
     </ul>
     </li>
     <li class="g3">
@@ -284,35 +284,19 @@
   </ul>
   </nav>
   <hr class="separator">
+  -->
 
   <div class="media site-footer-legalese">
     <img src="http://cdn.last.fm/flatness/anon-homepage/footer_as.png" class="media-pull-right" width="50" height="30" alt="Watch Out, There's a Last.fm About.">
     <div class="media-body">
-      <blockquote class="site-footer-legalese-strapline">“Watch Out, There's a Last.fm About.”</blockquote>
-
+      <blockquote class="site-footer-legalese-strapline">“{{quote}}”</blockquote>
       <p>
-      © 2013 Last.fm Ltd. All rights reserved. |
-      <a href="/legal/terms" data-analytics-action="FooterClick" data-analytics-label="Terms of Use">Terms of Use</a>,
-      <a href="/legal/privacy" data-analytics-action="FooterClick" data-analytics-label="Privacy Policy">Privacy Policy</a> and
-      <a href="/legal/cookies" data-analytics-action="FooterClick" data-analytics-label="Cookie Policy">Cookie Policy</a> -
-      <span class="date">Updated 15 Jan 2013</span>
+      © 2013 Last.fm Ltd. All rights reserved. | powered by <strong>pewpew</strong>
       </p>
 
     </div>
   </div>
-
-  <div id="cbsi_f">
-    <form>
-    </form>
-</div><a class="gamespot" href="http://www.gamespot.com"><img src="http://cdn.last.fm/flatness/responsive/footer/logo_gamespot.png" alt="Gamespot logo"></a>    </div>
 </footer>
-
-    <script>
-      var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-      (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-      g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-      s.parentNode.insertBefore(g,s)}(document,'script'));
-    </script>
 
   </body>
 </html>

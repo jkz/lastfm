@@ -37,24 +37,17 @@ angular.module( 'lastfm', [
   delete $httpProvider.defaults.headers.common['X-Requested-With'];
 })
 
-.run(function (lastfm) {
-  //XXX This secret is meh, I should actually ask a server to sign requests
-  lastfm.key = '96b7891388b19f60761d5cb03fcd88ff';
-  lastfm.secret = '1082aebf524eb701491422ccc096bde8';
-})
-
 .config( function myAppConfig ( $stateProvider, $urlRouterProvider ) {
   $urlRouterProvider
     .otherwise( '/404' );
 
   $stateProvider
   .state( 'content', {
-    url: '',
     abstract: true,
-    //template: '<markdown src=$state.current.templateUrl></markdown>',
+    url: '',
     templateUrl: 'lastfm/views/content/tpl.html',
-    onEnter: function($state, $rootScope, $window, $location, lastfm, $cookies) {
-        var promise = lastfm.callback();
+    onEnter: function($window, $location, lastfm) {
+        var promise = lastfm.callback($location.search().token);
         if (promise) {
           promise.then(function () {
             $window.location.href = 'http://lastfm.pewpew.nl';
@@ -156,29 +149,15 @@ angular.module( 'lastfm', [
 
     url: '/music/:artist',
     controller: 'ArtistCtrl',
-    //abstract: true,
     templateUrl: 'lastfm/views/music/tpl.html',
     onEnter: function ($stateParams) {
       $stateParams.artist = $stateParams.artist.replace(/\+/, ' ');
     }
   })
-  /*
-      .state( 'artist.profile', {
-        onEnter: function(titleService, $stateParams) {
-            titleService.setTitle($stateParams.artist + "- Discover music, concerts, stats and pictures at Last.fm.");
-        },
-        url: 'REMOVEME',
-        views: {
-            '': {
-                templateUrl: 'lastfm/views/music/profile/tpl.html',
-            },
-        }
-      })
-      */
   .state( 'user', {
+    abstract: true,
     url: '/user/:user',
     controller: 'UserCtrl',
-    abstract: true,
     templateUrl: 'lastfm/views/user/tpl.html',
   })
       .state( 'user.profile', {
@@ -246,25 +225,30 @@ angular.module( 'lastfm', [
   ;
 })
 
-/*
-.run( function run ( titleService ) {
-  titleService.setSuffix( ' | Title' );
-})
-*/
+.run(function ($rootScope, $state, $stateParams, lastfm, $cookies, $window, $location) {
+    //XXX This secret is meh, I should actually ask a server to sign requests
+    lastfm.key = '96b7891388b19f60761d5cb03fcd88ff';
+    lastfm.secret = '1082aebf524eb701491422ccc096bde8';
 
-.run(function ($rootScope, $state, $stateParams, lastfm, $cookies, $window) {
+    $rootScope.lastfm = lastfm;
+
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
 
     $rootScope.user = $stateParams;
 
-    $rootScope.lastfm = lastfm;
-
     function randint(min, max) {
+      // min/max are inclusive
       return Math.floor(Math.random() * (max - min) + 0.5) + min;
     };
     $rootScope.$watch('$state.current', function () {
         $rootScope.promo = randint(1, 2);
+        $rootScope.quote = [
+          "Let me take you down with my lasergun.",
+          "Don't call me a player.",
+          "Look at these graphics",
+          "Ready for another round?"
+        ][randint(0,3)];
     })
 })
 
