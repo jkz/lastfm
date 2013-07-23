@@ -19,6 +19,7 @@ angular.module( 'lastfm', [
 
   'ngCookies',
   'titleService',
+  'urlencode-POST',
 
   'kit',
   'markdown',
@@ -215,21 +216,25 @@ angular.module( 'lastfm', [
         $rootScope.session = new lastfm.Session($cookies.sessionToken);
     }
 
+    console.log('LASTFM', lastfm);
+    $rootScope.lastfm = lastfm;
+    $rootScope.love = lastfm.track.love;
+
     $rootScope.login = function () {
-        //$window.open('http://www.last.fm/api/auth/?api_key=' + lastfm.apiKey);
-        $window.location.href = 'http://www.last.fm/api/auth/?api_key=' + lastfm.apiKey;
+      //$window.open('http://www.last.fm/api/auth/?api_key=' + lastfm.apiKey);
+      $window.location.href = 'http://www.last.fm/api/auth/?api_key=' + lastfm.apiKey;
     }
 
     $rootScope.logout = function () {
-        delete $rootScope.session;
+      delete $rootScope.session;
     }
 
     $rootScope.$watch('session', function (session) {
-        if (!session) {
-            delete $cookies.sessionToken;
-        } else {
-            $cookies.sessionToken = session.token;
-        }
+      if (!session) {
+        delete $cookies.sessionToken;
+      } else {
+        $cookies.sessionToken = session.token;
+      }
     })
 
     function randint(min, max) {

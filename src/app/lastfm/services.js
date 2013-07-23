@@ -5,7 +5,9 @@ angular.module('lastfm.services')
   // This is hardcoded for now, of course it should be configurable elsewhere.
   var apiKey = '96b7891388b19f60761d5cb03fcd88ff',
   //XXX This secret is meh, perhaps I should ask a server to sign my requests.
-      apiSecret = '1082aebf524eb701491422ccc096bde8';
+      apiSecret = '1082aebf524eb701491422ccc096bde8',
+      sessionKey = undefined,
+      session = undefined;
 
 
   var rateLimited = false;
@@ -13,16 +15,14 @@ angular.module('lastfm.services')
   //XXX Please disambiguate step 6 of the signature guide in the documentation
   //    It took me far too long to figure out (again...) that 'all parameters'
   //    here means 'only the required parameters'
+  //XXX I wasted more time on this, finding out that only the 'format' parameter
+  //    needs to be excluded!
   function signature(params) {
     var a = [];
-    a.push('api_key');
-    a.push(apiKey);
-    a.push('method');
-    a.push(params.method);
-    if (params.token) {
-        a.push('token');
-        a.push(params.token);
-    }
+    angular.forEach(Object.keys(params).sort(), function (key) {
+      a.push(key);
+      a.push(params[key]);
+    });
     a.push(apiSecret);
     return md5(a.join(''));
   }
@@ -140,9 +140,12 @@ angular.module('lastfm.services')
     }
   }
 
-  function request(resource, options, callbacks) {
-    var success = callbacks.success || console.log,
-        error = callbacks.error || errorHandler;
+  function request(resource, args, callbacks) {
+    var callbacks = callbacks || {},
+        success = callbacks.success || console.log,
+        error = callbacks.error || errorHandler,
+        config = {url: 'http://ws.audioscrobbler.com/2.0/'};
+
 
     // Don't perform any requests when rate limited
     //TODO throw a real error or trigger error handler
@@ -150,15 +153,30 @@ angular.module('lastfm.services')
       return error(29, 'Rate Limit Previously Exceeded - Not issuing any requests for a while.');
     }
 
-    options.method = resource.method;
-    options.api_key = apiKey;
-    options.format = 'json';
+    args.method = resource.method;
+    args.api_key = apiKey;
 
-    if (resource.signed) {
-        options.api_sig = signature(options);
+    if (sessionKey) {
+        args.sk = sessionKey;
     }
 
-    $http.get('http://ws.audioscrobbler.com/2.0/', {params: options})
+    if (resource.write || resource.signed) {
+        args.api_sig = signature(args);
+    }
+
+    // Add format AFTER signature, cause it needs to be excluded
+    args.format = 'json';
+
+    // Write operations require the POST verb and parmas as data body
+    if (resource.write) {
+        config.method = 'POST';
+        config.data = args;
+    } else {
+        config.method = 'GET';
+        config.params = args;
+    }
+
+    $http(config)
       .error(function (data, status, headers, config) {
         // Known errors are dispatched to the error handler
         if (data.error) {
@@ -182,12 +200,26 @@ angular.module('lastfm.services')
 
   function resource(conf) {
     // Curry the request function with resource configuration
-    return function (options, callbacks) {
+    return function (args, callbacks) {
       // Decorate the success handler
       if (callbacks && callbacks.success) {
         callbacks.success = handler(conf, callbacks.success);
       }
-      return request(conf, options, callbacks);
+      return request(conf, args, callbacks);
+    }
+  }
+
+  // An action is a POST request to the api.
+  function action(conf) {
+    conf.write = true;
+    return function () {
+      console.log('ACTION!', arguments);
+      // An action configuration may provide a signature, which prepares the
+      // input for the request.
+      var args = conf.signature ?
+        conf.signature.apply(undefined, arguments) :
+        arguments;
+      return request(conf, args);
     }
   }
 
@@ -211,7 +243,6 @@ angular.module('lastfm.services')
     // Replace the host by a '#' for the ui-router
     return data.replace(/^http:\/\/www.last.fm/, '#');
   }
-
 
   var models = {};
   models.tag = function (obj) {
@@ -302,6 +333,21 @@ angular.module('lastfm.services')
         model: models.track
       })
     },
+    track: {
+      love: action({
+        method: 'track.love',
+        // The artist parameter is optional and should only be
+        // used when providing 2 strings
+        signature: function (track, artist) {
+          console.log('SIGNATURE!', track, artist);
+          if (artist) {
+            return {track: track, artist: artist};
+          } else {
+            return {track: track.name, artist: track.artist.name};
+          }
+        }
+      })
+    },
     user: {
       getInfo: resource({
         method: 'user.getInfo',
@@ -362,11 +408,14 @@ angular.module('lastfm.services')
     }, {
         success: function (data) {
           angular.extend(that, data);
+          sessionKey = data.key;
+          console.log('SESSION KEYED', sessionKey);
           resources.user.getInfo({
               user: that.name
           }, {
               success: function (data) {
                 angular.extend(that, data);
+                resources.track.love('Open Eye Signal', 'Jon Hopkins');
               }
           });
         }
