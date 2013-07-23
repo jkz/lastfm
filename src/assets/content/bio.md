@@ -1,7 +1,7 @@
 #Bio
 
 My family name is Jesse Kwabena Zwaan. My Dutch mother safely delivered of
-baby-me on the 6th of December 1988, which make me 24 as of writing.
+baby-me on the 6th of December 1988, which makes me 24 as of writing.
 Kwabena means this day was a Tuesday in Ghana, the homeland of my father.
 
 I was a bright kid from first elementary grade, which I skipped. It

@@ -88,7 +88,7 @@
     ng-class="{
       sic: $state.includes('user.library') || $state.includes('user.friends'),
       fixed: false,
-      fiflufi: $state.includes('user.profile')
+      fiflufi: $state.includes('user.profile') || $state.includes('content')
     }">
 
     <div id="header" class="clearit responsive-container" role="banner">
@@ -120,7 +120,7 @@
         <div id="profileLinks">
           <ul ng-show=!session>
             <li id="loginLink" class="profileItem">
-                <a ng-click=login() class="profile-link"><strong>Login</strong></a>
+                <a ng-click=lastfm.login() class="profile-link"><strong>Login</strong></a>
             </li>
             <!--
             <li id="signupLink" class="profileItem">

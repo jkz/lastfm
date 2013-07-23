@@ -1,5 +1,5 @@
 #Jesse the Game
-World domination. I have devised a schema for this specific purpose, which I am
+World domination. I have devised a scheme for this specific purpose, which I am
 not only willing to share with you, but offering you to be a part of. The
 scheme is seeded by the premise that for world domination you need an army of
 loyal minions. People.
@@ -16,7 +16,7 @@ real-life game character, Jesse the Game; who has built the entire thing by
 hand.
 
 Power comes at a price. The mechanics of this game form a progressive attention
-cycle, which is the built-in marketing strategy. Player accumulate power, by
+cycle, which is the built-in marketing strategy. Players accumulate power by
 receiving points I reward them for spending time on the site, tweeting,
  sharing, tagging, liking, pinning, linking my stuff and naturally scrobbling my music!
 

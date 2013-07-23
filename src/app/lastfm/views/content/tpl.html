@@ -1,0 +1,71 @@
+<div id="content" class="clearit">
+  <header
+    class="
+      page-head
+      without-crumbtrail
+      without-image
+      clearit
+      separated">
+    <h1>Cover letter</h1>
+
+    <nav class="secondary-nav" role="navigation" data-require="secondarynav">
+      <ul class="visible-menu" style="margin-right: 0px; margin-left: 42px; visibility: visible;">
+        <li
+          ng-repeat="nav in secondaryNav"
+          ng-class="{first: $first}">
+          <a ng-href=#/{{nav.slug}}>{{nav.name}}</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="leftCol">
+    <div class="leftColWrapper">
+      <div id="userBadge" class="clearit user vcard" id="hcard-{{jesse.name}}">
+
+        <div class="badgeAvatar">
+          <span class="userImage">
+            <a ng-href={{jesse.url}}>
+              <img class="photo" height="126" width="126" alt="" ng-src="{{jesse.image.large}}" />
+            </a>
+          </span>
+        </div>
+
+        <div class="badgeInfo">
+          <p class="userInfo adr">
+            <a ng-href={{jesse.url}}><strong class="fn">{{jesse.realname || jesse.name}}</strong></a>,
+            {{jesse.gender|gender}},
+            <span class="jesse-name">{{jesse.country|country}}</span><br>
+          </p>
+
+          <div class="userData">
+            <span class="userPlays" title="That&rsquo;s an average of {{jesse.playcount / (20 * 8)|currency:'&pound;'}} per hour">
+              <strong>
+                <span class=flip>&pound;</span>
+                <span class="count" ng-bind-html-unsafe="jesse.playcount|flipping"></span>
+                &nbsp;salary expectation (don&rsquo;t wait too long!)
+              </strong>
+              <p>current notice period: 0 seconds
+              <p>eligibility to work in UK: full (EU citizen)
+              <p><a ng-href=#/cv>cv</a>
+            </span>
+          </div><!--.userData-->
+        </div><!--.badgeInfo-->
+      </div><!--.profileBadge-->
+
+
+      <div id=markdown-box>
+        <h2 class="heading">
+          <span class="h2Wrapper">
+          </span>
+        </h2>
+        <markdown src=$state.current.templateUrl></markdown>
+      </div>
+    </div><!-- .leftColWrapper -->
+  </div><!-- .leftCol -->
+
+  <div class="rightCol">
+    <jesse></jesse>
+    <github-activities user="'jessethegame'"></github-activities>
+  </div><!-- .rightCol -->
+</div>

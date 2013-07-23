@@ -19,8 +19,7 @@ solution.
 
 ### [C2V](//boothurenamsterdam.com)
 ### 2012 and 2010
-A boat rental company, I made the old site (in Django) until I worked on another
-branch of their efforts; something with pretty women. I was rehired in 2012 to
+A boat rental company, I made the old site (in Django). I was rehired in 2012 to
 work on the revamped version in RoR.
 
 ### [C2V](//c2v.nl) (a discontinued branch of Thermofischer Scientific)

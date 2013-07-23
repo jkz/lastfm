@@ -37,13 +37,11 @@ angular.module( 'lastfm', [
   delete $httpProvider.defaults.headers.common['X-Requested-With'];
 })
 
-/*
-.config(function (lastfm) {
+.run(function (lastfm) {
   //XXX This secret is meh, I should actually ask a server to sign requests
   lastfm.key = '96b7891388b19f60761d5cb03fcd88ff';
   lastfm.secret = '1082aebf524eb701491422ccc096bde8';
 })
-*/
 
 .config( function myAppConfig ( $stateProvider, $urlRouterProvider ) {
   $urlRouterProvider
@@ -53,7 +51,8 @@ angular.module( 'lastfm', [
   .state( 'content', {
     url: '',
     abstract: true,
-    template: '<markdown src=$state.current.templateUrl></markdown>',
+    //template: '<markdown src=$state.current.templateUrl></markdown>',
+    templateUrl: 'lastfm/views/content/tpl.html',
     onEnter: function($state, $rootScope, $window, $location, lastfm, $cookies) {
         var promise = lastfm.callback();
         if (promise) {
@@ -68,6 +67,38 @@ angular.module( 'lastfm', [
           });
         }
     },
+    controller: function ($scope, lastfm) {
+      lastfm.user.getInfo({
+        user: 'jessethegame',
+      }, {
+        success: function (data) {
+          $scope.jesse = data;
+        }
+      });
+
+      $scope.secondaryNav = [
+        {
+          slug: 'intro',
+          name: 'Intro',
+        },
+        {
+          slug: 'bio',
+          name: 'Bio',
+        },
+        {
+          slug: 'cv',
+          name: 'CV',
+        },
+        {
+          slug: 'code',
+          name: 'Code',
+        },
+        {
+          slug: 'thegame',
+          name: 'The Game',
+        },
+      ];
+    }
   })
   .state( 'content.intro', {
     url: '',

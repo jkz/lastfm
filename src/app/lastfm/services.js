@@ -21,7 +21,7 @@ angular.module('lastfm.services')
 
     // When not undefined, urls returned by the api have 'http://www.last.fm'
     // replaces by this
-    urlprefix: undefined,
+    urlprefix: '#',
 
     // When this flag is on, the service will automatically fetch additional
     // user data when fetching a session key
@@ -263,7 +263,7 @@ angular.module('lastfm.services')
       medium:     data[1]['#text'] || options.medium ||def || medium,
       large:      data[2]['#text'] || options.large || def || large,
       extralarge: data[3]['#text'] || options.extralarge || def || extralarge,
-      mega:      (data[4] && data[4]['#text']).mega || options.mega || def || mega,
+      mega:      (data[4] && data[4]['#text'] || {}).mega || options.mega || def || mega,
     }
   }
 
