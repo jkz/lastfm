@@ -29,6 +29,11 @@ angular.module( 'lastfm', [
 
   'github'
 ])
+    //XXX This secret is meh, I should actually ask a server to sign requests
+.value('lastfmKey', '96b7891388b19f60761d5cb03fcd88ff')
+.value('lastfmSecret', '1082aebf524eb701491422ccc096bde8')
+.value('email', 'jesse@jessethegame.net')
+
 
 // This is for Angular < 1.1
 // for more info see:
@@ -62,10 +67,18 @@ angular.module( 'lastfm', [
     // Lastfm authentication redirects to the root url. As this url is also
     // the base for content, we need to extract the callback token here.
     //XXX I would refactor this probably to 'base' and have a 'base.callback'
-    onEnter: function($window, $location, lastfm) {
-      lastfm.callback($location.search().token, function () {
-          $window.location.href = 'http://lastfm.pewpew.nl';
-      });
+    onEnter: function($window, $location, lastfm, $cookieStore) {
+      var token = $location.search().token;
+
+      if (token) {
+        $cookieStore.put('token', token);
+        $window.location.href = 'http://lastfm.pewpew.nl';
+      } else {
+        token = $cookieStore.get('token');
+        $cookieStore.remove('token')
+      }
+
+      lastfm.auth.callback(token);
     },
     controller: function ($scope, lastfm) {
       lastfm.user.getInfo({
@@ -242,11 +255,7 @@ angular.module( 'lastfm', [
   ;
 })
 
-.run(function ($rootScope, $state, $stateParams, lastfm, $cookies, $window, $location) {
-    //XXX This secret is meh, I should actually ask a server to sign requests
-    lastfm.key = '96b7891388b19f60761d5cb03fcd88ff';
-    lastfm.secret = '1082aebf524eb701491422ccc096bde8';
-
+.run(function ($rootScope, $state, $stateParams, lastfm, $cookies, $window, $location, email) {
     // Expose the lastfm api to the scope
     $rootScope.lastfm = lastfm;
 
@@ -255,7 +264,7 @@ angular.module( 'lastfm', [
     $rootScope.$stateParams = $stateParams;
 
     //$rootScope.user = $stateParams;
-    $rootScope.email = 'jesse@jessethegame.net';
+    $rootScope.email = email;
 
     // min/max are inclusive
     function randint(min, max) {

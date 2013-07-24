@@ -120,9 +120,9 @@
         </ul>
 
         <div id="profileLinks">
-          <ul ng-show=!session>
+          <ul ng-show=!lastfm.session>
             <li id="loginLink" class="profileItem">
-                <a ng-click=lastfm.login() class="profile-link"><strong>Login</strong></a>
+                <a ng-click=lastfm.auth.login() class="profile-link"><strong>Login</strong></a>
             </li>
             <!--
             <li id="signupLink" class="profileItem">
@@ -131,28 +131,28 @@
             -->
           </ul>
 
-          <ul ng-show=session>
+          <ul ng-show=lastfm.session>
             <li class="profileItem">
               <div id="idBadger" >
-                <a ng-href="{{session.url}}" id="idBadgerUser"
-                  title="{{session.realname || session.name}}, {{session.gender|gender}}, {{session.country|country}}">
-                  <img ng-src="{{session.image.small}}" width="16" height="16" />{{session.name}}
-                  </a><a ng-href="{{session.url}}" id="idBadgerDropper"
-                  title="{{session.realname || session.name}}, {{session.gender|gender}}, {{session.country|country}}"><span>▼</span></a>
+                <a ng-href="{{lastfm.session.url}}" id="idBadgerUser"
+                  title="{{lastfm.session.realname || session.name}}, {{lastfm.session.gender|gender}}, {{lastfm.session.country|country}}">
+                  <img ng-src="{{lastfm.session.image.small}}" width="16" height="16" />{{lastfm.session.name}}
+                  </a><a ng-href="{{lastfm.session.url}}" id="idBadgerDropper"
+                  title="{{lastfm.session.realname || session.name}}, {{lastfm.session.gender|gender}}, {{lastfm.session.country|country}}"><span>▼</span></a>
                 <ul id="idBadgerDropDown">
                   <li class="home"><a ng-href="/home">Home</a></li>
-                  <li class="profile"><a ng-href="{{session.url}}" title="{{session.realname || session.name}}, {{session.gender|gender}}, {{session.country|country}}">Profile</a></li>
-                  <li class="friends"><a ng-href="{{session.url}}/friends" title="">Friends</a></li>
+                  <li class="profile"><a ng-href="{{lastfm.session.url}}" title="{{lastfm.session.realname || session.name}}, {{lastfm.session.gender|gender}}, {{lastfm.session.country|country}}">Profile</a></li>
+                  <li class="friends"><a ng-href="{{lastfm.session.url}}/friends" title="">Friends</a></li>
                   <li class="recs"><a ng-href="/home/recs">Recommended</a></li>
-                  <li class="library"><a ng-href="{{session.url}}/library" title="">Library</a></li>
-                  <li class="events"><a ng-href="{{session.url}}/events" title="">Events</a></li>
+                  <li class="library"><a ng-href="{{lastfm.session.url}}/library" title="">Library</a></li>
+                  <li class="events"><a ng-href="{{lastfm.session.url}}/events" title="">Events</a></li>
                   <li class="settings"><a ng-href="/settings">Settings</a></li>
                   <li><a href="/subscribe"><strong>Subscribe</strong></a></li>
                 </ul>
               </div>
             </li>
             <li id="logoutLink" class="profileItem">
-                <a ng-click=logout() class="profile-link">Logout</a>
+                <a ng-click=lastfm.auth.logout() class="profile-link">Logout</a>
             </li>
             <!--
             <li id="inboxLink" class="profileItem divider">

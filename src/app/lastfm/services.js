@@ -10,8 +10,11 @@ angular.module('lastfm.services')
 
 */
 
-.service('lastfm', function ($http, $cookies, $window) {
+.service('lastfm', function ($http, $cookieStore, $window, lastfmKey, lastfmSecret) {
   var lastfm = {
+    key: lastfmKey,
+    secret: lastfmSecret,
+
     // When lastfm notifies us of exceeding the rate limit, this flag turns on
     // and disables requesting for a while.
     //XXX it could be an idea to turn to cache and/or store a queue of pending
@@ -35,8 +38,7 @@ angular.module('lastfm.services')
   //    needs to be excluded!
   function signature(params) {
     var a = [];
-    // forEachSorted is Part of angulars internal api
-    forEachSorted(params, function (key) {
+    angular.forEach(Object.keys(params).sort(), function (key) {
       a.push(key);
       a.push(params[key]);
     });
@@ -141,6 +143,7 @@ angular.module('lastfm.services')
       } else {
         var entity = data[resource.entity];
         if (resource.model) {
+            console.log('MODELING', resource, callback, entity);
           entity = resource.model(data[resource.entity]);
         }
         return callback(entity);
@@ -154,10 +157,11 @@ angular.module('lastfm.services')
   function request(resource, args, callbacks) {
     // Merely here to smooth out th next 2 lines
     var callbacks = callbacks || {},
+        args = args || {};
 
         // Use console.log as the default handler
-        success = callbacks.success || console.log,
-        error = callbacks.error || errorHandler,
+        success = callbacks.success || resource.success || console.log,
+        error = callbacks.error || resource.error || errorHandler,
         config = {url: 'http://ws.audioscrobbler.com/2.0/'};
 
     // Don't perform any requests when rate limited
@@ -191,6 +195,7 @@ angular.module('lastfm.services')
         config.params = args;
     }
 
+    console.log('HTTP', config, lastfm);
     $http(config)
       .error(function (data, status, headers, config) {
         // Known errors are dispatched to the error handler
@@ -204,9 +209,10 @@ angular.module('lastfm.services')
       })
 
       .success(function (data) {
+          console.log('SUCCESS', data);
         // Errors without error status are dispatched here
         if (data.error) {
-          return error(data)
+          return error(data);
         }
 
         return success(data);
@@ -348,23 +354,20 @@ angular.module('lastfm.services')
         method: 'auth.getSession',
         entity: 'session',
         signed: true,
-        success: function (data) {
+        model: function (obj) {
           // Update the session on the lastfm object
-          lastfm.session = data;
+          lastfm.session = obj;
 
           // Update the session in the cookies
-          $cookies.lastfmSessionKey = data.key;
-          $cookies.lastfmSessionName = data.name;
+          $cookieStore.put('lastfmSession', obj);
 
           // Fetch additional userinfo if autoidentify is enabled.
           // This extends the session object with the response data.
           if (lastfm.autoidentify) {
-            resources.user.getInfo({}, {
-              success: function (data) {
-                angular.extend(lastfm.session, data);
-              }
-            });
+            lastfm.auth.identify();
           }
+
+          return obj;
         }
       })
     },
@@ -442,34 +445,39 @@ angular.module('lastfm.services')
     }
   };
 
-  lastfm.login = function () {
+  angular.extend(lastfm, resources);
+
+  lastfm.auth.login = function () {
       if (lastfm.session) {
         alert('Already logged in, please logout first!');
         return;
       }
-      $window.location.href = 'http://www.last.fm/api/auth/?api_key=' + lastfm.session.key;
+      $window.location.href = 'http://www.last.fm/api/auth/?api_key=' + lastfm.key;
   }
 
   // Remove all session data from lastfm service and cookies
-  lastfm.logout = function () {
+  lastfm.auth.logout = function () {
     delete lastfm.session;
-    delete $cookies.lastfmSessionKey;
-    delete $cookies.lastfmUserName;
+    $cookieStore.remove('lastfmSession');
   }
 
   // Check for a 'token' query parameter and fetch a session with it when
-  // present.
-  lastfm.callback = function (token, success, error) {
-    error = error || angular.noop;
+  // present. Callbacks takes 'success' and 'error' properties.
+  lastfm.auth.callback = function (token) {
     if (token) {
       if (!lastfm.session) {
-        return lastfm.auth.getSession({token: token})
-          .success(callback)
-          .error(error);
+        return lastfm.auth.getSession({token: token});
       }
       alert('Already logged in, please logout first!');
     }
-    return error();
+  }
+
+  lastfm.auth.identify = function () {
+    lastfm.user.getInfo({}, {
+      success: function (data) {
+        angular.extend(lastfm.session, data);
+      }
+    });
   }
 
   angular.extend(lastfm, resources);
@@ -478,12 +486,12 @@ angular.module('lastfm.services')
 
 // Load an active session from cookies, if present
 // To get additional info, call lastfm.user.getInfo without arguments
-.run(function (lastfm, $cookies) {
-  if ($cookies.lastfmSessionKey) {
-    lastfm.session = {
-      key: $cookies.lastfmSessionKey,
-      name: $cookies.lastfmSessionName
-    }
+.run(function (lastfm, $cookieStore) {
+  var session = $cookieStore.get('lastfmSession');
+  console.log('SESSION', session);
+  if (session) {
+    lastfm.session = session;
+    lastfm.auth.identify();
   }
 })
 ;
