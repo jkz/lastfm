@@ -47,7 +47,6 @@ angular.module('lastfm.services')
   }
 
 
-  //
   function errorHandler(code, message) {
     console.log('LAST.FM REST API ERROR:', code, message);
 
