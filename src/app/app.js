@@ -81,7 +81,7 @@ angular.module( 'lastfm', [
       lastfm.auth.callback(token);
     },
     controller: function ($scope, lastfm) {
-      lastfm.user.getInfo({
+      lastfm.api.user.getInfo({
         user: 'jessethegame',
       }, {
         success: function (data) {

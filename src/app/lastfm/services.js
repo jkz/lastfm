@@ -2,16 +2,15 @@ angular.module('lastfm.services')
 
 /*
  * To configure lastfm, do:
- *
-.config(function (lastfm) {
-    lastfm.key = 'KEYKEYKEYK';
-    lastfm.secret = 'SECRETSECR';
-})
+
+.value('lastfmKey', 'KEYKEYKEYK')
+.value('lastfmSecret', 'SECRETSECR')
 
 */
 
 .service('lastfm', function ($http, $cookieStore, $window, lastfmKey, lastfmSecret) {
   var lastfm = {
+
     key: lastfmKey,
     secret: lastfmSecret,
 
@@ -117,7 +116,7 @@ angular.module('lastfm.services')
 
   // Decoratores a callback function with resource specific parsing.
   // Extracts the actual data and applies optional models.
-  function handler(resource, callback) {
+  function successHandler(resource, callback) {
     return function (data) {
 
       // Collection resources take callback functions with signature
@@ -143,7 +142,6 @@ angular.module('lastfm.services')
       } else {
         var entity = data[resource.entity];
         if (resource.model) {
-            console.log('MODELING', resource, callback, entity);
           entity = resource.model(data[resource.entity]);
         }
         return callback(entity);
@@ -160,8 +158,8 @@ angular.module('lastfm.services')
         args = args || {};
 
         // Use console.log as the default handler
-        success = callbacks.success || resource.success || console.log,
-        error = callbacks.error || resource.error || errorHandler,
+        success = callbacks.success || console.log,
+        error = callbacks.error || errorHandler,
         config = {url: 'http://ws.audioscrobbler.com/2.0/'};
 
     // Don't perform any requests when rate limited
@@ -195,7 +193,7 @@ angular.module('lastfm.services')
         config.params = args;
     }
 
-    console.log('HTTP', config, lastfm);
+    console.log('HTTP', resource, config, lastfm);
     $http(config)
       .error(function (data, status, headers, config) {
         // Known errors are dispatched to the error handler
@@ -223,8 +221,8 @@ angular.module('lastfm.services')
     // Curry the request function with resource configuration
     return function (args, callbacks) {
       // Decorate the success handler
-      if (callbacks && callbacks.success) {
-        callbacks.success = handler(conf, callbacks.success);
+      if ((callbacks && callbacks.success)) {// || conf.success) {
+        callbacks.success = successHandler(conf, callbacks.success);// || conf.success);
       }
       return request(conf, args, callbacks);
     }
@@ -243,103 +241,108 @@ angular.module('lastfm.services')
     }
   }
 
-  function image(data, options) {
-    var def;
-    if (typeof options == 'string') {
-      def = options;
-      options = {};
-    } else {
-      options = options || {};
-    }
+  lastfm.fields = {
+    // Makes sure an object has 5 image sizes
+    image: function (data, options) {
+      var def;
+      if (typeof options == 'string') {
+        def = options;
+        options = {};
+      } else {
+        options = options || {};
+      }
 
-    // Meow.
-    var small = 'http://placekitten.com/g/32',
-        medium = 'http://placekitten.com/g/64',
-        large = 'http://placekitten.com/g/128',
-        extralarge = 'http://placekitten.com/g/256',
-        mega = 'http://placekitten.com/g/512';
+      // Meow.
+      var small = 'http://placekitten.com/g/32',
+          medium = 'http://placekitten.com/g/64',
+          large = 'http://placekitten.com/g/128',
+          extralarge = 'http://placekitten.com/g/256',
+          mega = 'http://placekitten.com/g/512';
 
-    if (!data) {
-        return;
-    }
+      if (!data) {
+          return;
+      }
 
-    return {
-      small:      data[0]['#text'] || options.small || def ||small,
-      medium:     data[1]['#text'] || options.medium ||def || medium,
-      large:      data[2]['#text'] || options.large || def || large,
-      extralarge: data[3]['#text'] || options.extralarge || def || extralarge,
-      mega:      (data[4] && data[4]['#text'] || {}).mega || options.mega || def || mega,
+      return {
+        small:      data[0]['#text'] || options.small || def ||small,
+        medium:     data[1]['#text'] || options.medium ||def || medium,
+        large:      data[2]['#text'] || options.large || def || large,
+        extralarge: data[3]['#text'] || options.extralarge || def || extralarge,
+        mega:      (data[4] && data[4]['#text'] || {}).mega || options.mega || def || mega,
+      }
+    },
+
+    // This function rebuild urls by replacing the hsot 'http://www.last.fm'
+    url: function (data) {
+      if (lastfm.urlprefix == 'undefined') {
+        return data;
+      }
+
+      return data.replace(/^http:\/\/www.last.fm/, lastfm.urlprefix);
     }
   }
 
-  // This function rebuild urls by replacing the hsot 'http://www.last.fm'
-  function url(data) {
-    if (lastfm.urlprefix == 'undefined') {
-      return data;
-    }
-
-    return data.replace(/^http:\/\/www.last.fm/, lastfm.urlprefix);
+  // Models decorate response data
+  lastfm.models = {
+      tag: function (obj) {
+        obj.url = lastfm.fields.url(obj.url);
+        return obj;
+      },
+      user: function (obj) {
+        obj.url = lastfm.fields.url(obj.url);
+        obj.image = lastfm.fields.image(obj.image, 'http://cdn.last.fm/flatness/responsive/2/noimage/default_user_140_g2.png');
+        return obj;
+      },
+      artist: function (obj) {
+        obj.url = lastfm.fields.url(obj.url);
+        //XXX The user.getRecentTracks?extended=1 endpoint has artists names as url
+        if (obj.url == obj.name) {
+            obj.url = '#/music/' + obj.name;
+        }
+        obj.image = image(obj.image, 'http://cdn.last.fm/flatness/responsive/2/noimage/default_user_140_g2.png');
+        if (obj.similar) {
+            obj.similar = obj.similar.artist.map(lastfm.models.artist);
+        }
+        if (obj.playcount) {
+            obj.playcount = parseInt(obj.playcount);
+        }
+        if (obj.listeners) {
+            obj.listeners = parseInt(obj.listeners);
+        }
+        if (obj.ontour) {
+            obj.ontour = obj.ontour == '1';
+        }
+        if (obj.tags) {
+            obj.tags = obj.tags.tag.map(lastfm.models.tag);
+        }
+        if (obj['@attr']) {
+            if (obj['@attr'].rank) {
+                obj.rank = parseInt(obj['@attr'].rank);
+            }
+        }
+        return obj;
+      },
+      track: function (obj) {
+        obj.url = lastfm.fields.url(obj.url);
+        obj.image = lastfm.fields.image(obj.image, '');
+        obj.artist = lastfm.models.artist(obj.artist);
+        if (obj['@attr']) {
+            if (obj['@attr'].rank) {
+                obj.rank = parseInt(obj['@attr'].rank);
+            }
+            if (obj['@attr'].nowplaying) {
+                obj.nowplaying = obj['@attr'].nowplaying == 'true';
+            }
+        }
+        if (obj.streamable) {
+          obj.streamable = obj.streamable['#text'] == '1';
+        }
+        //TODO loved
+        return obj;
+      }
   }
 
-  var models = {};
-  models.tag = function (obj) {
-    obj.url = url(obj.url);
-    return obj;
-  };
-  models.user = function (obj) {
-    obj.url = url(obj.url);
-    obj.image = image(obj.image, 'http://cdn.last.fm/flatness/responsive/2/noimage/default_user_140_g2.png');
-    return obj;
-  };
-  models.artist = function (obj) {
-    obj.url = url(obj.url);
-    //XXX The user.getRecentTracks?extended=1 endpoint has artists names as url
-    if (obj.url == obj.name) {
-        obj.url = '#/music/' + obj.name;
-    }
-    obj.image = image(obj.image, 'http://cdn.last.fm/flatness/responsive/2/noimage/default_user_140_g2.png');
-    if (obj.similar) {
-        obj.similar = obj.similar.artist.map(models.artist);
-    }
-    if (obj.playcount) {
-        obj.playcount = parseInt(obj.playcount);
-    }
-    if (obj.listeners) {
-        obj.listeners = parseInt(obj.listeners);
-    }
-    if (obj.ontour) {
-        obj.ontour = obj.ontour == '1';
-    }
-    if (obj.tags) {
-        obj.tags = obj.tags.tag.map(models.tag);
-    }
-    if (obj['@attr']) {
-        if (obj['@attr'].rank) {
-            obj.rank = parseInt(obj['@attr'].rank);
-        }
-    }
-    return obj;
-  };
-  models.track = function (obj) {
-    obj.url = url(obj.url);
-    obj.image = image(obj.image, '');
-    obj.artist = models.artist(obj.artist);
-    if (obj['@attr']) {
-        if (obj['@attr'].rank) {
-            obj.rank = parseInt(obj['@attr'].rank);
-        }
-        if (obj['@attr'].nowplaying) {
-            obj.nowplaying = obj['@attr'].nowplaying == 'true';
-        }
-    }
-    if (obj.streamable) {
-      obj.streamable = obj.streamable['#text'] == '1';
-    }
-    //TODO loved
-    return obj;
-  };
-
-  var resources = {
+  lastfm.api = {
     // The service exposes last.fm resources. To obtain the data, they should
     // be called with callback functions.
     //
@@ -375,13 +378,13 @@ angular.module('lastfm.services')
       getInfo: resource({
         method: 'artist.getInfo',
         entity: 'artist',
-        model: models.artist
+        model: lastfm.models.artist
       }),
       getTopTracks: resource({
         method: 'artist.getTopTracks',
         collection: 'toptracks',
         entity: 'track',
-        model: models.track
+        model: lastfm.models.track
       })
     },
     track: {
@@ -402,37 +405,37 @@ angular.module('lastfm.services')
       getInfo: resource({
         method: 'user.getInfo',
         entity: 'user',
-        model: models.user
+        model: lastfm.models.user
       }),
       getFriends: resource({
         method: 'user.getFriends',
         collection: 'friends',
         entity: 'user',
-        model: models.user
+        model: lastfm.models.user
       }),
       getRecentTracks: resource({
         method: 'user.getRecentTracks',
         collection: 'recenttracks',
         entity: 'track',
-        model: models.track
+        model: lastfm.models.track
       }),
       getLovedTracks: resource({
         method: 'user.getLovedTracks',
         collection: 'lovedtracks',
         entity: 'track',
-        model: models.track
+        model: lastfm.models.track
       }),
       getTopArtists: resource({
         method: 'user.getTopArtists',
         collection: 'topartists',
         entity: 'artist',
-        model: models.artist
+        model: lastfm.models.artist
       }),
       getTopTracks: resource({
         method: 'user.getTopTracks',
         collection: 'toptracks',
         entity: 'track',
-        model: models.track
+        model: lastfm.models.track
       }),
     },
     library: {
@@ -440,47 +443,48 @@ angular.module('lastfm.services')
         method: 'library.getArtists',
         collection: 'artists',
         entity: 'artist',
-        model: models.artist
+        model: lastfm.models.artist
       }),
     }
   };
 
-  angular.extend(lastfm, resources);
-
-  lastfm.auth.login = function () {
+  lastfm.auth = {
+    // Send the user to the authentiation flow initialization endpoint
+    login: function () {
       if (lastfm.session) {
         alert('Already logged in, please logout first!');
         return;
       }
       $window.location.href = 'http://www.last.fm/api/auth/?api_key=' + lastfm.key;
-  }
+    },
 
-  // Remove all session data from lastfm service and cookies
-  lastfm.auth.logout = function () {
-    delete lastfm.session;
-    $cookieStore.remove('lastfmSession');
-  }
+    // Remove all session data from lastfm service and cookies
+    logout: function () {
+      delete lastfm.session;
+      $cookieStore.remove('lastfmSession');
+    },
 
-  // Check for a 'token' query parameter and fetch a session with it when
-  // present. Callbacks takes 'success' and 'error' properties.
-  lastfm.auth.callback = function (token) {
-    if (token) {
-      if (!lastfm.session) {
-        return lastfm.auth.getSession({token: token});
+    // Check for a 'token' query parameter and fetch a session with it when
+    // present. Callbacks takes 'success' and 'error' properties.
+    callback: function (token) {
+      if (token) {
+        if (!lastfm.session) {
+          return lastfm.api.auth.getSession({token: token});
+        }
+        alert('Already logged in, please logout first!');
       }
-      alert('Already logged in, please logout first!');
+    },
+
+    // Get the information of authenticated user and store it in the session
+    identify: function () {
+      lastfm.api.user.getInfo({}, {
+        success: function (data) {
+          angular.extend(lastfm.session, data);
+        }
+      });
     }
   }
 
-  lastfm.auth.identify = function () {
-    lastfm.user.getInfo({}, {
-      success: function (data) {
-        angular.extend(lastfm.session, data);
-      }
-    });
-  }
-
-  angular.extend(lastfm, resources);
   return lastfm;
 })
 
@@ -488,7 +492,6 @@ angular.module('lastfm.services')
 // To get additional info, call lastfm.user.getInfo without arguments
 .run(function (lastfm, $cookieStore) {
   var session = $cookieStore.get('lastfmSession');
-  console.log('SESSION', session);
   if (session) {
     lastfm.session = session;
     lastfm.auth.identify();

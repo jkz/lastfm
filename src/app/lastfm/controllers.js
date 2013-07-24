@@ -2,7 +2,7 @@ angular.module('lastfm.controllers')
 
 .controller( 'FriendCtrl', function ($scope, $stateParams, lastfm, Collection) {
   $scope.friends = new Collection({
-    resource: lastfm.user.getFriends,
+    resource: lastfm.api.user.getFriends,
     page: {
       limit: 20
     },
@@ -15,7 +15,7 @@ angular.module('lastfm.controllers')
 
 .controller( 'ScrobbleCtrl', function ($scope, $stateParams, lastfm, Collection) {
   $scope.tracks = new Collection({
-    resource: lastfm.user.getRecentTracks,
+    resource: lastfm.api.user.getRecentTracks,
     page: {limit: 10},
     params: {
       user: $stateParams.user,
@@ -26,7 +26,7 @@ angular.module('lastfm.controllers')
 
 .controller( 'UserCtrl', function UserCtrl ( $scope, $state, $stateParams, lastfm) {
   $scope.user = {name: $stateParams.user};
-  lastfm.user.getInfo({
+  lastfm.api.user.getInfo({
       user: $stateParams.user,
   }, {
       success: function (data) {
@@ -57,11 +57,11 @@ angular.module('lastfm.controllers')
 .controller( 'ArtistCtrl', function ArtistCtrl ( $scope, $state, $stateParams, lastfm, Collection) {
   $scope.artist = {name: $stateParams.artist};
 
-  lastfm.artist.getInfo({
+  lastfm.api.artist.getInfo({
       artist: $stateParams.artist
   }, {
       success: function (data) {
-          $scope.artist = data;
+         $scope.artist = data;
       }
   });
 
@@ -77,7 +77,7 @@ angular.module('lastfm.controllers')
   ];
 
   $scope.topTracks = new Collection({
-      resource: lastfm.artist.getTopTracks,
+      resource: lastfm.api.artist.getTopTracks,
       page: {
         limit: 15
       },
@@ -104,7 +104,7 @@ angular.module('lastfm.controllers')
 
 .controller( 'ArtistTopTrackCtrl', function ($scope, $stateParams, lastfm, Collection) {
   $scope.tracks = new Collection({
-      resource: lastfm.artist.getTopTracks,
+      resource: lastfm.api.artist.getTopTracks,
       page: {
         limit: 15
       },
@@ -120,7 +120,7 @@ angular.module('lastfm.controllers')
 
 .controller( 'LibraryArtistCtrl', function ($scope, $stateParams, lastfm, Collection) {
     $scope.artists = new Collection({
-        resource: lastfm.library.getArtists,
+        resource: lastfm.api.library.getArtists,
         page: {
             limit: 18,
         },
@@ -134,7 +134,7 @@ angular.module('lastfm.controllers')
 
 .controller( 'LibraryLoveCtrl', function ($scope, $stateParams, lastfm, Collection) {
   $scope.tracks = new Collection({
-      resource: lastfm.user.getLovedTracks,
+      resource: lastfm.api.user.getLovedTracks,
       page: {
         limit: 50,
       },
@@ -156,7 +156,7 @@ angular.module('lastfm.controllers')
 
 .controller( 'UserTopArtistCtrl', function ($scope, $stateParams, lastfm, Collection) {
   $scope.artists = new Collection({
-      resource: lastfm.user.getTopArtists,
+      resource: lastfm.api.user.getTopArtists,
       page: {
         limit: 15
       },
@@ -169,7 +169,7 @@ angular.module('lastfm.controllers')
 
 .controller( 'UserTopTrackCtrl', function ($scope, $stateParams, lastfm, Collection) {
   $scope.tracks = new Collection({
-      resource: lastfm.user.getTopTracks,
+      resource: lastfm.api.user.getTopTracks,
       page: {
         limit: 15
       },
@@ -182,7 +182,7 @@ angular.module('lastfm.controllers')
 
 .controller( 'TrackCtrl', function ($scope, $stateParams, lastfm, Collection) {
   $scope.tracks = new Collection({
-      resource: lastfm.user.getRecentTracks,
+      resource: lastfm.api.user.getRecentTracks,
       page: {
         limit: 50
       },

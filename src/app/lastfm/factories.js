@@ -115,10 +115,10 @@ angular.module('lastfm.factories')
     var that = this,
 
     // Setup the query parameters
-        params = angular.extend({
-          page: that.page.index,
-          limit: that.page.limit,
-        }, that.params, options);
+    params = angular.extend({
+      page: that.page.index,
+      limit: that.page.limit,
+    }, that.params, options);
 
     return that.resource(params, {
       // Wrap the callback call, for the right 'this'
