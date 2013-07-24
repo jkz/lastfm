@@ -1,14 +1,14 @@
 #Jesse the Game
 World domination. I have devised a scheme for this specific purpose, which I am
 not only willing to share with you, but offering you to be a part of. The
-scheme is seeded by the premise that for world domination you need an army of
-loyal minions. People.
+scheme is seeded by the premise that you need an army of loyal minions to
+dominate the world.
 
 People love music. People love games. People think computer science is magic.
 These happen to be the three subjects I identify myself with. These are also
 the three psychological hacks I intend to abuse in one entertainment experience:
 
-[Jesse the Game](http://jessethegame.net)
+<strong>Jesse the Game</strong>
 
 The game is about power. The power to control a pop-music artist the way Mario
 and Link dance to the tips of your fingers. I will expose myself as a playable
@@ -29,4 +29,9 @@ that they’ll hardly realise how they are recruited for my army.
 
 ##Status
 I am not much of a trapezist, but I have juggled my share of APIs in the
-development of this project.
+development of this project. The project has had several phases with working
+elements. I used the project as a guide for honing my skills of the full
+web application stack. Most of the django and python code found in my repository
+[github.com/jessethegame](//github.com/jessethegame) are modularized parts of
+that project. There is no running version at the moment.
+
