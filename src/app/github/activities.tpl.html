@@ -1,4 +1,8 @@
-<h2 class="heading"><span class="h2Wrapper">Recent GitHub Activity</span></h2>
+<h2 class="heading">
+  <span class="h2Wrapper">
+    <a ng-href=//github.com/{{user}} target=_blank>{{user}} on GitHub</a>
+  </span>
+</h2>
 <ul class="minifeedSmall">
   <li ng-repeat="activity in activities">
     <ng-switch on=activity.type>
