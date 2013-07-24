@@ -11,8 +11,7 @@ angular.module('lastfm.services')
 */
 
 .service('lastfm', function ($http, $cookies, $window) {
-    var lastfm = {
-
+  var lastfm = {
     // When lastfm notifies us of exceeding the rate limit, this flag turns on
     // and disables requesting for a while.
     //XXX it could be an idea to turn to cache and/or store a queue of pending
@@ -28,7 +27,6 @@ angular.module('lastfm.services')
     autoidentify: true
 
   }
-
 
   //XXX Please disambiguate step 6 of the signature guide in the documentation
   //    It took me far too long to figure out (again...) that 'all parameters'
@@ -461,18 +459,21 @@ angular.module('lastfm.services')
 
   // Check for a 'token' query parameter and fetch a session with it when
   // present.
-  lastfm.callback = function (token) {
+  lastfm.callback = function (token, success, error) {
+    error = error || angular.noop;
     if (token) {
-      if (lastfm.session) {
-        alert('Already logged in, please logout first!');
+      if (!lastfm.session) {
+        return lastfm.auth.getSession({token: token})
+          .success(callback)
+          .error(error);
       }
-      return lastfm.auth.getSession({token: token});
+      alert('Already logged in, please logout first!');
     }
+    return error();
   }
 
   angular.extend(lastfm, resources);
   return lastfm;
-  return {callback: function () {return {then: function () {}}}};
 })
 
 // Load an active session from cookies, if present
